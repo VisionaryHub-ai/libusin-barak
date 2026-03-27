@@ -657,139 +657,101 @@ table.vt{width:100%;border-collapse:collapse;min-width:400px}
 <div class="container">
 
   <div class="section">
-    <div class="section-title">Scénáře</div>
+    <div class="section-title">Matice scénářů — Prodej × Koupě × Rezerva</div>
+    <div class="note" style="margin-bottom:14px"><strong>Jak číst:</strong> Každý řádek = kombinace ceny prodeje Libušína, koupě Družce a výše rezervy. Splátka při 4,3% / 30 let. Provoz 18k + osobní 25k = 43k fixní.</div>
     <div class="card" style="overflow-x:auto">
       <table class="vt">
-        <thead><tr><th>Parametr</th><th>Pesimistický</th><th style="color:#16a34a">Realistický</th><th>Optimistický</th></tr></thead>
+        <thead><tr><th>Prodej</th><th>Koupě</th><th>Rezerva</th><th>Záloha</th><th>Hypotéka</th><th>Splátka</th><th>Burn/měs</th><th>Runway</th></tr></thead>
         <tbody>
-          <tr><td>Prodej Libušín</td><td>11 000 000</td><td><strong>12 500 000</strong></td><td>13 500 000</td></tr>
-          <tr><td>Provize RK</td><td class="g">0</td><td class="g">0</td><td class="g">0</td></tr>
-          <tr><td>Čistý výnos (~50k náklady)</td><td>~10 950 000</td><td><strong>~12 450 000</strong></td><td>~13 450 000</td></tr>
-          <tr style="border-top:2px solid #d1d5db"><td>Koupě Družec (vyjednaná)</td><td>15 500 000</td><td><strong>14 500 000</strong></td><td>14 000 000</td></tr>
-          <tr><td>Záloha (výnos − 3 mil)</td><td>7 950 000</td><td><strong>9 450 000</strong></td><td>10 450 000</td></tr>
-          <tr><td>Hypotéka</td><td>~7 550 000</td><td style="color:#f97316;font-weight:800">~5 050 000</td><td>~3 550 000</td></tr>
-          <tr><td>LTV</td><td>49%</td><td class="g">35%</td><td class="g">25%</td></tr>
-          <tr style="background:#f0fdf4"><td><strong>Splátka/měs (4,3%/30 let)</strong></td><td><strong>~37 400</strong></td><td style="color:#16a34a;font-size:16px;font-weight:800">~25 000 Kč</td><td><strong>~17 600</strong></td></tr>
-          <tr><td>+ Provoz domu/měs</td><td>~20 000</td><td>~18 000</td><td>~16 000</td></tr>
-          <tr style="background:#f0fdf4"><td><strong>Bydlení celkem/měs</strong></td><td><strong>~57 400</strong></td><td style="color:#16a34a;font-weight:800">~43 000 Kč</td><td><strong>~33 600</strong></td></tr>
-          <tr><td>Cash rezerva</td><td>3 000 000</td><td>3 000 000</td><td>3 000 000</td></tr>
-          <tr><td>Doba prodeje</td><td>3–4 měs.</td><td class="g"><strong>6–8 týdnů</strong></td><td>4–6 týdnů</td></tr>
+          <tr class="hlr"><td>11M</td><td>15,5M</td><td>3M</td><td>7,95M</td><td>7,55M</td><td class="r">37 400</td><td class="r">80 400</td><td>37 měs.</td></tr>
+          <tr><td>11M</td><td>14,5M</td><td>3M</td><td>7,95M</td><td>6,55M</td><td>32 400</td><td>75 400</td><td>40 měs.</td></tr>
+          <tr><td>11M</td><td>14M</td><td>3M</td><td>7,95M</td><td>6,05M</td><td>30 000</td><td>73 000</td><td>41 měs.</td></tr>
+          <tr><td>11M</td><td>14,5M</td><td>2M</td><td>8,95M</td><td>5,55M</td><td>27 500</td><td>70 500</td><td>28 měs.</td></tr>
+          <tr style="border-top:2px solid #d1d5db"><td>12,5M</td><td>15,5M</td><td>3M</td><td>9,45M</td><td>6,05M</td><td>30 000</td><td>73 000</td><td>41 měs.</td></tr>
+          <tr style="background:#fff7ed"><td><strong>12,5M</strong></td><td><strong>14,5M</strong></td><td><strong>3M</strong></td><td><strong>9,45M</strong></td><td style="color:#f97316;font-weight:800"><strong>5,05M</strong></td><td style="color:#f97316;font-weight:800"><strong>25 000</strong></td><td style="color:#f97316;font-weight:800"><strong>68 000</strong></td><td style="color:#f97316;font-weight:800"><strong>44 měs.</strong></td></tr>
+          <tr><td>12,5M</td><td>14M</td><td>3M</td><td>9,45M</td><td>4,55M</td><td>22 500</td><td>65 500</td><td>46 měs.</td></tr>
+          <tr><td>12,5M</td><td>14,5M</td><td>2M</td><td>10,45M</td><td>4,05M</td><td class="g">20 000</td><td class="g">63 000</td><td>32 měs.</td></tr>
+          <tr><td>12,5M</td><td>14M</td><td>2M</td><td>10,45M</td><td>3,55M</td><td class="g">17 600</td><td class="g">60 600</td><td>33 měs.</td></tr>
+          <tr style="border-top:2px solid #d1d5db"><td>13,5M</td><td>14,5M</td><td>3M</td><td>10,45M</td><td>4,05M</td><td class="g">20 000</td><td class="g">63 000</td><td>48 měs.</td></tr>
+          <tr class="hlg"><td>13,5M</td><td>14M</td><td>3M</td><td>10,45M</td><td>3,55M</td><td class="g">17 600</td><td class="g">60 600</td><td>50 měs.</td></tr>
+          <tr><td>13,5M</td><td>14,5M</td><td>2M</td><td>11,45M</td><td>3,05M</td><td class="g">15 100</td><td class="g">58 100</td><td>34 měs.</td></tr>
+          <tr class="hlg"><td>13,5M</td><td>14M</td><td>2M</td><td>11,45M</td><td>2,55M</td><td class="g">12 600</td><td class="g">55 600</td><td>36 měs.</td></tr>
         </tbody>
       </table>
     </div>
-    <div class="note warn" style="margin-top:12px"><strong>Energetický štítek G + přímotopy:</strong> Provoz domu může být +1 500–2 500 Kč/měs navíc. Zjistit reálný stav!</div>
+    <div class="note warn" style="margin-top:12px"><strong>Oranžový řádek = nejpravděpodobnější scénář.</strong> Prodej 12,5M + koupě 14,5M + rezerva 3M = splátka 25k, burn 68k, runway 3,7 roku.</div>
+    <div class="note ok" style="margin-top:6px"><strong>Zelené řádky = best case.</strong> Pokud se podaří prodat za 13,5M a koupit za 14M, splátka klesne na 12,6–17,6k a burn na 55,6–60,6k.</div>
   </div>
 
   <div class="section">
-    <div class="section-title">Runway analýza (3 mil, realistický scénář)</div>
+    <div class="section-title">Runway analýza (realistický: hypo 5,05M, rezerva 3M)</div>
     <div class="grid-3">
-      <div class="sc"><div class="n">25 000 Kč</div><div class="l">Splátka (3 mil rezerva)</div><div class="ch">4,3% / 30 let</div></div>
+      <div class="sc"><div class="n">25 000 Kč</div><div class="l">Splátka/měs</div><div class="ch">4,3% / 30 let</div></div>
       <div class="sc"><div class="n">68k</div><div class="l">Break-even příjem</div><div class="ch">Splátka + provoz + život</div></div>
       <div class="sc"><div class="n">44 měs.</div><div class="l">Runway bez příjmu</div><div class="ch">3,7 roku</div></div>
     </div>
-
-    <!-- RUNWAY TABULKA -->
     <div class="card" style="margin-top:14px">
-      <div class="card-title">Runway při různých příjmech (rezerva 3 mil, burn 68k/měs)</div>
+      <div class="card-title">Runway při různých příjmech</div>
       <table class="vt">
-        <thead><tr><th>Příjem</th><th>Net burn</th><th>Runway z 3 mil</th><th>Poznámka</th></tr></thead>
+        <thead><tr><th>Příjem</th><th>Net burn</th><th>Runway z 3 mil</th><th></th></tr></thead>
         <tbody>
-          <tr><td>0 Kč (apokalypsa)</td><td>68 000 Kč</td><td><strong>44 měs. (3,7 roku)</strong></td><td></td></tr>
+          <tr><td>0 Kč</td><td>68 000 Kč</td><td><strong>44 měs. (3,7 roku)</strong></td><td></td></tr>
           <tr><td>40 000 Kč</td><td>28 000 Kč</td><td><strong>107 měs. (8,9 roku)</strong></td><td></td></tr>
-          <tr><td>60 000 Kč</td><td>8 000 Kč</td><td class="g"><strong>375 měs. (31 let)</strong></td><td></td></tr>
-          <tr style="background:#fff7ed"><td><strong>68 000 Kč</strong></td><td><strong>0 Kč</strong></td><td class="g"><strong>Break-even — 3 mil zůstávají</strong></td><td style="color:#f97316"><strong>Break-even</strong></td></tr>
-          <tr><td>100 000 Kč</td><td class="g">+32 000 Kč</td><td class="g">Nekonečno + 384k/rok úspory</td><td></td></tr>
-          <tr><td>150 000 Kč</td><td class="g">+82 000 Kč</td><td class="g">Nekonečno + 984k/rok</td><td></td></tr>
-          <tr><td>200 000 Kč</td><td class="g">+132 000 Kč</td><td class="g">Nekonečno + 1,58 mil/rok</td><td></td></tr>
+          <tr style="background:#fff7ed"><td><strong>68 000 Kč</strong></td><td><strong>0 Kč</strong></td><td class="g"><strong>Break-even</strong></td><td style="color:#f97316"><strong>Break-even</strong></td></tr>
+          <tr><td>100 000 Kč</td><td class="g">+32 000 Kč</td><td class="g">+384k/rok úspory</td><td></td></tr>
+          <tr><td>150 000 Kč</td><td class="g">+82 000 Kč</td><td class="g">+984k/rok</td><td></td></tr>
+          <tr><td>200 000 Kč</td><td class="g">+132 000 Kč</td><td class="g">+1,58 mil/rok</td><td></td></tr>
         </tbody>
       </table>
     </div>
+  </div>
 
-    <!-- SIMULACE PŘÍJMŮ -->
-    <div class="section">
-      <div class="section-title">Simulace příjmů</div>
-      <div class="grid-3">
-        <div class="card">
-          <div class="card-title">Příjem 100 000 Kč/měs</div>
-          <div class="dr"><span class="dk">Příjem</span><span class="dv">100 000 Kč</span></div>
-          <div class="dr"><span class="dk">− Splátka</span><span class="dv">−25 000 Kč</span></div>
-          <div class="dr"><span class="dk">− Provoz domu</span><span class="dv">−18 000 Kč</span></div>
-          <div class="dr"><span class="dk">− Osobní</span><span class="dv">−25 000 Kč</span></div>
-          <div class="dr" style="background:#f0fdf4"><span class="dk g"><strong>Přebytek</strong></span><span class="dv g" style="font-size:15px"><strong>+32 000 Kč</strong></span></div>
-          <div class="dr"><span class="dk">Roční úspory</span><span class="dv">384k</span></div>
-          <div class="dr"><span class="dk">Splátka = % příjmu</span><span class="dv g">25%</span></div>
-          <div class="dr"><span class="dk">Splacení hypo</span><span class="dv">~13 let z přebytku</span></div>
-        </div>
-        <div class="card" style="border-color:#f97316">
-          <div class="card-title" style="color:#f97316">Příjem 150 000 Kč/měs</div>
-          <div class="dr"><span class="dk">Příjem</span><span class="dv">150 000 Kč</span></div>
-          <div class="dr"><span class="dk">− Vše (68k)</span><span class="dv">−68 000 Kč</span></div>
-          <div class="dr" style="background:#f0fdf4"><span class="dk g"><strong>Přebytek</strong></span><span class="dv g" style="font-size:15px"><strong>+82 000 Kč</strong></span></div>
-          <div class="dr"><span class="dk">Roční úspory</span><span class="dv g">984k Kč</span></div>
-          <div class="dr"><span class="dk">Splátka = % příjmu</span><span class="dv g">17%</span></div>
-          <div class="dr"><span class="dk">Splacení hypo</span><span class="dv g">~62 měs. (5 let)</span></div>
-          <div class="dr"><span class="dk">Za 3 roky</span><span class="dv g">+2,95 mil na business</span></div>
-        </div>
-        <div class="card">
-          <div class="card-title">Příjem 200 000 Kč/měs</div>
-          <div class="dr"><span class="dk">Příjem</span><span class="dv">200 000 Kč</span></div>
-          <div class="dr"><span class="dk">− Vše (68k)</span><span class="dv">−68 000 Kč</span></div>
-          <div class="dr" style="background:#f0fdf4"><span class="dk g"><strong>Přebytek</strong></span><span class="dv g" style="font-size:15px"><strong>+132 000 Kč</strong></span></div>
-          <div class="dr"><span class="dk">Roční úspory</span><span class="dv g">1,58 mil Kč</span></div>
-          <div class="dr"><span class="dk">Splátka = % příjmu</span><span class="dv g">12,5%</span></div>
-          <div class="dr"><span class="dk">Splacení hypo</span><span class="dv g">~38 měs. (3,2 roku)</span></div>
-          <div class="dr"><span class="dk">Za 3 roky</span><span class="dv g">+4,74 mil na business</span></div>
-        </div>
+  <div class="section">
+    <div class="section-title">Simulace příjmů (realistický scénář)</div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-title">Příjem 100 000 Kč/měs</div>
+        <div class="dr"><span class="dk">− Splátka</span><span class="dv">−25 000 Kč</span></div>
+        <div class="dr"><span class="dk">− Provoz + osobní</span><span class="dv">−43 000 Kč</span></div>
+        <div class="dr" style="background:#f0fdf4"><span class="dk g"><strong>Přebytek</strong></span><span class="dv g"><strong>+32 000 Kč</strong></span></div>
+        <div class="dr"><span class="dk">Splátka = % příjmu</span><span class="dv g">25%</span></div>
+        <div class="dr"><span class="dk">Splacení hypo</span><span class="dv">~13 let z přebytku</span></div>
+      </div>
+      <div class="card" style="border-color:#f97316">
+        <div class="card-title" style="color:#f97316">Příjem 150 000 Kč/měs</div>
+        <div class="dr"><span class="dk">− Vše</span><span class="dv">−68 000 Kč</span></div>
+        <div class="dr" style="background:#f0fdf4"><span class="dk g"><strong>Přebytek</strong></span><span class="dv g"><strong>+82 000 Kč</strong></span></div>
+        <div class="dr"><span class="dk">Splátka = % příjmu</span><span class="dv g">17%</span></div>
+        <div class="dr"><span class="dk">Splacení hypo</span><span class="dv g">~5 let z přebytku</span></div>
+        <div class="dr"><span class="dk">Za 3 roky</span><span class="dv g">+2,95 mil na business</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Příjem 200 000 Kč/měs</div>
+        <div class="dr"><span class="dk">− Vše</span><span class="dv">−68 000 Kč</span></div>
+        <div class="dr" style="background:#f0fdf4"><span class="dk g"><strong>Přebytek</strong></span><span class="dv g"><strong>+132 000 Kč</strong></span></div>
+        <div class="dr"><span class="dk">Splátka = % příjmu</span><span class="dv g">12,5%</span></div>
+        <div class="dr"><span class="dk">Splacení hypo</span><span class="dv g">~3,2 roku z přebytku</span></div>
+        <div class="dr"><span class="dk">Za 3 roky</span><span class="dv g">+4,74 mil na business</span></div>
       </div>
     </div>
+  </div>
 
-    <!-- MODELY REZERV -->
-    <div class="section">
-      <div class="section-title">Modely podle výše rezervy</div>
-      <div class="card" style="overflow-x:auto">
-        <table class="vt">
-          <thead><tr><th>Parametr</th><th>Rezerva 2 mil</th><th style="color:#f97316">Rezerva 3 mil</th><th>Rezerva 4 mil</th></tr></thead>
-          <tbody>
-            <tr><td>Záloha</td><td>10 450 000</td><td><strong>9 450 000</strong></td><td>8 450 000</td></tr>
-            <tr><td>Hypotéka</td><td>4 050 000</td><td style="color:#f97316;font-weight:800"><strong>5 050 000</strong></td><td>6 050 000</td></tr>
-            <tr><td>LTV</td><td class="g">28%</td><td class="g">35%</td><td class="y">42%</td></tr>
-            <tr><td>Splátka/měs (4,3%/30 let)</td><td>~20 000 Kč</td><td style="color:#f97316;font-weight:700">~25 000 Kč</td><td>~30 000 Kč</td></tr>
-            <tr><td>Provoz domu</td><td>18 000</td><td>18 000</td><td>18 000</td></tr>
-            <tr><td>Osobní výdaje</td><td>25 000</td><td>25 000</td><td>25 000</td></tr>
-            <tr style="background:#fff7ed"><td><strong>Celkový burn/měs</strong></td><td><strong>63 000 Kč</strong></td><td style="color:#f97316;font-weight:800"><strong>68 000 Kč</strong></td><td><strong>73 000 Kč</strong></td></tr>
-            <tr><td>Break-even příjem</td><td>63 000 Kč</td><td>68 000 Kč</td><td>73 000 Kč</td></tr>
-            <tr><td>Runway bez příjmu</td><td>~32 měs. (2,6 roku)</td><td><strong>~44 měs. (3,7 roku)</strong></td><td class="g">~55 měs. (4,6 roku)</td></tr>
-            <tr><td>Runway při 40k příjmu</td><td>~87 měs.</td><td>~107 měs.</td><td class="g">~121 měs.</td></tr>
-            <tr><td>Přebytek při 100k</td><td class="g">+37 000 Kč</td><td class="g">+32 000 Kč</td><td class="g">+27 000 Kč</td></tr>
-            <tr><td>Přebytek při 150k</td><td class="g">+87 000 Kč</td><td class="g">+82 000 Kč</td><td class="g">+77 000 Kč</td></tr>
-            <tr><td>Přebytek při 200k</td><td class="g">+137 000 Kč</td><td class="g">+132 000 Kč</td><td class="g">+127 000 Kč</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="note">
-        <strong>Kompromis:</strong> 2 mil rezerva = nejnižší splátka (20k) ale kratší runway (2,6 roku). 4 mil = nejdelší runway (4,6 let) ale vyšší splátka (30k). <strong>3 mil je sweet spot</strong> — splátka 25k, runway 3,7 roku, break-even 68k.
-      </div>
+  <div class="section">
+    <div class="section-title">Délka hypotéky (realistický: hypo 5,05M)</div>
+    <div class="card" style="overflow-x:auto">
+      <table class="vt">
+        <thead><tr><th>Délka</th><th>Splátka</th><th>Celkem</th><th>Přeplatek</th><th>Burn/měs</th><th>Break-even</th></tr></thead>
+        <tbody>
+          <tr style="background:#fff7ed"><td><strong>30 let</strong></td><td style="color:#f97316"><strong>25 000</strong></td><td>9 000 000</td><td>3 950 000</td><td><strong>68 000</strong></td><td><strong>68 000</strong></td></tr>
+          <tr><td>25 let</td><td>27 600</td><td>8 250 000</td><td>3 200 000</td><td>70 600</td><td>70 600</td></tr>
+          <tr><td>20 let</td><td>31 400</td><td>7 540 000</td><td>2 490 000</td><td>74 400</td><td>74 400</td></tr>
+          <tr><td>15 let</td><td>38 200</td><td>6 870 000</td><td>1 820 000</td><td>81 200</td><td>81 200</td></tr>
+          <tr><td>10 let</td><td>51 900</td><td>6 230 000</td><td>1 180 000</td><td>94 900</td><td>94 900</td></tr>
+        </tbody>
+      </table>
     </div>
-
-    <!-- MODELY HYPOTÉK -->
-    <div class="section">
-      <div class="section-title">Modely délky hypotéky (rezerva 3 mil, hypo 5,05 mil)</div>
-      <div class="card" style="overflow-x:auto">
-        <table class="vt">
-          <thead><tr><th>Délka</th><th>Splátka/měs</th><th>Celkem zaplatíš</th><th>Přeplatek</th><th>Burn/měs</th><th>Break-even</th></tr></thead>
-          <tbody>
-            <tr style="background:#fff7ed"><td><strong>30 let (standard)</strong></td><td style="color:#f97316"><strong>25 000 Kč</strong></td><td>9 000 000</td><td>3 950 000</td><td><strong>68 000 Kč</strong></td><td><strong>68 000 Kč</strong></td></tr>
-            <tr><td>25 let</td><td>27 600 Kč</td><td>8 250 000</td><td>3 200 000</td><td>70 600 Kč</td><td>70 600 Kč</td></tr>
-            <tr><td>20 let</td><td>31 400 Kč</td><td>7 540 000</td><td>2 490 000</td><td>74 400 Kč</td><td>74 400 Kč</td></tr>
-            <tr><td>15 let</td><td>38 200 Kč</td><td>6 870 000</td><td>1 820 000</td><td>81 200 Kč</td><td>81 200 Kč</td></tr>
-            <tr><td>10 let</td><td>51 900 Kč</td><td>6 230 000</td><td>1 180 000</td><td>94 900 Kč</td><td>94 900 Kč</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="note">
-        <strong>30 let vs 15 let:</strong> Splátka +13 200 Kč/měs, ale ušetříš 2,13 mil na přeplatku. Pokud čekáš příjem 150k+, 15-letka dává smysl — splatíš do 2041 a přeplatíš míň.
-      </div>
-    </div>
+    <div class="note"><strong>30 vs 15 let:</strong> +13 200 Kč/měs, ale ušetříš 2,13 mil na přeplatku. Při příjmu 150k+ dává 15-letka smysl.</div>
+  </div>
 
   </div>
 </div>
