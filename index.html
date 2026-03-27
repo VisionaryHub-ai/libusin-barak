@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analýza nemovitostí — Libušín vs Družec</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.9.2/proj4.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#ffffff;color:#1a1a1a;line-height:1.6}
+.nav{position:sticky;top:0;z-index:9999;background:#fff;border-bottom:2px solid #f3f4f6;padding:0;display:flex;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.nav-btn{padding:14px 32px;font-size:14px;font-weight:700;cursor:pointer;border:none;background:transparent;color:#9ca3af;transition:all .2s;border-bottom:3px solid transparent;-webkit-tap-highlight-color:rgba(249,115,22,.2);touch-action:manipulation}
+.nav-btn:hover{color:#f97316;background:#fff7ed}
+.nav-btn.active-lib{color:#f97316;border-bottom-color:#f97316;background:#fff7ed}
+.nav-btn.active-dru{color:#16a34a;border-bottom-color:#16a34a;background:#f0fdf4}
+.nav-btn.active-vs{color:#1a1a1a;border-bottom-color:#1a1a1a;background:#f9fafb}
+.nav-btn.active-fin{color:#f97316;border-bottom-color:#f97316;background:#fff7ed}
+.panel{display:none}.panel.active{display:block}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+.hero{padding:32px 0;text-align:center;border-bottom:1px solid #e5e7eb}
+.hero h1{font-size:28px;font-weight:800;color:#1a1a1a;margin-bottom:6px}
+.hero .sub{color:#6b7280;font-size:13px}
+.hero .price{display:inline-block;font-size:26px;font-weight:800;padding:10px 28px;border-radius:10px;margin-top:12px}
+.section{padding:28px 0;border-bottom:1px solid #e5e7eb}
+.section-title{font-size:18px;font-weight:700;color:#1a1a1a;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.section-title .ico{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800}
+.card{background:#f9fafb;border:1px solid #e5e7eb;border-radius:12px;padding:18px;margin-bottom:12px}
+.card-title{font-size:12px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.dr{display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-bottom:1px solid #e5e7eb;font-size:13px}
+.dr:last-child{border-bottom:none}
+.dk{color:#6b7280;flex:0 0 48%}.dv{color:#1a1a1a;font-weight:600;text-align:right}
+.g{color:#16a34a}.r{color:#dc2626}.y{color:#f97316}.b{color:#f97316}
+.tag{display:inline-block;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:600}
+.tg{background:#dcfce7;color:#16a34a}.tr{background:#fef2f2;color:#dc2626}.ty{background:#fff7ed;color:#f97316}.tb{background:#fff7ed;color:#f97316}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+@media(max-width:900px){.grid-2,.grid-3{grid-template-columns:1fr}}
+@media(max-width:600px){
+.nav{flex-wrap:nowrap;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch;justify-content:flex-start}
+.nav-btn{padding:12px 16px;font-size:12px;flex:0 0 auto;text-align:center;white-space:nowrap;min-height:44px}
+.container{padding:0 12px}
+.hero h1{font-size:20px}
+.hero .price{font-size:20px;padding:8px 16px}
+.hero .sub{font-size:11px}
+.section-title{font-size:15px}
+.card{padding:12px}
+.dr{flex-direction:column;gap:2px;align-items:flex-start}
+.dk{flex:none}.dv{text-align:left}
+.sc .n{font-size:18px}
+.comp>div{flex-direction:column!important;gap:6px}
+.comp>div>div:last-child{text-align:left!important}
+table.vt{font-size:11px}
+.vt th,.vt td{padding:5px 6px}
+.grid-3{grid-template-columns:1fr 1fr!important}
+#map-lib,#map-dru{height:200px}
+.print-btn{bottom:8px;right:8px;padding:8px 12px;font-size:11px}
+}
+@media(max-width:380px){
+.nav-btn{padding:8px 8px;font-size:11px}
+.hero h1{font-size:17px}
+.hero .price{font-size:17px;padding:6px 12px}
+.grid-3{grid-template-columns:1fr!important}
+}
+.note{border-left:3px solid #f97316;padding:12px 16px;border-radius:0 8px 8px 0;margin:10px 0;font-size:13px;background:#fff7ed}
+.note.warn{border-left-color:#f97316;background:#fff7ed}
+.note.err{border-left-color:#dc2626;background:#fef2f2}
+.note.ok{border-left-color:#16a34a;background:#f0fdf4}
+.sc{background:#f9fafb;border:1px solid #e5e7eb;border-radius:12px;padding:14px;text-align:center}
+.sc .n{font-size:24px;font-weight:800;color:#1a1a1a}.sc .l{font-size:11px;color:#6b7280;margin-top:3px}
+.sc .ch{font-size:12px;font-weight:600;margin-top:3px}.up{color:#16a34a}.dn{color:#dc2626}
+.rm{display:flex;gap:4px;margin:4px 0}.rd{width:12px;height:12px;border-radius:50%;background:#e5e7eb}
+.rd.ag{background:#16a34a}.rd.ay{background:#f97316}.rd.ar{background:#dc2626}
+table.vt{width:100%;border-collapse:collapse;min-width:400px}
+.card{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.vt th,.vt td{padding:8px 12px;text-align:left;border-bottom:1px solid #e5e7eb;font-size:13px}
+.vt th{color:#6b7280;font-weight:600;text-transform:uppercase;font-size:11px;letter-spacing:.5px}
+.vt td{color:#1a1a1a}.vt tr:hover{background:#f9fafb}
+.comp{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:12px;margin-bottom:8px}
+.checklist{list-style:none;padding:0}.checklist li{padding:6px 0;font-size:13px;display:flex;align-items:flex-start;gap:8px}
+.checklist li::before{content:'';display:inline-block;width:16px;height:16px;min-width:16px;border:2px solid #d1d5db;border-radius:4px;margin-top:2px}
+#map-lib,#map-dru{height:300px;border-radius:12px;border:1px solid #e5e7eb;margin-top:12px}
+.footer{text-align:center;padding:28px 0;color:#9ca3af;font-size:11px}
+.print-btn{position:fixed;bottom:16px;right:16px;background:#f97316;color:white;border:none;padding:10px 18px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(249,115,22,.3);z-index:100}
+.hl{background:#fff7ed}.hlg{background:#f0fdf4}.hlr{background:#fef2f2}
+@media print{.print-btn,.nav{display:none}.panel{display:block!important;page-break-before:always}}
+</style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">Tisk / PDF</button>
+
+<nav class="nav">
+  <button class="nav-btn active-lib" onclick="go('lib')" id="btn-lib">Libušín (prodej)</button>
+  <button class="nav-btn" onclick="go('dru')" id="btn-dru">Družec (koupě)</button>
+  <button class="nav-btn" onclick="go('vs')" id="btn-vs">Srovnání</button>
+  <button class="nav-btn" onclick="go('fin')" id="btn-fin">Finanční model</button>
+</nav>
+
+<!-- ===================== LIBUŠÍN ===================== -->
+<div class="panel active" id="p-lib">
+<div class="hero" style="background:#fff7ed;border-bottom:2px solid #f97316">
+  <div class="container">
+    <h1 style="color:#f97316">V Zahrádkách 742, Libušín</h1>
+    <div class="sub">273 06 Libušín, okres Kladno &bull; LV 439 &bull; KÚ Libušín [683582] &bull; SO 14346770</div>
+    <div class="price" style="background:#f97316;color:#fff">Valuo odhad: 14 311 040 Kč</div>
+    <div class="sub" style="margin-top:6px">Inzertní: 13 500 000 Kč &bull; Realizační: 11–13 mil Kč</div>
+    <div class="sub" style="margin-top:4px;font-size:11px">Valuo: 14,3 mil (44 722 Kč/m²) &bull; Rozmezí: 11,6–16,4 mil &bull; Započitatelná: 320 m² &bull; Provize RK: 0 Kč</div>
+  </div>
+</div>
+<div class="container">
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fff7ed;color:#f97316">ID</div> Identifikace</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Adresní místo</div>
+        <div class="dr"><span class="dk">Adresa</span><span class="dv">V Zahrádkách 742, 273 06 Libušín</span></div>
+        <div class="dr"><span class="dk">Kód AM</span><span class="dv b">14446898</span></div>
+        <div class="dr"><span class="dk">Kód SO</span><span class="dv b">14346770</span></div>
+        <div class="dr"><span class="dk">Obec</span><span class="dv">Libušín [532576]</span></div>
+        <div class="dr"><span class="dk">KÚ</span><span class="dv">Libušín [683582]</span></div>
+        <div class="dr"><span class="dk">LV</span><span class="dv">439</span></div>
+        <div class="dr"><span class="dk">Vlastník</span><span class="dv">Liška Jakub Bc.</span></div>
+        <div class="dr"><span class="dk">GPS</span><span class="dv">50.1675°N, 14.0616°E</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Stavební objekt (RÚIAN)</div>
+        <div class="dr"><span class="dk">Typ</span><span class="dv">Budova s č.p.</span></div>
+        <div class="dr"><span class="dk">Způsob využití</span><span class="dv g">Rodinný dům</span></div>
+        <div class="dr"><span class="dk">Dokončení</span><span class="dv">31. 12. 1980</span></div>
+        <div class="dr"><span class="dk">Podlaží</span><span class="dv">2 (+ sklep)</span></div>
+        <div class="dr"><span class="dk">Počet bytů</span><span class="dv">1</span></div>
+        <div class="dr"><span class="dk">Zastavěná plocha</span><span class="dv b">140 m²</span></div>
+        <div class="dr"><span class="dk">Obestavěný prostor</span><span class="dv">~1 280 m³ <span class="tag ty">VÝPOČET</span></span></div>
+        <div class="dr"><span class="dk">Podlahová (RÚIAN)</span><span class="dv y">Neuvedeno</span></div>
+        <div class="dr"><span class="dk b">Započitatelná (Valuo)</span><span class="dv b"><strong>320 m²</strong></span></div>
+        <div class="dr"><span class="dk">Podlahová (odhad)</span><span class="dv">~250 m² (nadzemí)</span></div>
+        <div class="dr"><span class="dk">Konstrukce</span><span class="dv">Cihlová</span></div>
+        <div class="dr"><span class="dk">Kanalizace</span><span class="dv g">Připojena</span></div>
+        <div class="dr"><span class="dk">Vodovod</span><span class="dv y">RÚIAN: nezjištěno <span class="tag tg">REÁLNĚ ANO</span></span></div>
+        <div class="dr"><span class="dk">Plyn</span><span class="dv y">RÚIAN: nezjištěno <span class="tag tg">REÁLNĚ ANO — Buderus</span></span></div>
+        <div class="dr"><span class="dk">Vytápění</span><span class="dv">Ústřední (kotel v budově)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fff7ed;color:#f97316">P</div> Parcely na LV 439</div>
+    <div class="card">
+      <table class="vt">
+        <thead><tr><th>Parcela</th><th>Výměra</th><th>Druh</th><th>Stavba</th></tr></thead>
+        <tbody>
+          <tr><td><strong>st. 905</strong></td><td>173 m²</td><td>Zastavěná plocha</td><td>RD č.p. 742</td></tr>
+          <tr><td><strong>st. 906</strong></td><td>43 m²</td><td>Zastavěná plocha</td><td>Garáž</td></tr>
+          <tr style="background:#f0fdf4"><td><strong>907</strong></td><td style="color:#16a34a;font-weight:700">668 m²</td><td>Zahrada</td><td>—</td></tr>
+          <tr style="border-top:2px solid #d1d5db"><td><strong>Celkem</strong></td><td style="color:#f97316;font-weight:700">884 m²</td><td colspan="2" style="color:#6b7280">RÚIAN: 884 m² &bull; Valuo započitatelná: 320 m²</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note ok"><strong>Pozemek 884 m² dle RÚIAN</strong> — zahrada 668 m², zastavěná 173 m² (RD) + 43 m² (garáž).</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fff7ed;color:#f97316">M</div> Mapa</div>
+    <div id="map-lib"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fff7ed;color:#f97316">T</div> Technické vybavení</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Modernizované prvky</div>
+        <div class="dr"><span class="dk">Kotel</span><span class="dv g">Buderus GB192i (kondenzační)</span></div>
+        <div class="dr"><span class="dk">Zásobník TUV</span><span class="dv g">Buderus Logalux ~120-160 l</span></div>
+        <div class="dr"><span class="dk">Změkčovač</span><span class="dv g">Trinnity Exclusive</span></div>
+        <div class="dr"><span class="dk">Filtr</span><span class="dv g">Fernox TF1</span></div>
+        <div class="dr"><span class="dk">Okna</span><span class="dv g">Plastová (celý dům)</span></div>
+        <div class="dr"><span class="dk">Podlahy 1.NP</span><span class="dv">Laminát 2005 (kuchyně, jídelna, chodba)</span></div>
+        <div class="dr"><span class="dk">Podlahy 2.NP</span><span class="dv">Laminát 2005</span></div>
+        <div class="dr"><span class="dk">Střecha</span><span class="dv g">Sedlová, nová 2005</span></div>
+        <div class="dr"><span class="dk">Krb</span><span class="dv">Cihlový zabudovaný</span></div>
+        <div class="dr"><span class="dk y">Elektroinstalace</span><span class="dv y">Původní 1980</span></div>
+        <div class="dr"><span class="dk y">Rozvody topení</span><span class="dv y">Původní 1980</span></div>
+        <div class="dr"><span class="dk y">Radiátory</span><span class="dv y">Deskové (původní 1980)</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Dispozice</div>
+        <div class="dr"><span class="dk">Dispozice</span><span class="dv">5+1 / 6+1</span></div>
+        <div class="dr"><span class="dk">Sklep</span><span class="dv">Plně podsklepený</span></div>
+        <div class="dr"><span class="dk">Garáže</span><span class="dv b">3 stání</span></div>
+        <div class="dr"><span class="dk">Fasáda</span><span class="dv y">Břízolit (1980)</span></div>
+        <div class="dr"><span class="dk">Zateplení</span><span class="dv r">Ne</span></div>
+        <div class="dr"><span class="dk">Energie/měs</span><span class="dv">~10 000 Kč</span></div>
+        <div class="dr"><span class="dk">Stav (Valuo)</span><span class="dv y">Průměrný</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fff7ed;color:#f97316">$</div> Tržní analýza</div>
+    <div class="grid-3" style="margin-bottom:16px">
+      <div class="sc"><div class="n">55 557 Kč</div><div class="l">Průměr Kč/m² RD okres Kladno</div></div>
+      <div class="sc"><div class="n">+21,7%</div><div class="l">Růst ceny 1 rok</div><div class="ch up">+1 743 000 Kč</div></div>
+      <div class="sc"><div class="n">+46%</div><div class="l">Růst zájemců 1 rok</div><div class="ch up">43 dní prům. inzerce</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Srovnávané nemovitosti (Valuo)</div>
+      <div class="comp"><div style="display:flex;justify-content:space-between"><div><strong>314, Máchova</strong><br><span style="font-size:12px;color:#6b7280">164 m² &bull; pozemek 296 m² &bull; průměrný &bull; cihlová &bull; 3 podlaží</span></div><div style="text-align:right"><div style="font-size:16px;font-weight:800;color:#f97316">5 950 000 Kč</div><div style="font-size:11px;color:#94a3b8">36 280 Kč/m² &bull; 42 dní inzerce</div></div></div></div>
+      <div class="comp"><div style="display:flex;justify-content:space-between"><div><strong>705, Důl Jan</strong><br><span style="font-size:12px;color:#6b7280">130 m² &bull; pozemek 1 137 m² &bull; průměrný &bull; smíšená &bull; 1 podlaží</span></div><div style="text-align:right"><div style="font-size:16px;font-weight:800;color:#f97316">6 664 000 Kč</div><div style="font-size:11px;color:#94a3b8">51 261 Kč/m² &bull; uprav. −2% <span class="r">z 6,8 mil (zlevněno z 7,7 mil)</span></div></div></div></div>
+      <div class="comp"><div style="display:flex;justify-content:space-between"><div><strong>833, Důl Jan</strong><br><span style="font-size:12px;color:#6b7280">135 m² &bull; pozemek 373 m² &bull; po rekonstrukci &bull; cihlová &bull; 1 podlaží</span></div><div style="text-align:right"><div style="font-size:16px;font-weight:800;color:#f97316">6 384 000 Kč</div><div style="font-size:11px;color:#94a3b8">47 289 Kč/m² &bull; uprav. −16% <span class="r">prodáno (ČÚZK) 7,6 mil z 8,29 mil</span></div></div></div></div>
+      <div class="comp"><div style="display:flex;justify-content:space-between"><div><strong>491, Sokola Tůmy</strong><br><span style="font-size:12px;color:#6b7280">146 m² &bull; pozemek 955 m² &bull; před rekonstrukcí &bull; cihlová &bull; 3 podlaží</span></div><div style="text-align:right"><div style="font-size:16px;font-weight:800;color:#f97316">6 144 600 Kč</div><div style="font-size:11px;color:#94a3b8">42 085 Kč/m² &bull; uprav. +14% <span class="r">z 5,39 mil (zlevněno z 6,6 mil)</span></div></div></div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fef2f2;color:#dc2626">!</div> Rizika</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Poddolování</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span class="tag tr">VYSOKÉ</span><div class="rm"><div class="rd ar"></div><div class="rd ar"></div><div class="rd ar"></div><div class="rd ar"></div><div class="rd ar"></div></div></div>
+        <div class="dr"><span class="dk">Důl Jan</span><span class="dv">1887–1925</span></div>
+        <div class="dr"><span class="dk">Důl Max</span><span class="dv">1890–1925</span></div>
+        <div class="dr"><span class="dk">Důl Schöller</span><span class="dv">1902–2002</span></div>
+        <div class="note err" style="margin-top:8px"><strong>1982:</strong> Pokles terénu. <strong>Od 2003:</strong> Důlní vody stoupají 10-12 m/rok.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Ostatní</div>
+        <div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:13px;font-weight:600">Povodně</span><span class="tag tg">NÍZKÉ</span></div><div class="rm"><div class="rd ag"></div><div class="rd"></div><div class="rd"></div></div></div>
+        <div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:13px;font-weight:600">Radon</span><span class="tag ty">NÍZKÝ–STŘEDNÍ</span></div><div class="rm"><div class="rd ay"></div><div class="rd ay"></div><div class="rd"></div></div></div>
+        <div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:13px;font-weight:600">Ekologická zátěž</span><span class="tag ty">NÍZKÁ–STŘEDNÍ</span></div><div class="rm"><div class="rd ay"></div><div class="rd ay"></div><div class="rd"></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fff7ed;color:#f97316">C</div> Cenový odhad</div>
+
+    <!-- ZDROJE -->
+    <div class="card">
+      <div class="card-title">Valuo.cz — tržní odhad</div>
+      <table class="vt">
+        <thead><tr><th>Parametr</th><th>Min</th><th>Střed</th><th>Max</th><th>Kč/m²</th></tr></thead>
+        <tbody>
+          <tr style="background:#fff7ed"><td style="color:#f97316;font-weight:700">Odhad</td><td style="color:#f97316">11 599 360</td><td style="color:#f97316;font-weight:800;font-size:15px">14 311 040</td><td style="color:#f97316">16 398 720</td><td style="color:#f97316;font-weight:700">44 722</td></tr>
+          <tr><td>Započitatelná plocha</td><td colspan="3">320 m² &bull; Shoda 63% &bull; Max vzdálenost 840 m</td><td>Max stáří 300 dní</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- KOREKCE -->
+    <div class="card">
+      <div class="card-title">Korekční faktory</div>
+      <div class="dr"><span class="dk g">+ Pozemek 884 m²</span><span class="dv g">+200–400k</span></div>
+      <div class="dr"><span class="dk g">+ Nový kotel Buderus GB192i + příslušenství</span><span class="dv g">+150–250k</span></div>
+      <div class="dr"><span class="dk g">+ 3 garážová stání + 140 m² plný sklep</span><span class="dv g">+300–500k</span></div>
+      <div class="dr"><span class="dk g">+ Rostoucí trh +21,7% za rok</span><span class="dv g">Momentum</span></div>
+      <div class="dr"><span class="dk g">+ Balíček PalanStav (rekon. za náklady)</span><span class="dv g">+300–500k</span></div>
+      <div class="dr"><span class="dk g">+ Four Locations (0 provize, prof. prezentace)</span><span class="dv g">+ušetří 300–500k na RK</span></div>
+      <div class="dr"><span class="dk r">− Poddolované území</span><span class="dv r">−500k–1M</span></div>
+      <div class="dr"><span class="dk r">− Nezateplená fasáda (břízolit 1980)</span><span class="dv r">−200–400k</span></div>
+    </div>
+
+    <!-- VARIANTY PRODEJE -->
+    <div class="card">
+      <div class="card-title">Varianty prodejní ceny</div>
+      <table class="vt">
+        <thead><tr><th></th><th>Konzervativní</th><th style="color:#f97316">Realistický</th><th>Optimistický</th></tr></thead>
+        <tbody>
+          <tr><td>Referenční zdroj</td><td>Poddolování odradí</td><td style="color:#f97316"><strong>Dobrý kupec</strong></td><td>Investor, ignoruje poddol.</td></tr>
+          <tr><td><strong>Inzertní cena</strong></td><td>12 000 000</td><td style="color:#f97316;font-weight:800"><strong>13 500 000</strong></td><td>14 500 000</td></tr>
+          <tr><td><strong>Realizační cena</strong></td><td>10 500 000</td><td style="color:#f97316;font-weight:800"><strong>12 000 000 – 13 000 000</strong></td><td>13 500 000 – 14 000 000</td></tr>
+          <tr><td>Provize RK</td><td class="g">0</td><td class="g">0</td><td class="g">0</td></tr>
+          <tr><td><strong>Čistý výnos</strong></td><td>~10 450 000</td><td style="color:#f97316;font-weight:800"><strong>~11 950 000 – 12 950 000</strong></td><td>~13 450 000 – 13 950 000</td></tr>
+          <tr><td>Vysvětlení</td><td>Poddolování + elektrika 1980 + břízolit</td><td>Kotel Buderus + střecha 2005 pomůže</td><td>Investor, velký sklep + garáže</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- HLAVNÍ CENOVÝ BOX -->
+    <div style="background:#fff7ed;border:2px solid #f97316;border-radius:12px;padding:24px;text-align:center;margin-top:14px">
+      <div style="font-size:12px;color:#f97316;font-weight:700;text-transform:uppercase;letter-spacing:1px">Valuo tržní odhad</div>
+      <div style="font-size:40px;font-weight:800;color:#f97316;margin:8px 0">14 311 040 Kč</div>
+      <div style="font-size:14px;color:#6b7280">Valuo: 44 722 Kč/m² &bull; Ale: poddolování + elektrika 1980 + břízolit</div>
+      <div style="display:flex;gap:12px;justify-content:center;margin-top:16px;flex-wrap:wrap">
+        <div style="background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:10px 16px;text-align:center;flex:1;min-width:140px">
+          <div style="font-size:11px;color:#6b7280">Konzervativní</div>
+          <div style="font-size:18px;font-weight:800;color:#1a1a1a">10 500 000 Kč</div>
+        </div>
+        <div style="background:#f97316;border-radius:8px;padding:10px 16px;text-align:center;flex:1;min-width:140px">
+          <div style="font-size:11px;color:#fff;opacity:.8">Realistický</div>
+          <div style="font-size:18px;font-weight:800;color:#fff">12 000 000 – 13 000 000 Kč</div>
+        </div>
+        <div style="background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:10px 16px;text-align:center;flex:1;min-width:140px">
+          <div style="font-size:11px;color:#6b7280">Optimistický</div>
+          <div style="font-size:18px;font-weight:800;color:#1a1a1a">13 500 000 – 14 000 000 Kč</div>
+        </div>
+      </div>
+      <div style="font-size:11px;color:#6b7280;margin-top:12px">S Four Locations + PalanStav balíčkem &bull; Provize: 0 Kč</div>
+    </div>
+
+    <div class="note" style="margin-top:14px">
+      <strong>Valuo metodika:</strong> Započitatelná plocha 320 m² + sklep 140 m² + garáž 43 m² + pozemek 884 m². Srovnává s 4 reálně prodanými/inzerovanými nemovitostmi v Libušíně (průměrná shoda 63%, max vzdálenost 840 m, max stáří dat 300 dní).
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#f0fdf4;color:#16a34a">S</div> Prodejní strategie</div>
+    <div class="grid-2">
+      <div class="card"><div class="card-title">Four Locations</div>
+        <div class="dr"><span class="dk">Typ</span><span class="dv">Development, prodej, investice, správa</span></div>
+        <div class="dr"><span class="dk">Provize</span><span class="dv g">0 Kč</span></div>
+        <div class="dr"><span class="dk">Prezentace</span><span class="dv">Fotky, dron, staging, vizualizace</span></div>
+        <div class="dr"><span class="dk">Distribuce</span><span class="dv b">Neveřejná + síť investorů</span></div>
+      </div>
+      <div class="card"><div class="card-title">PalanStav</div>
+        <div class="dr"><span class="dk">Balíček</span><span class="dv g">Rekonstrukce za náklady</span></div>
+        <div class="dr"><span class="dk">Efekt na cenu</span><span class="dv g">+300–500k Kč</span></div>
+        <div class="dr"><span class="dk">Koupě Družec</span><span class="dv">Tech. prohlídka + vyjednávání</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#f3f4f6;color:#6b7280">?</div> Checklist</div>
+    <div class="grid-2">
+      <div class="card"><div class="card-title">Kritické</div><ul class="checklist">
+        <li>Výpis z LV 439 — břemena, zástavy</li>
+        <li>Územní plán — zónování parcely 907</li>
+        <li>Vyjádření ČGS k poddolování</li>
+        <li>PENB (ze zákona nutný)</li>
+        <li>Opravit RÚIAN: vodovod + plyn</li>
+      </ul></div>
+      <div class="card"><div class="card-title">Doporučené</div><ul class="checklist">
+        <li>BPEJ kód parcely 907</li>
+        <li>Geotechnický posudek</li>
+        <li>Měření radonu (3–5k Kč)</li>
+        <li>Profesionální fotky + video</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ===================== DRUŽEC ===================== -->
+<div class="panel" id="p-dru">
+<div class="hero" style="background:#f0fdf4;border-bottom:2px solid #16a34a">
+  <div class="container">
+    <h1 style="color:#16a34a">V Zátiší 157, Družec</h1>
+    <div class="sub">273 62 Družec, okres Kladno &bull; KÚ Družec [632716] &bull; SO 1280651 &bull; Parcela st. 167</div>
+    <div class="price" style="background:#1a1a1a;color:#fff">Nabídka: 16 990 000 Kč</div>
+    <div class="sub" style="margin-top:6px">Reálná hodnota: 14–15 mil &bull; Cíl vyjednávání: 14,5 mil</div>
+  </div>
+</div>
+<div class="container">
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#f0fdf4;color:#16a34a">ID</div> Identifikace</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Adresní místo</div>
+        <div class="dr"><span class="dk">Adresa</span><span class="dv">V Zátiší 157, 273 62 Družec</span></div>
+        <div class="dr"><span class="dk">Kód SO</span><span class="dv b">1280651</span></div>
+        <div class="dr"><span class="dk">Parcela</span><span class="dv">st. 167, KÚ Družec</span></div>
+        <div class="dr"><span class="dk">KÚ</span><span class="dv">Družec [632716]</span></div>
+        <div class="dr"><span class="dk">GPS</span><span class="dv">50.1028°N, 14.0541°E</span></div>
+        <div class="dr"><span class="dk">LV</span><span class="dv b">84</span></div>
+        <div class="dr"><span class="dk">Parcela st. 167</span><span class="dv">577 m² — zastavěná + nádvoří</span></div>
+        <div class="dr"><span class="dk">Parcela 860/1</span><span class="dv">999 m² — zahrada (ZPF)</span></div>
+        <div class="dr"><span class="dk">Parcela 860/9</span><span class="dv">103 m² — společný (most přes potok)</span></div>
+        <div class="dr"><span class="dk b">Pozemek (Sreality)</span><span class="dv b">1 720 m²</span></div>
+        <div class="dr"><span class="dk">Pozemek (text inzerátu)</span><span class="dv">1 775 m²</span></div>
+        <div class="dr"><span class="dk">Sousední pozemek (860/11)</span><span class="dv">~1 600 m² — dokoupitelný, NENÍ v ceně</span></div>
+        <div class="dr"><span class="dk">Zóna ÚP</span><span class="dv">BV — bydlení venkovské</span></div>
+        <div class="dr"><span class="dk">Sreality</span><span class="dv"><a href="https://www.sreality.cz/detail/prodej/dum/rodinny/druzec-druzec-v-zatisi/2177704780" style="color:#60a5fa" target="_blank">Odkaz na inzerát</a></span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Stavba — projekt + RÚIAN</div>
+        <div class="dr"><span class="dk">SO (RÚIAN)</span><span class="dv">1280651 — rodinný dům</span></div>
+        <div class="dr"><span class="dk b">Rok výstavby</span><span class="dv b">1947</span></div>
+        <div class="dr"><span class="dk">Rekonstrukce</span><span class="dv">2005</span></div>
+        <div class="dr"><span class="dk">Konstrukce</span><span class="dv">Smíšená</span></div>
+        <div class="dr"><span class="dk">Zastavěná (Sreality)</span><span class="dv">577 m²</span></div>
+        <div class="dr"><span class="dk b">Užitná (Sreality)</span><span class="dv b">289 m² / text: 293 m²</span></div>
+        <div class="dr"><span class="dk">Celková plocha</span><span class="dv">263 m²</span></div>
+        <div class="dr"><span class="dk">Podlaží</span><span class="dv">3 (přízemí + patro + podkroví) + sklep</span></div>
+        <div class="dr"><span class="dk">Dispozice</span><span class="dv">6+1</span></div>
+        <div class="dr"><span class="dk">Počet koupelen</span><span class="dv">3 (1 dole + 2 nahoře)</span></div>
+        <div class="dr"><span class="dk">Kanalizace</span><span class="dv g">Přípoj</span></div>
+        <div class="dr"><span class="dk">Vodovod</span><span class="dv g">Veřejný + studna</span></div>
+        <div class="dr"><span class="dk">Plyn</span><span class="dv g">Připojen</span></div>
+        <div class="dr"><span class="dk y">Vytápění (Sreality)</span><span class="dv y">Elektrické přímotopy</span></div>
+        <div class="dr"><span class="dk y">Energetický štítek</span><span class="dv y">G</span></div>
+        <div class="dr"><span class="dk">Ochrana</span><span class="dv g">Žádné</span></div>
+        <div class="dr"><span class="dk">Regulativ ÚP</span><span class="dv">Max 300 m² zast., 2 NP + podkroví</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#f0fdf4;color:#16a34a">S</div> Sreality — inzerovaná data</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Základní parametry</div>
+        <div class="dr"><span class="dk">Cena</span><span class="dv" style="font-size:16px;color:#dc2626;font-weight:800">16 990 000 Kč</span></div>
+        <div class="dr"><span class="dk">Dispozice</span><span class="dv">6+1</span></div>
+        <div class="dr"><span class="dk">Užitná plocha</span><span class="dv">289 m² (text: 293 m²)</span></div>
+        <div class="dr"><span class="dk">Celková plocha</span><span class="dv">263 m²</span></div>
+        <div class="dr"><span class="dk">Zastavěná plocha</span><span class="dv">577 m²</span></div>
+        <div class="dr"><span class="dk">Pozemek</span><span class="dv b">1 720 m² (text: 1 775 m²)</span></div>
+        <div class="dr"><span class="dk">Zahrada</span><span class="dv">999 m²</span></div>
+        <div class="dr"><span class="dk">Podlaží</span><span class="dv">3 podlaží + sklep</span></div>
+        <div class="dr"><span class="dk">Rok výstavby</span><span class="dv b">1947</span></div>
+        <div class="dr"><span class="dk">Rekonstrukce</span><span class="dv">2005</span></div>
+        <div class="dr"><span class="dk">Konstrukce</span><span class="dv">Smíšená</span></div>
+        <div class="dr"><span class="dk">Stav</span><span class="dv g">Velmi dobrý</span></div>
+        <div class="dr"><span class="dk">Nastěhování</span><span class="dv g">Ihned</span></div>
+        <div class="dr"><span class="dk">Sousední pozemek</span><span class="dv">~1 600 m² — dokoupitelný (NENÍ v ceně)</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Technické</div>
+        <div class="dr" style="background:#fef2f2"><span class="dk r">Vytápění</span><span class="dv r"><strong>Elektrické přímotopy</strong></span></div>
+        <div class="dr" style="background:#fef2f2"><span class="dk r">Ohřev vody</span><span class="dv r">Elektrický kotel</span></div>
+        <div class="dr" style="background:#fef2f2"><span class="dk r">Energetický štítek</span><span class="dv r"><strong>G (nejhorší!)</strong></span></div>
+        <div class="dr"><span class="dk">Vodovod</span><span class="dv">Veřejný + studna</span></div>
+        <div class="dr"><span class="dk">Kanalizace</span><span class="dv g">Veřejná</span></div>
+        <div class="dr"><span class="dk">Plyn</span><span class="dv g">Připojen</span></div>
+        <div class="dr"><span class="dk">Elektřina</span><span class="dv">230V</span></div>
+        <div class="dr"><span class="dk">Internet</span><span class="dv">VDSL</span></div>
+        <div class="dr"><span class="dk">Komunikace</span><span class="dv">Asfalt</span></div>
+        <div class="dr"><span class="dk">Garáž</span><span class="dv">2 + 6 parking (8 celkem)</span></div>
+        <div class="dr"><span class="dk">Vybavení</span><span class="dv">Částečně zařízeno</span></div>
+        <div class="dr"><span class="dk">Kuchyně</span><span class="dv">Trouba, sklokeramika, digestoř, myčka</span></div>
+        <div class="dr"><span class="dk">Koupelny</span><span class="dv">3× (1 dole + 2 nahoře) — vana, sprcha, 2 umyvadla</span></div>
+        <div class="dr"><span class="dk">Zimní zahrada</span><span class="dv g">Ano — vstup na terasu</span></div>
+        <div class="dr"><span class="dk">Potok</span><span class="dv">Regulovaný, protéká zahradou</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#f0fdf4;color:#16a34a">M</div> Mapa</div>
+    <div id="map-dru"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fff7ed;color:#f97316">!</div> Zjištění a upozornění</div>
+
+    <div class="note ok">
+      <strong>RÚIAN: SO 1280651 — Rodinný dům</strong><br>
+      V Zátiší 157, parcela st. 167, KÚ Družec. Způsob využití: <strong>rodinný dům</strong>, 1 byt, zastavěná plocha 143 m². Žádné evidované ochrany. Kanalizace připojena. Bez problémů s kolaudací.
+    </div>
+    <div class="note warn">
+      <strong>POZOR #1: Energetický štítek G + přímotopy</strong><br>
+      G = nejhorší kategorie (≥286 kWh/m²/rok). Sreality uvádí "elektrické přímotopy" — nejdražší zdroj tepla.<br>
+      Plyn JE dostupný (Sreality: připojen). Proč se netopí plynem? Zjistit na prohlídce reálný stav a náklady.
+    </div>
+    <div class="note warn">
+      <strong>POZOR #2: Hodně dat v RÚIAN chybí</strong><br>
+      Obestavěný prostor, podlahová plocha, konstrukce, vytápění, vodovod, plyn — vše "neuvedeno/nezjištěno" v RÚIAN.<br>
+      RÚIAN říká 1 podlaží, Sreality říká 3 (vč. sklepa). Zastavěná 143 m² odpovídá, ale zbytek ověřit na prohlídce.
+    </div>
+    <div class="note">
+      <strong>Ověřit na prohlídce:</strong><br>
+      1) Reálný zdroj vytápění — přímotopy nebo kotel? Skutečné náklady na energie.<br>
+      2) Stav střechy, rozvodů, oken (20 let od rekon. 2005)<br>
+      3) Kompletní výpis z LV — břemena, zástavy<br>
+      4) Kolaudace přístavby (garáž, terasa, zimní zahrada z 2005) — je v katastru?<br>
+      5) Sousední pozemek ~1 600 m² — NENÍ v ceně 16,99 mil (dokoupitelný zvlášť)
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#f0fdf4;color:#16a34a">P</div> Parcely na LV 84</div>
+    <div class="card">
+      <table class="vt">
+        <thead><tr><th>Parcela</th><th>Výměra</th><th>Druh</th><th>Poznámka</th></tr></thead>
+        <tbody>
+          <tr><td><strong>st. 167</strong></td><td>577 m²</td><td>Zastavěná plocha + nádvoří</td><td>RD č.p. 157</td></tr>
+          <tr style="background:#f0fdf4"><td><strong>860/1</strong></td><td style="color:#16a34a;font-weight:700">999 m²</td><td>Zahrada (ZPF)</td><td>Zemědělský půdní fond</td></tr>
+          <tr><td><strong>860/9</strong></td><td>103 m²</td><td>Ostatní plocha</td><td>Společný (most přes potok) — ½</td></tr>
+          <tr style="border-top:2px solid #d1d5db"><td><strong>Pozemek č.1</strong></td><td style="color:#16a34a;font-weight:700">1 775 m²</td><td colspan="2">S domem (st.167 + 860/1 + ½ 860/9)</td></tr>
+          <tr><td><strong>860/11</strong></td><td>~1 600 m²</td><td>Sousední pozemek</td><td>Volitelný — za dalších ~9 mil?</td></tr>
+          <tr style="border-top:2px solid #d1d5db"><td><strong>Celkem oba</strong></td><td style="color:#16a34a;font-weight:700">3 375 m²</td><td colspan="2"></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note warn"><strong>Zahrada 860/1 je v ZPF</strong> — zjistit, jestli to omezuje budoucí využití (přístavba, bazén, garáž).</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#f0fdf4;color:#16a34a">T</div> Technické vybavení</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Dle Sreality</div>
+        <div class="dr"><span class="dk r">Vytápění</span><span class="dv r"><strong>Elektrické přímotopy</strong></span></div>
+        <div class="dr"><span class="dk r">Ohřev vody</span><span class="dv r">Elektrický bojler</span></div>
+        <div class="dr"><span class="dk r">Energetický štítek</span><span class="dv r"><strong>G (nejhorší)</strong></span></div>
+        <div class="dr"><span class="dk g">Plyn</span><span class="dv g">Připojen (proč se nepoužívá?)</span></div>
+        <div class="dr"><span class="dk">Elektřina</span><span class="dv">230V</span></div>
+        <div class="dr"><span class="dk g">Vodovod</span><span class="dv g">Veřejný + studna</span></div>
+        <div class="dr"><span class="dk g">Kanalizace</span><span class="dv g">Veřejná</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Ověřit na prohlídce</div>
+        <div class="dr"><span class="dk">Reálný zdroj tepla?</span><span class="dv y">Přímotopy nebo kotel?</span></div>
+        <div class="dr"><span class="dk">Rozvody pro ÚT?</span><span class="dv y">Radiátory, trubky?</span></div>
+        <div class="dr"><span class="dk">Stav střechy</span><span class="dv y">20 let od rekon. 2005</span></div>
+        <div class="dr"><span class="dk">Stav oken</span><span class="dv y">Plastová? Rok?</span></div>
+        <div class="dr"><span class="dk">Elektroinstalace</span><span class="dv y">Rok? Stav?</span></div>
+        <div class="dr"><span class="dk">Izolace/zateplení</span><span class="dv y">Fasáda? Podkroví?</span></div>
+        <div class="dr"><span class="dk">Náklady na energie</span><span class="dv r">Reálné vyúčtování!</span></div>
+        <div class="dr"><span class="dk">Studna</span><span class="dv y">Vydatnost, kvalita vody?</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fef2f2;color:#dc2626">!</div> Rizika</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Energetika</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span class="tag tr">VYSOKÉ</span><div class="rm"><div class="rd ar"></div><div class="rd ar"></div><div class="rd ar"></div><div class="rd ar"></div><div class="rd ar"></div></div></div>
+        <div class="dr"><span class="dk">Štítek</span><span class="dv r">G — nejhorší kategorie</span></div>
+        <div class="dr"><span class="dk">Vytápění</span><span class="dv r">Přímotopy (nejdražší)</span></div>
+        <div class="dr"><span class="dk">Dopad na provoz</span><span class="dv r">+5–10k Kč/měs oproti plynu</span></div>
+        <div class="note err" style="margin-top:8px"><strong>Největší vyjednávací argument.</strong> Přechod na plynový kotel = investice 150–300k Kč. Plyn JE připojený — proč se nepoužívá?</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Ostatní rizika</div>
+        <div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:13px;font-weight:600">Poddolování</span><span class="tag tg">NE</span></div><div class="rm"><div class="rd ag"></div><div class="rd"></div><div class="rd"></div></div></div>
+        <div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:13px;font-weight:600">Povodně</span><span class="tag tg">NÍZKÉ</span></div><div class="rm"><div class="rd ag"></div><div class="rd"></div><div class="rd"></div></div></div>
+        <div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:13px;font-weight:600">Kolaudace přístaveb</span><span class="tag ty">OVĚŘIT</span></div><div class="rm"><div class="rd ay"></div><div class="rd ay"></div><div class="rd"></div></div></div>
+        <div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:13px;font-weight:600">Stav po 20 letech</span><span class="tag ty">STŘEDNÍ</span></div><div class="rm"><div class="rd ay"></div><div class="rd ay"></div><div class="rd"></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#f3f4f6;color:#6b7280">?</div> Checklist prohlídky</div>
+    <div class="grid-2">
+      <div class="card"><div class="card-title">Kritické</div><ul class="checklist">
+        <li>Reálný zdroj vytápění — přímotopy nebo kotel?</li>
+        <li>Skutečné náklady na energie (vyúčtování)</li>
+        <li>Kompletní výpis z LV 84 — břemena, zástavy</li>
+        <li>Kolaudace přístaveb z 2005 (garáž, terasa, zimní zahrada)</li>
+        <li>Stav střechy, rozvodů, oken (20 let)</li>
+        <li>Sousední pozemek ~1 600 m² — cena a podmínky dokoupení?</li>
+      </ul></div>
+      <div class="card"><div class="card-title">Doporučené</div><ul class="checklist">
+        <li>Studna — vydatnost, kvalita vody</li>
+        <li>Stav elektroinstalace</li>
+        <li>Izolace podkroví a fasády</li>
+        <li>Stav kanalizačního napojení</li>
+        <li>ZPF status parcely 860/1 — omezení využití?</li>
+        <li>Technická dokumentace domu</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#f0fdf4;color:#16a34a">C</div> Reálná cena</div>
+    <div class="card">
+      <div class="dr"><span class="dk">Nabídková cena</span><span class="dv">16 990 000 Kč</span></div>
+      <div class="dr"><span class="dk r">− Energetický štítek G</span><span class="dv r">−500k–1M</span></div>
+      <div class="dr"><span class="dk r">− Přímotopy (pokud reálně)</span><span class="dv r">−300–500k</span></div>
+      <div class="dr"><span class="dk g">+ RÚIAN: rodinný dům, bez ochrany</span><span class="dv g">Čistý stav</span></div>
+      <div class="dr"><span class="dk y">− 20 let od rekon.</span><span class="dv y">−200–400k</span></div>
+      <div class="dr"><span class="dk g">+ Pozemek 1 720 m²</span><span class="dv g">+300–500k</span></div>
+      <div class="dr"><span class="dk g">+ 3 min od D6</span><span class="dv g">+200–300k</span></div>
+      <div class="dr"><span class="dk g">+ 3 koupelny + zimní zahrada</span><span class="dv g">+200–300k</span></div>
+      <div class="dr"><span class="dk r">− Rok výstavby 1947 (78 let)</span><span class="dv r">−200–400k</span></div>
+      <div style="background:#f0fdf4;border:2px solid #16a34a;border-radius:10px;padding:18px;text-align:center;margin-top:14px">
+        <div style="font-size:12px;color:#16a34a">ODHADOVANÁ REÁLNÁ HODNOTA</div>
+        <div style="font-size:32px;font-weight:800;color:#1a1a1a">14 000 000–15 000 000 Kč</div>
+        <div style="font-size:12px;color:#6b7280;margin-top:4px">Nabídka 16,99 mil předražena o ~12-18%. Cíl: 14,5 mil. Páka: energetika G + přímotopy + rok 1947.</div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ===================== SROVNÁNÍ ===================== -->
+<div class="panel" id="p-vs">
+<div class="hero" style="background:#f9fafb;border-bottom:2px solid #1a1a1a">
+  <div class="container">
+    <h1 style="color:#1a1a1a">Libušín vs Družec — srovnání</h1>
+    <div class="sub">Parametrické srovnání obou nemovitostí &bull; RÚIAN + Sreality + Valuo data</div>
+  </div>
+</div>
+<div class="container">
+
+  <div class="section">
+    <div class="section-title">Parametrické srovnání</div>
+    <div class="card" style="overflow-x:auto">
+      <table class="vt">
+        <thead><tr><th style="width:30%">Parametr</th><th style="color:#60a5fa;width:30%">Libušín (prodej)</th><th style="color:#16a34a;width:30%">Družec (koupě)</th><th style="width:10%">Pozn.</th></tr></thead>
+        <tbody>
+          <tr><td>Cena</td><td style="font-weight:700">Valuo: 14,3 mil &bull; Realizační: 11–13 mil</td><td class="r">Nabídka: 16 990 000 Kč</td><td class="y">Cíl: 14,5 mil</td></tr>
+          <tr><td>Dispozice</td><td>5+1/6+1</td><td>6+1</td><td></td></tr>
+          <tr><td>Užitná plocha</td><td class="g" style="font-weight:700">320 m² (Valuo započit.)</td><td>289 m² (Sre) / 293 m² (text)</td><td class="g">Libušín víc</td></tr>
+          <tr><td>Zastavěná plocha</td><td>216 m² (173 RD + 43 garáž)</td><td>577 m² (st.167 vč. nádvoří)</td><td>Družec víc</td></tr>
+          <tr><td>Pozemek</td><td>884 m²</td><td class="g" style="font-weight:700">1 720 m²</td><td>Družec 2×</td></tr>
+          <tr><td>Zahrada</td><td>668 m²</td><td>999 m²</td><td></td></tr>
+          <tr><td>Využití (RÚIAN)</td><td class="g">Rodinný dům</td><td class="g">Rodinný dům</td><td class="g">Oba OK</td></tr>
+          <tr><td>Podlaží</td><td>2 + sklep</td><td>3 (přízemí + patro + podkroví) + sklep</td><td></td></tr>
+          <tr><td>Koupelny</td><td>1</td><td class="g">3 (1 dole + 2 nahoře)</td><td class="g">Družec</td></tr>
+          <tr><td>LV</td><td>439</td><td>84</td><td></td></tr>
+          <tr><td>Rok výstavby</td><td>1980</td><td class="y">1947</td><td class="y">Družec 78 let!</td></tr>
+          <tr><td>Rekonstrukce</td><td>Malba + omítky 2020–23, střecha 2005</td><td>Kompletní 2005</td><td></td></tr>
+          <tr><td>Kotel</td><td class="g">Buderus GB192i (kondenzační)</td><td class="r">Přímotopy (?!)</td><td class="r">Zjistit!</td></tr>
+          <tr><td>Ohřev vody</td><td class="g">Buderus Logalux</td><td class="r">Elektrický kotel</td><td></td></tr>
+          <tr style="background:#fef2f2"><td><strong>Energetika</strong></td><td class="y">Nemá PENB</td><td class="r"><strong>Třída G (nejhorší)</strong></td><td class="r">Družec!</td></tr>
+          <tr><td>Elektroinstalace</td><td class="y">Původní 1980</td><td class="y">Neznámé (ověřit)</td><td class="y">Oba ověřit</td></tr>
+          <tr><td>Rozvody topení</td><td class="y">Původní 1980</td><td class="y">Neznámé (ověřit)</td><td></td></tr>
+          <tr><td>Okna</td><td class="g">Plastová (nová)</td><td class="y">Ověřit stav</td><td></td></tr>
+          <tr><td>Střecha</td><td class="g">Sedlová 2005 (nová)</td><td class="y">Rekon. 2005 (20 let)</td><td></td></tr>
+          <tr><td>Zateplení</td><td class="r">Ne (břízolit)</td><td class="y">Ověřit</td><td></td></tr>
+          <tr><td>Garáže</td><td>3 stání</td><td>2 + 6 parking (8 celkem)</td><td></td></tr>
+          <tr><td>Zimní zahrada</td><td class="r">Ne</td><td class="g">Ano + terasa</td><td class="g">Družec</td></tr>
+          <tr><td>Poddolování</td><td class="r">VYSOKÉ</td><td class="g">Ne</td><td class="g">Družec</td></tr>
+          <tr><td>D6 dálnice</td><td>~8 min</td><td class="g">~3 min</td><td></td></tr>
+          <tr><td>Energie/měs</td><td>~10 000 Kč</td><td class="r">~15-20 000? (G + přímotopy)</td><td class="r">Ověřit!</td></tr>
+          <tr><td>Potok na zahradě</td><td class="r">Ne</td><td class="g">Ano (regulovaný)</td><td></td></tr>
+          <tr><td>Studna</td><td class="r">Ne</td><td class="g">Ano (užitková)</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Kč/m² srovnání</div>
+    <div class="grid-3">
+      <div class="sc"><div class="n b">44 722</div><div class="l">Libušín Kč/m² (320 m² Valuo)</div></div>
+      <div class="sc"><div class="n">58 788</div><div class="l">Družec Kč/m² užitná (289 m²)</div></div>
+      <div class="sc"><div class="n g">9 878</div><div class="l">Družec Kč/m² pozemku (1 720 m²)</div></div>
+    </div>
+    <div class="grid-3" style="margin-top:10px">
+      <div class="sc"><div class="n b">16 188</div><div class="l">Libušín Kč/m² pozemku (884 m²)</div></div>
+      <div class="sc"><div class="n">198 m²</div><div class="l">Družec zastavěná RD (projekt)</div></div>
+      <div class="sc"><div class="n">140 m²</div><div class="l">Libušín zastavěná RD (RÚIAN)</div></div>
+    </div>
+    <div class="note warn" style="margin-top:10px"><strong>Družec je za Kč/m² užitné plochy (289 m²) výrazně dražší než Libušín (320 m²).</strong> 524 m² HPP Družce zahrnuje zdi — nelze srovnávat s užitnou plochou. Za Kč/m² pozemku je Družec levnější.</div>
+  </div>
+</div>
+</div>
+
+<!-- ===================== FINANČNÍ MODEL ===================== -->
+<div class="panel" id="p-fin">
+<div class="hero" style="background:#fff7ed;border-bottom:2px solid #f97316">
+  <div class="container">
+    <h1 style="color:#f97316">Finanční model</h1>
+    <div class="sub">Prodej Libušín (realita ~12,5 mil) → Koupě Družec (~14,5 mil) &bull; Four Locations + PalanStav &bull; Rezerva 3 mil</div>
+  </div>
+</div>
+<div class="container">
+
+  <div class="section">
+    <div class="section-title">Scénáře</div>
+    <div class="card" style="overflow-x:auto">
+      <table class="vt">
+        <thead><tr><th>Parametr</th><th>Pesimistický</th><th style="color:#16a34a">Realistický</th><th>Optimistický</th></tr></thead>
+        <tbody>
+          <tr><td>Prodej Libušín</td><td>11 000 000</td><td><strong>12 500 000</strong></td><td>13 500 000</td></tr>
+          <tr><td>Provize RK</td><td class="g">0</td><td class="g">0</td><td class="g">0</td></tr>
+          <tr><td>Čistý výnos (~50k náklady)</td><td>~10 950 000</td><td><strong>~12 450 000</strong></td><td>~13 450 000</td></tr>
+          <tr style="border-top:2px solid #d1d5db"><td>Koupě Družec (vyjednaná)</td><td>15 500 000</td><td><strong>14 500 000</strong></td><td>14 000 000</td></tr>
+          <tr><td>Záloha (výnos − 3 mil)</td><td>7 950 000</td><td><strong>9 450 000</strong></td><td>10 450 000</td></tr>
+          <tr><td>Hypotéka</td><td>~7 550 000</td><td style="color:#f97316;font-weight:800">~5 050 000</td><td>~3 550 000</td></tr>
+          <tr><td>LTV</td><td>49%</td><td class="g">35%</td><td class="g">25%</td></tr>
+          <tr style="background:#f0fdf4"><td><strong>Splátka/měs (4,3%/30 let)</strong></td><td><strong>~37 400</strong></td><td style="color:#16a34a;font-size:16px;font-weight:800">~25 000 Kč</td><td><strong>~17 600</strong></td></tr>
+          <tr><td>+ Provoz domu/měs</td><td>~20 000</td><td>~18 000</td><td>~16 000</td></tr>
+          <tr style="background:#f0fdf4"><td><strong>Bydlení celkem/měs</strong></td><td><strong>~57 400</strong></td><td style="color:#16a34a;font-weight:800">~43 000 Kč</td><td><strong>~33 600</strong></td></tr>
+          <tr><td>Cash rezerva</td><td>3 000 000</td><td>3 000 000</td><td>3 000 000</td></tr>
+          <tr><td>Doba prodeje</td><td>3–4 měs.</td><td class="g"><strong>6–8 týdnů</strong></td><td>4–6 týdnů</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note warn" style="margin-top:12px"><strong>Energetický štítek G + přímotopy:</strong> Provoz domu může být +1 500–2 500 Kč/měs navíc. Zjistit reálný stav!</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Runway analýza (3 mil, realistický scénář)</div>
+    <div class="grid-3">
+      <div class="sc"><div class="n">25 000 Kč</div><div class="l">Splátka (3 mil rezerva)</div><div class="ch">4,3% / 30 let</div></div>
+      <div class="sc"><div class="n">68k</div><div class="l">Break-even příjem</div><div class="ch">Splátka + provoz + život</div></div>
+      <div class="sc"><div class="n">44 měs.</div><div class="l">Runway bez příjmu</div><div class="ch">3,7 roku</div></div>
+    </div>
+
+    <!-- RUNWAY TABULKA -->
+    <div class="card" style="margin-top:14px">
+      <div class="card-title">Runway při různých příjmech (rezerva 3 mil, burn 68k/měs)</div>
+      <table class="vt">
+        <thead><tr><th>Příjem</th><th>Net burn</th><th>Runway z 3 mil</th><th>Poznámka</th></tr></thead>
+        <tbody>
+          <tr><td>0 Kč (apokalypsa)</td><td>68 000 Kč</td><td><strong>44 měs. (3,7 roku)</strong></td><td></td></tr>
+          <tr><td>40 000 Kč</td><td>28 000 Kč</td><td><strong>107 měs. (8,9 roku)</strong></td><td></td></tr>
+          <tr><td>60 000 Kč</td><td>8 000 Kč</td><td class="g"><strong>375 měs. (31 let)</strong></td><td></td></tr>
+          <tr style="background:#fff7ed"><td><strong>68 000 Kč</strong></td><td><strong>0 Kč</strong></td><td class="g"><strong>Break-even — 3 mil zůstávají</strong></td><td style="color:#f97316"><strong>Break-even</strong></td></tr>
+          <tr><td>100 000 Kč</td><td class="g">+32 000 Kč</td><td class="g">Nekonečno + 384k/rok úspory</td><td></td></tr>
+          <tr><td>150 000 Kč</td><td class="g">+82 000 Kč</td><td class="g">Nekonečno + 984k/rok</td><td></td></tr>
+          <tr><td>200 000 Kč</td><td class="g">+132 000 Kč</td><td class="g">Nekonečno + 1,58 mil/rok</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- SIMULACE PŘÍJMŮ -->
+    <div class="section">
+      <div class="section-title">Simulace příjmů</div>
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-title">Příjem 100 000 Kč/měs</div>
+          <div class="dr"><span class="dk">Příjem</span><span class="dv">100 000 Kč</span></div>
+          <div class="dr"><span class="dk">− Splátka</span><span class="dv">−25 000 Kč</span></div>
+          <div class="dr"><span class="dk">− Provoz domu</span><span class="dv">−18 000 Kč</span></div>
+          <div class="dr"><span class="dk">− Osobní</span><span class="dv">−25 000 Kč</span></div>
+          <div class="dr" style="background:#f0fdf4"><span class="dk g"><strong>Přebytek</strong></span><span class="dv g" style="font-size:15px"><strong>+32 000 Kč</strong></span></div>
+          <div class="dr"><span class="dk">Roční úspory</span><span class="dv">384k</span></div>
+          <div class="dr"><span class="dk">Splátka = % příjmu</span><span class="dv g">25%</span></div>
+          <div class="dr"><span class="dk">Splacení hypo</span><span class="dv">~13 let z přebytku</span></div>
+        </div>
+        <div class="card" style="border-color:#f97316">
+          <div class="card-title" style="color:#f97316">Příjem 150 000 Kč/měs</div>
+          <div class="dr"><span class="dk">Příjem</span><span class="dv">150 000 Kč</span></div>
+          <div class="dr"><span class="dk">− Vše (68k)</span><span class="dv">−68 000 Kč</span></div>
+          <div class="dr" style="background:#f0fdf4"><span class="dk g"><strong>Přebytek</strong></span><span class="dv g" style="font-size:15px"><strong>+82 000 Kč</strong></span></div>
+          <div class="dr"><span class="dk">Roční úspory</span><span class="dv g">984k Kč</span></div>
+          <div class="dr"><span class="dk">Splátka = % příjmu</span><span class="dv g">17%</span></div>
+          <div class="dr"><span class="dk">Splacení hypo</span><span class="dv g">~62 měs. (5 let)</span></div>
+          <div class="dr"><span class="dk">Za 3 roky</span><span class="dv g">+2,95 mil na business</span></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Příjem 200 000 Kč/měs</div>
+          <div class="dr"><span class="dk">Příjem</span><span class="dv">200 000 Kč</span></div>
+          <div class="dr"><span class="dk">− Vše (68k)</span><span class="dv">−68 000 Kč</span></div>
+          <div class="dr" style="background:#f0fdf4"><span class="dk g"><strong>Přebytek</strong></span><span class="dv g" style="font-size:15px"><strong>+132 000 Kč</strong></span></div>
+          <div class="dr"><span class="dk">Roční úspory</span><span class="dv g">1,58 mil Kč</span></div>
+          <div class="dr"><span class="dk">Splátka = % příjmu</span><span class="dv g">12,5%</span></div>
+          <div class="dr"><span class="dk">Splacení hypo</span><span class="dv g">~38 měs. (3,2 roku)</span></div>
+          <div class="dr"><span class="dk">Za 3 roky</span><span class="dv g">+4,74 mil na business</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODELY REZERV -->
+    <div class="section">
+      <div class="section-title">Modely podle výše rezervy</div>
+      <div class="card" style="overflow-x:auto">
+        <table class="vt">
+          <thead><tr><th>Parametr</th><th>Rezerva 2 mil</th><th style="color:#f97316">Rezerva 3 mil</th><th>Rezerva 4 mil</th></tr></thead>
+          <tbody>
+            <tr><td>Záloha</td><td>10 450 000</td><td><strong>9 450 000</strong></td><td>8 450 000</td></tr>
+            <tr><td>Hypotéka</td><td>4 050 000</td><td style="color:#f97316;font-weight:800"><strong>5 050 000</strong></td><td>6 050 000</td></tr>
+            <tr><td>LTV</td><td class="g">28%</td><td class="g">35%</td><td class="y">42%</td></tr>
+            <tr><td>Splátka/měs (4,3%/30 let)</td><td>~20 000 Kč</td><td style="color:#f97316;font-weight:700">~25 000 Kč</td><td>~30 000 Kč</td></tr>
+            <tr><td>Provoz domu</td><td>18 000</td><td>18 000</td><td>18 000</td></tr>
+            <tr><td>Osobní výdaje</td><td>25 000</td><td>25 000</td><td>25 000</td></tr>
+            <tr style="background:#fff7ed"><td><strong>Celkový burn/měs</strong></td><td><strong>63 000 Kč</strong></td><td style="color:#f97316;font-weight:800"><strong>68 000 Kč</strong></td><td><strong>73 000 Kč</strong></td></tr>
+            <tr><td>Break-even příjem</td><td>63 000 Kč</td><td>68 000 Kč</td><td>73 000 Kč</td></tr>
+            <tr><td>Runway bez příjmu</td><td>~32 měs. (2,6 roku)</td><td><strong>~44 měs. (3,7 roku)</strong></td><td class="g">~55 měs. (4,6 roku)</td></tr>
+            <tr><td>Runway při 40k příjmu</td><td>~87 měs.</td><td>~107 měs.</td><td class="g">~121 měs.</td></tr>
+            <tr><td>Přebytek při 100k</td><td class="g">+37 000 Kč</td><td class="g">+32 000 Kč</td><td class="g">+27 000 Kč</td></tr>
+            <tr><td>Přebytek při 150k</td><td class="g">+87 000 Kč</td><td class="g">+82 000 Kč</td><td class="g">+77 000 Kč</td></tr>
+            <tr><td>Přebytek při 200k</td><td class="g">+137 000 Kč</td><td class="g">+132 000 Kč</td><td class="g">+127 000 Kč</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note">
+        <strong>Kompromis:</strong> 2 mil rezerva = nejnižší splátka (20k) ale kratší runway (2,6 roku). 4 mil = nejdelší runway (4,6 let) ale vyšší splátka (30k). <strong>3 mil je sweet spot</strong> — splátka 25k, runway 3,7 roku, break-even 68k.
+      </div>
+    </div>
+
+    <!-- MODELY HYPOTÉK -->
+    <div class="section">
+      <div class="section-title">Modely délky hypotéky (rezerva 3 mil, hypo 5,05 mil)</div>
+      <div class="card" style="overflow-x:auto">
+        <table class="vt">
+          <thead><tr><th>Délka</th><th>Splátka/měs</th><th>Celkem zaplatíš</th><th>Přeplatek</th><th>Burn/měs</th><th>Break-even</th></tr></thead>
+          <tbody>
+            <tr style="background:#fff7ed"><td><strong>30 let (standard)</strong></td><td style="color:#f97316"><strong>25 000 Kč</strong></td><td>9 000 000</td><td>3 950 000</td><td><strong>68 000 Kč</strong></td><td><strong>68 000 Kč</strong></td></tr>
+            <tr><td>25 let</td><td>27 600 Kč</td><td>8 250 000</td><td>3 200 000</td><td>70 600 Kč</td><td>70 600 Kč</td></tr>
+            <tr><td>20 let</td><td>31 400 Kč</td><td>7 540 000</td><td>2 490 000</td><td>74 400 Kč</td><td>74 400 Kč</td></tr>
+            <tr><td>15 let</td><td>38 200 Kč</td><td>6 870 000</td><td>1 820 000</td><td>81 200 Kč</td><td>81 200 Kč</td></tr>
+            <tr><td>10 let</td><td>51 900 Kč</td><td>6 230 000</td><td>1 180 000</td><td>94 900 Kč</td><td>94 900 Kč</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note">
+        <strong>30 let vs 15 let:</strong> Splátka +13 200 Kč/měs, ale ušetříš 2,13 mil na přeplatku. Pokud čekáš příjem 150k+, 15-letka dává smysl — splatíš do 2041 a přeplatíš míň.
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<div class="footer">Analýza nemovitostí &bull; 27. 3. 2026 &bull; Data: RÚIAN (vdp.cuzk.gov.cz), Sreality, Valuo.cz, ČSÚ &bull; Nenahrazuje znalecký posudek</div>
+
+<script>
+function go(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>{b.className='nav-btn'});
+  document.getElementById('p-'+id).classList.add('active');
+  document.getElementById('btn-'+id).classList.add('active-'+id);
+  if(id==='lib'&&!window._mapLibInit){initMapLib();window._mapLibInit=true}
+  if(id==='dru'&&!window._mapDruInit){initMapDru();window._mapDruInit=true}
+  window.scrollTo(0,0);
+}
+
+proj4.defs('EPSG:5514','+proj=krovak +lat_0=49.5 +lon_0=24.83333333333333 +alpha=30.28813975277778 +k=0.9999 +x_0=0 +y_0=0 +ellps=bessel +towgs84=570.8,85.7,462.8,4.998,1.587,5.261,3.56 +units=m +no_defs');
+function sjtskToWgs84(x,y){const[lng,lat]=proj4('EPSG:5514','EPSG:4326',[y,x]);return[lat,lng]}
+
+function initMapLib(){
+  const m=L.map('map-lib').setView([50.1675,14.0616],18);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OSM | ČÚZK',maxZoom:20}).addTo(m);
+  const parcels={905:{color:'#3b82f6',label:'st.905 — RD 742 (173m²)',rings:[[-767057.59,-1030590.13],[-767045.83,-1030587.31],[-767041.03,-1030586.47],[-767038.67,-1030595.99],[-767041.07,-1030596.65],[-767055.11,-1030600.17],[-767057.59,-1030590.13]]},906:{color:'#f59e0b',label:'st.906 — garáž (43m²)',rings:[[-767059.42,-1030613.07],[-767049.39,-1030610.53],[-767048.28,-1030614.57],[-767058.40,-1030617.12],[-767059.42,-1030613.07]]},907:{color:'#22c55e',label:'907 — zahrada (668m²)',rings:[[-767069.46,-1030587.91],[-767042.32,-1030581.25],[-767041.03,-1030586.47],[-767045.83,-1030587.31],[-767057.59,-1030590.13],[-767055.11,-1030600.17],[-767041.07,-1030596.65],[-767038.67,-1030595.99],[-767034.77,-1030611.78],[-767062.33,-1030618.48],[-767069.46,-1030587.91]]}};
+  Object.entries(parcels).forEach(([n,p])=>{const c=p.rings.map(([x,y])=>sjtskToWgs84(y,x));L.polygon(c,{color:p.color,fillColor:p.color,fillOpacity:.25,weight:2}).addTo(m).bindPopup('<b>'+n+'</b><br>'+p.label)});
+  const bld=[[-767057.59,-1030590.13],[-767045.83,-1030587.31],[-767044.81,-1030591.09],[-767042.52,-1030590.37],[-767041.07,-1030596.65],[-767055.11,-1030600.17],[-767057.59,-1030590.13]].map(([x,y])=>sjtskToWgs84(y,x));
+  L.polygon(bld,{color:'#ef4444',fillColor:'#ef4444',fillOpacity:.4,weight:3}).addTo(m).bindPopup('<b>RD č.p. 742</b><br>140 m², 2 podlaží + sklep');
+  const pt=sjtskToWgs84(-1030592.85,-767047.87);L.marker(pt).addTo(m).bindPopup('<b>V Zahrádkách 742</b>').openPopup();m.setView(pt,19);
+}
+
+function initMapDru(){
+  const m=L.map('map-dru').setView([50.1028,14.0541],18);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OSM',maxZoom:20}).addTo(m);
+  L.marker([50.10283,14.05413]).addTo(m).bindPopup('<b>V Zátiší 157, Družec</b><br>SO 1280651 &bull; st. 167<br>Rodinný dům &bull; 143 m² zast.<br>Pozemek 1 720 m²').openPopup();
+  L.circle([50.10283,14.05413],{radius:25,color:'#4ade80',fillColor:'#4ade80',fillOpacity:.15}).addTo(m);
+}
+
+// Init Libušín map on load
+setTimeout(()=>{initMapLib();window._mapLibInit=true},100);
+</script>
+</body>
+</html>
