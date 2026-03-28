@@ -18,7 +18,33 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .nav-btn.active-vs{color:#1a1a1a;border-bottom-color:#1a1a1a;background:#f9fafb}
 .nav-btn.active-fin{color:#f97316;border-bottom-color:#f97316;background:#fff7ed}
 .nav-btn.active-nak{color:#7c3aed;border-bottom-color:#7c3aed;background:#f5f3ff}
+.nav-btn.active-check{color:#7c3aed;border-bottom-color:#7c3aed;background:#f5f3ff}
+.nav-btn.active-rk{color:#0891b2;border-bottom-color:#0891b2;background:#ecfeff}
+.nav-btn.active-prodej{color:#f97316;border-bottom-color:#f97316;background:#fff7ed}
+.nav-btn.active-pravo{color:#334155;border-bottom-color:#334155;background:#f1f5f9}
+.nav-btn.active-trh{color:#2563eb;border-bottom-color:#2563eb;background:#eff6ff}
 .panel{display:none}.panel.active{display:block}
+.mega-nav{position:sticky;top:0;z-index:9999;background:#fff;border-bottom:2px solid #f3f4f6;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.mega-top{display:flex;justify-content:center;align-items:center;gap:0;padding:0}
+.mega-group{position:relative}
+.mega-group-btn{padding:14px 24px;font-size:13px;font-weight:700;cursor:pointer;border:none;background:transparent;color:#6b7280;transition:all .2s;border-bottom:3px solid transparent;display:flex;align-items:center;gap:6px}
+.mega-group-btn:hover{color:#1a1a1a;background:#f9fafb}
+.mega-group-btn .arrow{font-size:10px;transition:transform .2s}
+.mega-group.open .arrow{transform:rotate(180deg)}
+.mega-group.open .mega-group-btn{color:#1a1a1a;background:#f9fafb;border-bottom-color:#e5e7eb}
+.mega-dd{display:none;position:absolute;top:100%;left:50%;transform:translateX(-50%);background:#fff;border:1px solid #e5e7eb;border-radius:0 0 12px 12px;box-shadow:0 8px 24px rgba(0,0,0,.1);min-width:200px;z-index:10000;overflow:hidden}
+.mega-group.open .mega-dd{display:block}
+.mega-dd-btn{display:block;width:100%;padding:12px 20px;font-size:13px;font-weight:600;cursor:pointer;border:none;background:transparent;color:#374151;text-align:left;transition:all .15s;white-space:nowrap}
+.mega-dd-btn:hover{background:#f9fafb;color:#1a1a1a}
+.mega-dd-btn.active-item{font-weight:700}
+.mega-dd-sep{height:1px;background:#e5e7eb;margin:0}
+.mega-dd-label{padding:8px 20px 4px;font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px}
+@media(max-width:600px){
+.mega-top{overflow-x:auto;-webkit-overflow-scrolling:touch;justify-content:flex-start}
+.mega-group-btn{padding:12px 14px;font-size:12px;white-space:nowrap;min-height:44px}
+.mega-dd{left:0;transform:none;min-width:180px;border-radius:0 0 8px 8px}
+.mega-dd-btn{padding:10px 16px;font-size:12px}
+}
 .container{max-width:1200px;margin:0 auto;padding:0 24px}
 .hero{padding:32px 0;text-align:center;border-bottom:1px solid #e5e7eb}
 .hero h1{font-size:28px;font-weight:800;color:#1a1a1a;margin-bottom:6px}
@@ -85,19 +111,38 @@ table.vt{width:100%;border-collapse:collapse;min-width:400px}
 .footer{text-align:center;padding:28px 0;color:#9ca3af;font-size:11px}
 .print-btn{position:fixed;bottom:16px;right:16px;background:#f97316;color:white;border:none;padding:10px 18px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(249,115,22,.3);z-index:100}
 .hl{background:#fff7ed}.hlg{background:#f0fdf4}.hlr{background:#fef2f2}
-@media print{.print-btn,.nav{display:none}.panel{display:block!important;page-break-before:always}}
+@media print{.print-btn,.mega-nav{display:none}.panel{display:block!important;page-break-before:always}}
 </style>
 </head>
 <body>
 
 <button class="print-btn" onclick="window.print()">Tisk / PDF</button>
 
-<nav class="nav">
-  <button class="nav-btn active-lib" onclick="go('lib')" id="btn-lib">Libušín (prodej)</button>
-  <button class="nav-btn" onclick="go('dru')" id="btn-dru">Družec (koupě)</button>
-  <button class="nav-btn" onclick="go('vs')" id="btn-vs">Srovnání</button>
-  <button class="nav-btn" onclick="go('fin')" id="btn-fin">Finanční model</button>
-  <button class="nav-btn" onclick="go('nak')" id="btn-nak">Náklady & Dotace</button>
+<nav class="mega-nav">
+  <div class="mega-top">
+    <div class="mega-group" id="mg-nem">
+      <button class="mega-group-btn" onclick="toggleMega('nem')">Nemovitosti <span class="arrow">▾</span></button>
+      <div class="mega-dd">
+        <button class="mega-dd-btn" onclick="go('lib')" id="btn-lib">Libušín (prodej)</button>
+        <button class="mega-dd-btn" onclick="go('prodej')" id="btn-prodej">Prodejní strategie</button>
+        <div class="mega-dd-sep"></div>
+        <button class="mega-dd-btn" onclick="go('dru')" id="btn-dru">Družec (koupě)</button>
+        <button class="mega-dd-btn" onclick="go('check')" id="btn-check">Prohlídka checklist</button>
+        <button class="mega-dd-btn" onclick="go('rk')" id="btn-rk">Strategie na RK</button>
+        <div class="mega-dd-sep"></div>
+        <button class="mega-dd-btn" onclick="go('vs')" id="btn-vs">Srovnání</button>
+        <button class="mega-dd-btn" onclick="go('trh')" id="btn-trh">Konkurence & Trh</button>
+      </div>
+    </div>
+    <div class="mega-group" id="mg-fin">
+      <button class="mega-group-btn" onclick="toggleMega('fin')">Finance <span class="arrow">▾</span></button>
+      <div class="mega-dd">
+        <button class="mega-dd-btn" onclick="go('fin')" id="btn-fin">Finanční model</button>
+        <button class="mega-dd-btn" onclick="go('nak')" id="btn-nak">Náklady & Dotace</button>
+        <button class="mega-dd-btn" onclick="go('pravo')" id="btn-pravo">Právní & Hypotéka</button>
+      </div>
+    </div>
+  </div>
 </nav>
 
 <!-- ===================== LIBUŠÍN ===================== -->
@@ -1292,14 +1337,1188 @@ table.vt{width:100%;border-collapse:collapse;min-width:400px}
 </div>
 </div>
 
+<div class="panel" id="p-check">
+<div class="hero" style="background:#f5f3ff;border-bottom:2px solid #7c3aed">
+  <div class="container">
+    <h1 style="color:#7c3aed">Prohlídka Družec — Checklist</h1>
+    <div class="sub">V Zátiší 157, Družec &bull; Prohlídka s Palánem &bull; Klíčové body ke kontrole na místě</div>
+  </div>
+</div>
+<div class="container">
+
+  <!-- PRIORITA 1: SKLEP -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fef2f2;color:#dc2626">1</div> Priorita #1: Sklep</div>
+    <div class="note err">Sklep je nejdůležitější bod celé prohlídky. Vlhkost = problém s cenou nebo důvod odejít.</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Co hledat</div>
+        <div class="dr"><span class="dk">Vlhkost na stěnách</span><span class="dv r">Vizuálně + rukou</span></div>
+        <div class="dr"><span class="dk">Mapy / skvrny</span><span class="dv r">Tmavé plochy, prosakování</span></div>
+        <div class="dr"><span class="dk">Výkvěty soli</span><span class="dv y">Bílé povlaky na zdivu</span></div>
+        <div class="dr"><span class="dk">Zatuchlý vzduch</span><span class="dv y">Vůně hned při vstupu</span></div>
+        <div class="dr"><span class="dk">Test rukou</span><span class="dv r">Ruka po zdi v úrovni terénu — pokud mokrá = problém</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Fotky povinné</div>
+        <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>Všechny 4 stěny sklepa</span></label>
+        <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>Podlaha sklepa</span></label>
+        <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>Strop sklepa</span></label>
+        <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>Všechny rohy (vlhkost se sbíhá)</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRIORITA 2: HUP -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fff7ed;color:#f97316">2</div> Priorita #2: HUP (plyn)</div>
+    <div class="note warn">Přítomnost HUP rozhoduje mezi scénářem A (plyn) a B (tepelné čerpadlo). Dopad na investici desítky tisíc.</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Co hledat</div>
+        <div class="dr"><span class="dk">Kde hledat</span><span class="dv">Žlutá skříňka na fasádě nebo u plotu</span></div>
+        <div class="dr"><span class="dk">HUP nalezen</span><span class="dv g">= Plyn připojený → Scénář A možný</span></div>
+        <div class="dr"><span class="dk">HUP nenalezen</span><span class="dv r">= Jen „v dosahu" → přípojka 80–150k navíc</span></div>
+        <div class="dr"><span class="dk">Scénář B (TČ)</span><span class="dv y">Pokud volíš TČ, HUP nerelevantní</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Zkontrolovat na místě</div>
+        <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>Prohlédnout fasádu — žlutá skříňka HUP?</span></label>
+        <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>Prohlédnout plot / vstupní pilíře</span></label>
+        <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>Fotka HUP (nebo místa kde chybí)</span></label>
+        <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>Zeptat se realitačky na stav plynu</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRIORITA 3: TOPENÍ A ROZVODY -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fff7ed;color:#f97316">3</div> Priorita #3: Topení a rozvody</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Co ověřit</div>
+        <div class="dr"><span class="dk">Radiátory na rozvody</span><span class="dv y">V koupelně vypadal radiátor napojený na trubky — ověřit</span></div>
+        <div class="dr"><span class="dk">Přímotopy</span><span class="dv">Spočítat přímotopy v každé místnosti</span></div>
+        <div class="dr"><span class="dk">Rozvaděč</span><span class="dv r">Dimenzování na přímotopy = vysoký odběr → zkontrolovat jistič</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Checklist topení</div>
+        <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>Zkontrolovat každou místnost — přímotop nebo radiátor?</span></label>
+        <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>Koupelna — radiátor napojený na trubky?</span></label>
+        <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>Rozvaděč — velikost hlavního jističe</span></label>
+        <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>Počet přímotopů celkem: ____</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- TECHNICKÝ STAV -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#f0fdf4;color:#16a34a">🔧</div> Technický stav</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Elektroinstalace & Okna</div>
+        <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>Rozvaděč — typ vedení (měď / hliník?)</span></label>
+        <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>Okna — rok výměny, stav těsnění</span></label>
+        <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>Okna — kondenzace, rosení skel?</span></label>
+        <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>Fasáda zblízka — praskliny, stav soklu</span></label>
+      </div>
+      <div class="card">
+        <div class="card-title">Střecha & Podkroví & Zahrada</div>
+        <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>Střecha — pohled z podkroví na krov (praskliny, průsaky)</span></label>
+        <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>Izolace podkroví — tloušťka, materiál</span></label>
+        <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>Zimní zahrada — napojení na terén, těsnění spoje s domem</span></label>
+        <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>Podlaha u obvodových zdí — vlhkost, vrzání</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- DOKUMENTY -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#f5f3ff;color:#7c3aed">📄</div> Dokumenty vyžádat</div>
+    <div class="card">
+      <div class="card-title">Seznam dokumentů k vyžádání od prodávajícího / RK</div>
+      <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>Vyúčtování energií za posledních 12 měsíců (elektřina, případně plyn)</span></label>
+      <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>Kolaudační rozhodnutí přístaveb z roku 2005</span></label>
+      <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>Kompletní výpis z LV 84 (aktuální)</span></label>
+      <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>Projektová dokumentace (původní + přístavby)</span></label>
+      <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>Geometrický plán (nový / aktualizovaný)</span></label>
+      <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>Vyjádření k přípojkám — plyn, voda, kanalizace</span></label>
+    </div>
+  </div>
+
+  <!-- FOTKY -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#f5f3ff;color:#7c3aed">📷</div> Fotky udělat</div>
+    <div class="card">
+      <div class="card-title">Povinný fotoarchiv z prohlídky</div>
+      <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>1. Sklep — všechny stěny (i suché, pro srovnání)</span></label>
+      <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>2. HUP na fasádě (nebo místo kde není)</span></label>
+      <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>3. Rozvaděč (otevřený) — jističe, typ vedení</span></label>
+      <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>4. Každý přímotop (místnost + model)</span></label>
+      <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>5. Krov zevnitř (stav trámů, případné průsaky)</span></label>
+      <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>6. Podlaha u obvodových zdí</span></label>
+      <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>7. Spodek soklu (vlhkost, oprýskání omítky)</span></label>
+      <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>8. Zimní zahrada — spoj s domem, těsnění</span></label>
+      <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>9. Studna (pokud je na pozemku)</span></label>
+      <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>10. Potok blízko domu — vzdálenost, stav břehů</span></label>
+    </div>
+  </div>
+
+  <!-- OTÁZKY NA REALITAČKU -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#f5f3ff;color:#7c3aed">❓</div> Otázky na realitačku</div>
+    <div class="card">
+      <div class="card-title">Položit přímo na prohlídce</div>
+      <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>Proč se topí přímotopy, když je plyn v dosahu?</span></label>
+      <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>Kolik platili za elektřinu ročně? (vyúčtování)</span></label>
+      <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>Proč prodávají?</span></label>
+      <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>Jak dlouho je dům neobývaný?</span></label>
+      <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>Jsou přístavby (2005) řádně zkolaudované?</span></label>
+      <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>Co zahrnuje cena? (nábytek, spotřebiče, Miele?)</span></label>
+      <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid #e5e7eb;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>Sousední pozemek 860/11 — je na prodej? Cena a podmínky?</span></label>
+      <label style="display:flex;align-items:flex-start;gap:8px;padding:8px 0;font-size:13px;cursor:pointer"><input type="checkbox" style="margin-top:3px;width:16px;height:16px;accent-color:#7c3aed"><span>Kdo platí geometrický plán?</span></label>
+    </div>
+  </div>
+
+  <!-- VERDIKT -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#f5f3ff;color:#7c3aed">⚖️</div> Verdikt po prohlídce</div>
+    <div class="note" style="margin-bottom:16px">Vyplň po návratu. Sklep + HUP = 2 klíčové proměnné pro rozhodnutí o ceně.</div>
+    <div class="grid-2">
+      <div class="card hlg">
+        <div class="card-title" style="color:#16a34a">Scénář 1 — Optimistický</div>
+        <div class="dr"><span class="dk">Podmínka</span><span class="dv g">Sklep suchý + HUP ano</span></div>
+        <div class="dr"><span class="dk">Akce</span><span class="dv g">Nabídni 13,5 M Kč (Scénář A — plyn)</span></div>
+      </div>
+      <div class="card hl">
+        <div class="card-title" style="color:#f97316">Scénář 2 — OK</div>
+        <div class="dr"><span class="dk">Podmínka</span><span class="dv y">Sklep suchý + HUP ne</span></div>
+        <div class="dr"><span class="dk">Akce</span><span class="dv y">Nabídni 13,5 M Kč, počítej s TČ (Scénář B)</span></div>
+      </div>
+      <div class="card hl">
+        <div class="card-title" style="color:#f97316">Scénář 3 — Realistický</div>
+        <div class="dr"><span class="dk">Podmínka</span><span class="dv y">Sklep mírně vlhký</span></div>
+        <div class="dr"><span class="dk">Akce</span><span class="dv y">Nabídni 12,5–13 M Kč, zajisti stavební posudek</span></div>
+      </div>
+      <div class="card hlr">
+        <div class="card-title" style="color:#dc2626">Scénář 4 — Odejdi</div>
+        <div class="dr"><span class="dk">Podmínka</span><span class="dv r">Sklep mokrý / plíseň</span></div>
+        <div class="dr"><span class="dk">Akce</span><span class="dv r">Odejdi, nebo max 11 M Kč + posudek hydrologa</span></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <div class="card-title">Výsledek prohlídky — poznámky</div>
+      <div class="dr"><span class="dk">Sklep</span><span class="dv" style="color:#9ca3af">[ suchý / mírně vlhký / mokrý / plíseň ]</span></div>
+      <div class="dr"><span class="dk">HUP</span><span class="dv" style="color:#9ca3af">[ nalezen / nenalezen ]</span></div>
+      <div class="dr"><span class="dk">Radiátory na rozvody</span><span class="dv" style="color:#9ca3af">[ ano / ne ]</span></div>
+      <div class="dr"><span class="dk">Přímotopů celkem</span><span class="dv" style="color:#9ca3af">[ ___ ks ]</span></div>
+      <div class="dr"><span class="dk">Celkový dojem</span><span class="dv" style="color:#9ca3af">[ pozitivní / neutrální / negativní ]</span></div>
+      <div class="dr"><span class="dk">Doporučený scénář</span><span class="dv" style="color:#9ca3af">[ 1 / 2 / 3 / 4 ]</span></div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<div class="panel" id="p-rk">
+<div class="hero" style="background:#ecfeff;border-bottom:2px solid #0891b2">
+  <div class="container">
+    <h1 style="color:#0891b2">Strategie — Realitačka Družec</h1>
+    <div class="sub">V Zátiší 157, Družec &bull; Prodejní agent &bull; Jak vybudovat vztah a získat výhodu na obou stranách</div>
+    <div class="price" style="background:#0891b2;color:#fff">100h práce = 230–360k Kč hodnoty</div>
+    <div class="sub" style="margin-top:6px">Nabídka webu, AI automatizace a CRM za spolupráci na koordinaci obou dealů</div>
+  </div>
+</div>
+<div class="container">
+
+  <!-- 1. TVOJE POZICE -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#ecfeff;color:#0891b2">💼</div> Tvoje pozice</div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-title">Profesní profil</div>
+        <div class="dr"><span class="dk">Forma</span><span class="dv">OSVČ — IT konzultant</span></div>
+        <div class="dr"><span class="dk">LinkedIn</span><span class="dv g">CPO Appmine</span></div>
+        <div class="dr"><span class="dk">Projekt</span><span class="dv">Transformuj.ai</span></div>
+        <div class="dr"><span class="dk">Lovable</span><span class="dv g">Certifikovaný partner</span></div>
+        <div class="dr"><span class="dk">Reference</span><span class="dv b">GoPay, Packeta, Alza</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Finanční pozice</div>
+        <div class="dr"><span class="dk">Vlastní barák</span><span class="dv g">12–13 mil, bez hypotéky</span></div>
+        <div class="dr"><span class="dk">Hypotéka</span><span class="dv g">Předschválená 4 mil</span></div>
+        <div class="dr"><span class="dk">Stavebák z Družce</span><span class="dv">PalanStav (znalost objektu)</span></div>
+        <div class="dr"><span class="dk">Pozice</span><span class="dv g">Seriózní kupec bez podmínek</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Co nabízíš</div>
+        <div class="dr"><span class="dk">Objem</span><span class="dv b">100 hodin práce</span></div>
+        <div class="dr"><span class="dk">Zaměření</span><span class="dv">Web, AI, automatizace, CRM</span></div>
+        <div class="dr"><span class="dk">Tržní hodnota</span><span class="dv g">230 000 – 360 000 Kč</span></div>
+        <div class="dr"><span class="dk">Pro tebe cena</span><span class="dv">0 Kč (výměna za spolupráci)</span></div>
+      </div>
+    </div>
+    <div class="note ok">Jsi silný kupec: vlastní nemovitost jako zajištění, předschválená hypotéka, zavedené IT reference a konkrétní hodnotová nabídka. Realitačka to ocení víc než hotovost na účtu.</div>
+  </div>
+
+  <!-- 2. CO ŘÍCT NA PROHLÍDCE -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#ecfeff;color:#0891b2">🗣</div> Co říct na prohlídce</div>
+    <div class="grid-2">
+      <div>
+        <div class="card" style="border-left:3px solid #0891b2">
+          <div class="card-title" style="color:#0891b2">Skript prohlídky — krok za krokem</div>
+          <div class="dr"><span class="dk" style="font-weight:700;color:#0891b2">1.</span><span class="dv">Představ se profesionálně: "Jsem v IT, dělám AI transformaci pro firmy" — zmíň GoPay/Packeta/Alza</span></div>
+          <div class="dr"><span class="dk" style="font-weight:700;color:#0891b2">2.</span><span class="dv">Ukaž vážný zájem: přijď s Palánem, řekni že jsi připravil 21 otázek, prober detaily domu</span></div>
+          <div class="dr"><span class="dk" style="font-weight:700;color:#0891b2">3.</span><span class="dv">Projdi celý checklist otázek — technický stav, inženýrské sítě, věcná břemena, sousedé</span></div>
+          <div class="dr"><span class="dk" style="font-weight:700;color:#0891b2">4.</span><span class="dv">Na konci: <em>"Mám vážný zájem. Rád bych probral možnosti spolupráce — mám nápad pro obě strany."</em></span></div>
+          <div class="dr"><span class="dk" style="font-weight:700;color:#0891b2">5.</span><span class="dv">Domluvit 2. schůzku — <strong>na první NIKDY nenabízej spolupráci podrobně</strong></span></div>
+        </div>
+        <div class="note ok">Přijít s technikem (PalanStav) signalizuje serióznost a znalost — realitačka ví, že nejsi náhodný kolemjdoucí.</div>
+      </div>
+      <div>
+        <div class="card" style="border-left:3px solid #dc2626">
+          <div class="card-title" style="color:#dc2626">NEŘÍKAT na prohlídce</div>
+          <div class="dr"><span class="dk r">✗</span><span class="dv">Že prodáváš Libušín — oslabuje pozici (ví, že musíš koupit)</span></div>
+          <div class="dr"><span class="dk r">✗</span><span class="dv">Že víš o historii slev: 30 → 25 → 18 → 17 mil</span></div>
+          <div class="dr"><span class="dk r">✗</span><span class="dv">Že nemáš hotovost — vypadá slabě</span></div>
+          <div class="dr"><span class="dk r">✗</span><span class="dv">Konkrétní cílovou cenu jako první — nech ji udělat nabídku</span></div>
+          <div class="dr"><span class="dk r">✗</span><span class="dv">Že jsi jediný zájemce — i když to víš</span></div>
+        </div>
+        <div class="note err">Informační asymetrie je tvoje výhoda. Chraň ji.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. NABÍDKA SPOLUPRÁCE -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#ecfeff;color:#0891b2">🤝</div> Nabídka spolupráce — co nabízíš vs. co chceš</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title" style="color:#0891b2">Co nabídneš (100h celkem)</div>
+        <table class="vt">
+          <thead><tr><th>Služba</th><th>Hodin</th><th>Tržní hodnota</th></tr></thead>
+          <tbody>
+            <tr><td>Nový web (design + kód)</td><td class="b">40–50h</td><td class="g">100–150k</td></tr>
+            <tr><td>CRM + email automatizace</td><td class="b">15–20h</td><td class="g">50–80k</td></tr>
+            <tr><td>AI nástroje (generování inzerátů, popis nemovitostí)</td><td class="b">15–20h</td><td class="g">50–80k</td></tr>
+            <tr><td>Konzultace strategie &amp; marketing</td><td class="b">10–15h</td><td class="g">30–50k</td></tr>
+            <tr style="background:#ecfeff"><td><strong>CELKEM</strong></td><td class="b"><strong>~100h</strong></td><td class="g"><strong>230–360k Kč</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:#16a34a">Co chceš zpět</div>
+        <div class="dr"><span class="dk">Koordinace dealů</span><span class="dv g">Synchronizace prodeje Libušína + koupě Družce</span></div>
+        <div class="dr"><span class="dk">Insider info</span><span class="dv g">Skutečná motivace prodejce, deadline, spodní cena</span></div>
+        <div class="dr"><span class="dk">Exkluzivita</span><span class="dv g">Stažení inzerátu po dohodě na ceně</span></div>
+        <div class="dr"><span class="dk">Časový buffer</span><span class="dv g">3–4 měsíce lhůta podmíněná prodejem Libušína</span></div>
+        <div class="dr"><span class="dk">Provize</span><span class="dv y">Standardní (nic extra od tebe)</span></div>
+        <div class="note ok" style="margin-top:12px">Win-win: realitačka dostane hodnotný marketing. Ty dostaneš exkluzivitu a čas na prodej Libušína.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. TIMING NABÍDKY -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#ecfeff;color:#0891b2">⏱</div> Timing nabídky</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Timeline</div>
+        <div class="dr"><span class="dk" style="color:#0891b2;font-weight:700">Krok 1</span><span class="dv">📞 <strong>Telefonát</strong> — domluv prohlídku (skript níže)</span></div>
+        <div class="dr"><span class="dk" style="color:#0891b2;font-weight:700">Krok 2</span><span class="dv">🏠 <strong>Prohlídka</strong> — s Palánem, 21 otázek, ukaž zájem</span></div>
+        <div class="dr"><span class="dk" style="color:#0891b2;font-weight:700">Krok 3</span><span class="dv">📬 <strong>Po prohlídce</strong> — potvrzovací zpráva (viz text níže)</span></div>
+        <div class="dr"><span class="dk" style="color:#0891b2;font-weight:700">Krok 4</span><span class="dv">☕ <strong>2. schůzka</strong> — teprve zde nabídni spolupráci podrobně</span></div>
+        <div class="dr"><span class="dk r" style="font-weight:700">NIKDY</span><span class="dv r">Nenabízej spolupráci na první schůzce — příliš brzy = podezřelé</span></div>
+      </div>
+      <div class="card" style="border-left:3px solid #0891b2">
+        <div class="card-title" style="color:#0891b2">Text po prohlídce (SMS/WhatsApp)</div>
+        <div style="background:#f0f9ff;border-radius:8px;padding:14px;font-size:13px;font-style:italic;color:#1a1a1a;line-height:1.7">
+          "Dobrý den, byl jsem moc spokojený s prohlídkou, dům splňuje naše představy. Rád bych probral další postup — navíc mám nápad na spolupráci, která by mohla být zajímavá pro obě strany. Kdy byste měla čas na krátkou schůzku nebo hovor?"
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. CO NEŘÍKAT -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fef2f2;color:#dc2626">✗</div> Co NEŘÍKAT — informační disciplína</div>
+    <div class="grid-2">
+      <div class="card" style="border-left:3px solid #dc2626">
+        <div class="card-title" style="color:#dc2626">Neprozrazuj prodej Libušína</div>
+        <div style="font-size:13px;color:#374151;margin-bottom:8px">Jakmile ví, že <em>musíš</em> koupit (protože prodáváš), ztrácíš celou vyjednávací pozici. Vypadá to, že jsi pod tlakem.</div>
+        <div class="note err" style="margin:0">Říkej: "Hledám rodinný dům v okolí Kladna" — nic víc.</div>
+      </div>
+      <div class="card" style="border-left:3px solid #dc2626">
+        <div class="card-title" style="color:#dc2626">Neříkej o historii slev</div>
+        <div style="font-size:13px;color:#374151;margin-bottom:8px">Víš že cena šla 30M → 25M → 18M → 17M. To je tvoje eso. Použiješ to až u cenového vyjednávání, ne na prohlídce.</div>
+        <div class="note err" style="margin:0">Každá sleva je argument: "Cena klesala 4x, jsem reálný kupec."</div>
+      </div>
+      <div class="card" style="border-left:3px solid #dc2626">
+        <div class="card-title" style="color:#dc2626">Neříkej o nedostatku hotovosti</div>
+        <div style="font-size:13px;color:#374151;margin-bottom:8px">Hypotéka + výnos z prodeje = dostatečná síla. Neomlouvej se za to. Řekni silnou verzi: "Mám předschválenou hypotéku a vlastní nemovitost jako zajištění."</div>
+      </div>
+      <div class="card" style="border-left:3px solid #dc2626">
+        <div class="card-title" style="color:#dc2626">Neříkej cenu jako první</div>
+        <div style="font-size:13px;color:#374151;margin-bottom:8px">Ať ona řekne aktuální nabídkovou cenu nebo podmínky. Pak teprve reaguj. Kdo mluví o ceně první, zpravidla prohraje.</div>
+        <div class="note err" style="margin:0">Pokud se ptá: "Kolik chcete dát?" → "Jaká je aktuálně nejlepší cena?"</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. SKRIPT PRVNÍHO HOVORU -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#ecfeff;color:#0891b2">📞</div> Skript prvního hovoru</div>
+    <div class="card" style="border-left:4px solid #0891b2;max-width:760px">
+      <div class="card-title" style="color:#0891b2">Přesné znění — telefonát pro domluvení prohlídky</div>
+      <div style="background:#f0f9ff;border-radius:8px;padding:18px;font-size:14px;line-height:1.9;color:#1a1a1a">
+        <p><strong>"Dobrý den, volám ohledně domu V Zátiší 157 v Družci.</strong></p>
+        <p>Jsem z IT, hledám rodinný dům v okolí Kladna — líbí se mi ten váš inzerát.</p>
+        <p>Rád bych si domluvil prohlídku. Přijdu s technikem, abychom si prohlédli i technický stav.</p>
+        <p><strong>Kdy by se vám hodilo?"</strong></p>
+      </div>
+      <div class="note" style="margin-top:12px">Krátké, věcné, profesionální. Zmínka o technikovi signalizuje vážnost. Neptat se na nic jiného — prohlídka je cíl hovoru.</div>
+    </div>
+    <div class="grid-3" style="margin-top:12px">
+      <div class="sc"><div class="n">✓</div><div class="l">Zmíníš IT profesi</div></div>
+      <div class="sc"><div class="n">✓</div><div class="l">Přijdeš s technikem</div></div>
+      <div class="sc"><div class="n">✓</div><div class="l">Nezmiňuješ cenu ani Libušín</div></div>
+    </div>
+  </div>
+
+  <!-- 7. PO DOHODĚ NA CENĚ -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#ecfeff;color:#0891b2">📄</div> Po dohodě na ceně — smluvní strategie</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Rezervační smlouva bez zálohy</div>
+        <div class="dr"><span class="dk">Cíl</span><span class="dv">Blokovat dům bez vázání hotovosti</span></div>
+        <div class="dr"><span class="dk">Argument 1</span><span class="dv">Jsem vážný kupec, záloha se váže k prodeji Libušína</span></div>
+        <div class="dr"><span class="dk">Argument 2</span><span class="dv">Nabízím smluvní pokutu místo zálohy — chrání obě strany</span></div>
+        <div class="dr"><span class="dk">Argument 3</span><span class="dv">Exkluzivita inzerátu = dostatečná jistota pro prodejce</span></div>
+        <div class="dr"><span class="dk">Riziko zálohy</span><span class="dv r">Propadnutí pokud se Libušín neprodá včas</span></div>
+        <div class="note warn" style="margin-top:10px">Alternativa: symbolická záloha 50–100k s podmínkou vrácení při nesplnění podmínek kupní smlouvy.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Smlouva o budoucí kupní smlouvě</div>
+        <div class="dr"><span class="dk">Podmínka</span><span class="dv b">Uzavření podmíněno prodejem Libušína</span></div>
+        <div class="dr"><span class="dk">Lhůta</span><span class="dv">3–4 měsíce od podpisu</span></div>
+        <div class="dr"><span class="dk">Smluvní pokuta</span><span class="dv b">300 000 Kč — oboustranná</span></div>
+        <div class="dr"><span class="dk">Pokuta pro prodejce</span><span class="dv g">Pokud prodá jinak nebo zdraží</span></div>
+        <div class="dr"><span class="dk">Pokuta pro tebe</span><span class="dv y">Pokud neuzavřeš kupní smlouvu v lhůtě</span></div>
+        <div class="dr"><span class="dk">Stažení inzerátu</span><span class="dv g">Ihned po podpisu smlouvy o budoucí</span></div>
+        <div class="note ok" style="margin-top:10px">Symetrická pokuta 300k je férová a motivuje prodejce k exkluzivitě bez nutnosti zálohy.</div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:4px">
+      <div class="card-title">Klíčová ustanovení smlouvy</div>
+      <div class="grid-3">
+        <div>
+          <div class="dr"><span class="dk">Předmět</span><span class="dv">V Zátiší 157, Družec + pozemky</span></div>
+          <div class="dr"><span class="dk">Cena</span><span class="dv">Sjednaná při podpisu — pevná</span></div>
+        </div>
+        <div>
+          <div class="dr"><span class="dk">Rozvazovací podmínka</span><span class="dv">Neprodání Libušína do lhůty</span></div>
+          <div class="dr"><span class="dk">Notář</span><span class="dv">Úschova kupní ceny u notáře</span></div>
+        </div>
+        <div>
+          <div class="dr"><span class="dk">Stav předání</span><span class="dv">Popsán v příloze protokolu</span></div>
+          <div class="dr"><span class="dk">Přechod rizik</span><span class="dv">K datu předání klíčů</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUICK REFERENCE -->
+  <div class="section" style="border-bottom:none">
+    <div class="section-title"><div class="ico" style="background:#ecfeff;color:#0891b2">✓</div> Quick reference — klíčová čísla</div>
+    <div class="grid-3">
+      <div class="sc">
+        <div class="n" style="color:#0891b2">100h</div>
+        <div class="l">Nabídka práce (web, AI, CRM)</div>
+        <div class="ch" style="color:#16a34a">230–360k Kč tržní hodnota</div>
+      </div>
+      <div class="sc">
+        <div class="n" style="color:#0891b2">3–4 měs</div>
+        <div class="l">Lhůta smlouvy o budoucí</div>
+        <div class="ch" style="color:#f97316">Podmíněno prodejem Libušína</div>
+      </div>
+      <div class="sc">
+        <div class="n" style="color:#0891b2">300k</div>
+        <div class="l">Oboustranná smluvní pokuta</div>
+        <div class="ch" style="color:#16a34a">Chrání obě strany symetricky</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+</div>
+
+<div class="panel" id="p-prodej">
+<div class="hero" style="background:#fff7ed;border-bottom:2px solid #f97316">
+  <div class="container">
+    <h1 style="color:#f97316">Prodejní strategie — Libušín</h1>
+    <div class="sub">Jak zvýšit cenu bez investic &bull; Four Locations + NanoBannana &bull; Cíl: 13+ mil</div>
+    <div class="price" style="background:#f97316;color:#fff">13 500 000 Kč</div>
+    <div class="sub" style="margin-top:6px">Valuo odhad: 14,3 mil &bull; Realizační cíl: 13–13,5 mil &bull; Provize RK: 0 Kč (Four Locations)</div>
+  </div>
+</div>
+<div class="container">
+
+  <!-- 1. Co zvyšuje cenu za 0 Kč -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fff7ed;color:#f97316">0&nbsp;Kč</div> Co zvyšuje cenu za 0 Kč</div>
+    <div class="note ok"><strong>Bez jediné koruny investice</strong> lze výrazně zlepšit první dojem a dosáhnout lepší nabídky. Každý bod níže je zadarmo — stojí jen čas.</div>
+    <div class="grid-2" style="margin-top:16px">
+      <div class="card">
+        <div class="card-title">🌳 Úklid zahrady</div>
+        <div class="dr"><span class="dk">Švestka, třešeň, jabloň</span><span class="dv g">Prodejní argument — vzrostlé stromy</span></div>
+        <div class="dr"><span class="dk">Tráva</span><span class="dv">Posekat před focením i prohlídkami</span></div>
+        <div class="dr"><span class="dk">Záhony</span><span class="dv">Vyplít, urovnat</span></div>
+        <div class="dr"><span class="dk">Veranda</span><span class="dv">Uklidit, vystavit nábytek</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">🖌️ Vymalování vstupní chodby a schodiště</div>
+        <div class="dr"><span class="dk">Proč</span><span class="dv">První dojem — kupující vidí hned po vstupu</span></div>
+        <div class="dr"><span class="dk">Co</span><span class="dv">Světlá neutrální barva (bílá, světle šedá)</span></div>
+        <div class="dr"><span class="dk">Náklady</span><span class="dv g">~500–800 Kč (barva) + vlastní práce</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">📦 Declutter + úklid</div>
+        <div class="dr"><span class="dk">Pravidlo</span><span class="dv">Méně = více. Prázdný prostor = větší prostor</span></div>
+        <div class="dr"><span class="dk">Osobní věci</span><span class="dv">Pryč z dohledu (fotky, drobnosti)</span></div>
+        <div class="dr"><span class="dk">Sklep</span><span class="dv">Vyčistit, vyhodit nepotřebné</span></div>
+        <div class="dr"><span class="dk">Garáže</span><span class="dv">Uklidit, ukázat kapacitu 3 stání</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">🔧 Opravit drobnosti</div>
+        <div class="dr"><span class="dk">Kliky</span><span class="dv">Dotáhnout, vyměnit poškozené</span></div>
+        <div class="dr"><span class="dk">Žárovky</span><span class="dv">Všechna světla musí fungovat</span></div>
+        <div class="dr"><span class="dk">Kapající kohoutky</span><span class="dv">Opravit — signál zanedbanosti</span></div>
+        <div class="dr"><span class="dk">Skříňky</span><span class="dv">Dorazit panty, zavírání dveří</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">🪟 Umýt okna + fasádu vysokotlakem</div>
+        <div class="dr"><span class="dk">Okna</span><span class="dv">Zevnitř i zvenku — světlost místností</span></div>
+        <div class="dr"><span class="dk">Fasáda</span><span class="dv">Vysokotlaký čistič — břízolit vypadá nový</span></div>
+        <div class="dr"><span class="dk">Efekt</span><span class="dv g">Dům okamžitě vypadá udržovaněji</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">💨 Vyvětrat sklep</div>
+        <div class="dr"><span class="dk">Proč</span><span class="dv">Sklep = velký argument (plně podsklepený)</span></div>
+        <div class="dr"><span class="dk">Co</span><span class="dv">Otevřít průduchy, odstranit zápach vlhka</span></div>
+        <div class="dr"><span class="dk">Tip</span><span class="dv">Lavender/dřevěný uhlí absorbér</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. NanoBannana staging -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fff7ed;color:#f97316">NB</div> NanoBannana staging</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Co to je</div>
+        <div class="dr"><span class="dk">Staging</span><span class="dv">Profesionální aranžování interiéru pro fotky a prohlídky</span></div>
+        <div class="dr"><span class="dk">Firma</span><span class="dv b">NanoBannana</span></div>
+        <div class="dr"><span class="dk">Náklady</span><span class="dv g"><strong>0 Kč</strong> — součást balíčku Four Locations</span></div>
+        <div class="dr"><span class="dk">Princip</span><span class="dv">Dočasný nábytek + dekorace = emocionální dojem</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Efekt a místnosti</div>
+        <div class="dr"><span class="dk">Efekt na cenu</span><span class="dv g">+5–10 % = +600 000 – 1 300 000 Kč</span></div>
+        <div class="dr"><span class="dk">Obývák</span><span class="dv g">Priorita č. 1 — klíčová fotka inzerátu</span></div>
+        <div class="dr"><span class="dk">Kuchyně</span><span class="dv g">Priorita č. 2</span></div>
+        <div class="dr"><span class="dk">Hlavní ložnice</span><span class="dv g">Priorita č. 3</span></div>
+        <div class="dr"><span class="dk">Vstupní chodba</span><span class="dv">První dojem při prohlídce</span></div>
+      </div>
+    </div>
+    <div class="note ok"><strong>Staging = nejlevnější způsob jak zvýšit cenu.</strong> Kupující nekupují dům — kupují si pocit domova. Staging tento pocit vytváří.</div>
+  </div>
+
+  <!-- 3. Vizualizace fasády -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fff7ed;color:#f97316">VIZ</div> Vizualizace fasády</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Účel vizualizace</div>
+        <div class="dr"><span class="dk">Co je to</span><span class="dv">AI vizualizace domu po zateplení a přefasádování</span></div>
+        <div class="dr"><span class="dk">Označení v inzerátu</span><span class="dv r"><strong>POVINNĚ:</strong> "Vizualizace možné podoby"</span></div>
+        <div class="dr"><span class="dk">Pořadí fotek</span><span class="dv">Reálné fotky hlavní, vizualizace jako doplněk</span></div>
+        <div class="dr"><span class="dk">Efekt</span><span class="dv g">Kupující vidí potenciál — překoná první dojem fasády</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Jak na to</div>
+        <div class="dr"><span class="dk">Nástroj</span><span class="dv">Midjourney / DALL-E / Stable Diffusion</span></div>
+        <div class="dr"><span class="dk">Vstup</span><span class="dv">Reálná fotka domu + prompt: moderní fasáda, bílá omítka, zateplení</span></div>
+        <div class="dr"><span class="dk">Náklady</span><span class="dv g">~0–500 Kč</span></div>
+        <div class="dr"><span class="dk">Varianty</span><span class="dv">Světlá fasáda, tmavý sokl — minimalistický styl</span></div>
+      </div>
+    </div>
+    <div class="note warn"><strong>Právní upozornění:</strong> Vizualizace MUSÍ být jasně označena v inzerátu jako "Vizualizace možné podoby". Záměna za reálný stav je klamavá reklama.</div>
+  </div>
+
+  <!-- 4. Profi fotky checklist -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fff7ed;color:#f97316">📷</div> Profi fotky — checklist</div>
+    <div class="note ok"><strong>Timing: golden hour</strong> — ráno 7–9 hod nebo večer 17–19 hod. Měkké světlo, bez tvrdých stínů.</div>
+    <div class="grid-2" style="margin-top:14px">
+      <div class="card">
+        <div class="card-title">Exteriér</div>
+        <ul class="checklist">
+          <li>Dron — celý pozemek 884 m² z ptačí perspektivy</li>
+          <li>Dron — okolí, charakter zástavby</li>
+          <li>Dron — autobusová zastávka (3 min pěšky)</li>
+          <li>Fasáda — přední pohled (po umytí)</li>
+          <li>Zahrada — ovocné stromy (švestka, třešeň, jabloň)</li>
+          <li>Veranda — pohled z venku i z interiéru</li>
+          <li>Garáže — 3 stání, vjezd, prostor</li>
+          <li>Lodžie — zasklená, venkovní rolety</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">Interiér</div>
+        <ul class="checklist">
+          <li>Obývák — po stagingu, hlavní foto inzerátu</li>
+          <li>Kuchyně — po stagingu</li>
+          <li>Hlavní ložnice — po stagingu</li>
+          <li>Každá místnost — alespoň 1 záběr</li>
+          <li>Kotel Buderus GB192i — detail + štítek (rok výroby, model)</li>
+          <li>Logalux zásobník + Trinnity + Fernox — sestava</li>
+          <li>Sklep — čistý, suchý, prostorný (plně podsklepený)</li>
+          <li>Vstupní chodba — po vymalování, první dojem</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Draft inzerátu -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fff7ed;color:#f97316">AD</div> Draft inzerátu</div>
+    <div class="card">
+      <div class="card-title">Návrh textu inzerátu — 13 500 000 Kč</div>
+      <div style="font-size:14px;line-height:1.8;color:#1a1a1a">
+        <p style="font-size:16px;font-weight:700;margin-bottom:8px">Rodinný dům 5+1 / 6+1, 320 m², pozemek 884 m², 3 garáže — Libušín, okr. Kladno</p>
+        <p style="margin-bottom:10px"><strong>Prodáváme prostorný rodinný dům v klidné části Libušína</strong> — kostka s maximální dispozicí, bez zbytečných chodeb. Celá užitná plocha 320 m² slouží k bydlení.</p>
+        <p style="font-weight:600;margin-bottom:4px">Co vás zaujme:</p>
+        <ul style="margin-left:18px;margin-bottom:10px;font-size:13px">
+          <li><strong>Nový kondenzační kotel Buderus GB192i</strong> včetně zásobníku Logalux, změkčovače vody Trinnity a filtru Fernox — sestava za 200–300 tis. Kč. Nastěhujete se a topíte.</li>
+          <li><strong>3 garážová stání</strong> v plně podsklepené garáži — ideální pro rodinu s více auty nebo pro dílnu.</li>
+          <li><strong>Zahrada 884 m²</strong> se vzrostlými ovocnými stromy (švestka, třešeň, jabloň), veranda, lodžie.</li>
+          <li><strong>Autobusová zastávka 3 minuty pěšky</strong> — pošta, lékárna, doktor, Alza Box, vše v dosahu.</li>
+          <li>Plastová okna po celém domě, sedlová střecha 2005, deskové radiátory.</li>
+          <li>Plně podsklepený — sklep pod celým domem i garáží.</li>
+        </ul>
+        <p style="font-weight:600;margin-bottom:4px">Dispozice:</p>
+        <p style="font-size:13px;margin-bottom:10px">Přízemí: vstupní hala, obývací pokoj s krbem, kuchyně s jídelnou, 1 ložnice, koupelna, WC. Patro: 3 pokoje (dětské / ložnice), koupelna, lodžie. Sklep: kotelna, sklady, garáže.</p>
+        <div class="note warn" style="margin:10px 0">
+          <strong>Poddolování — transparentně:</strong> Lokalita Libušín je historicky poddolovaná (uhlí, oblast Kladno). Na tomto domě rodina bydlí přes 40 let bez jakýchkoli strukturálních problémů. Od roku 2003 je lokalita stabilizovaná. Kupující doporučujeme ověřit aktuální mapu poddolování na DIAMO.cz. Cena tento faktor zohledňuje.
+        </div>
+        <p style="font-size:13px;color:#6b7280">Měření, prohlídky a více informací — kontaktujte nás. Prodej přes Four Locations (0 % provize).</p>
+      </div>
+    </div>
+    <div class="note ok"><strong>Klíčový princip:</strong> Poddolování neskrývat — zmínit čestně a přeformulovat jako stabilní stav. Kupující kteří se bojí, nekoupí stejně. Ti co koupí, ocení transparentnost.</div>
+  </div>
+
+  <!-- 6. Cílový kupec -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fff7ed;color:#f97316">👨‍👩‍👧‍👦</div> Cílový kupec</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Profil ideálního kupce</div>
+        <div class="dr"><span class="dk">Kdo</span><span class="dv">Rodina s 2 dětmi (5–12 let)</span></div>
+        <div class="dr"><span class="dk">Financování</span><span class="dv">Hypotéka, vlastní vklad 10–20 %</span></div>
+        <div class="dr"><span class="dk">Budget</span><span class="dv g">Hledají pod 14 mil v okrese Kladno</span></div>
+        <div class="dr"><span class="dk">Situace</span><span class="dv">Přestěhování z Prahy / Kladna, první velký dům</span></div>
+        <div class="dr"><span class="dk">Priorita</span><span class="dv">Nastěhovat se a bydlet — bez rekonstrukce</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Proč koupí právě tento dům</div>
+        <div class="dr"><span class="dk">Kostka</span><span class="dv g">Žádná chodbová plocha — vše užitné</span></div>
+        <div class="dr"><span class="dk">Kotel</span><span class="dv g">Hotový — neřeší topení 10+ let</span></div>
+        <div class="dr"><span class="dk">Bus 3 min</span><span class="dv g">Máma s kočárkem, škola, práce</span></div>
+        <div class="dr"><span class="dk">Zahrada</span><span class="dv g">Děti, grilování, stromy</span></div>
+        <div class="dr"><span class="dk">3 garáže</span><span class="dv g">2 auta + dílna / kolo + sportovní vybavení</span></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:0">
+      <div class="card-title">Kdo NEKOUPÍ — a proč</div>
+      <div class="dr"><span class="dk">Investor / flipper</span><span class="dv r">Poddolování = nízká spekulativní hodnota, přeprodej těžký</span></div>
+      <div class="dr"><span class="dk">Kupec bez hypotéky</span><span class="dv y">Menší skupina v tomto segmentu</span></div>
+      <div class="dr"><span class="dk">Kupec hledající novostavbu</span><span class="dv r">Očekávání energetické třídy A, podlahovka</span></div>
+      <div class="dr"><span class="dk">Senior bez dětí</span><span class="dv y">Příliš velký dům, velká zahrada = zátěž</span></div>
+    </div>
+    <div class="note warn"><strong>Marketingová taktika:</strong> Cílit inzerát a komunikaci na rodiny, ne na investory. Text inzerátu = "nastěhuj se a bydli", ne "potenciál k přestavbě".</div>
+  </div>
+
+  <!-- 7. Kotel jako prodejní argument -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fff7ed;color:#f97316">🔥</div> Kotel jako prodejní argument</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Sestava kotelny</div>
+        <div class="dr"><span class="dk">Kotel</span><span class="dv g"><strong>Buderus GB192i</strong> — kondenzační plynový kotel</span></div>
+        <div class="dr"><span class="dk">Zásobník TUV</span><span class="dv g">Buderus Logalux ~120–160 l</span></div>
+        <div class="dr"><span class="dk">Změkčovač</span><span class="dv g">Trinnity Exclusive — ochrana před vodním kamenem</span></div>
+        <div class="dr"><span class="dk">Filtr</span><span class="dv g">Fernox TF1 — magnetický filtr nečistot</span></div>
+        <div class="dr"><span class="dk">Celková hodnota sestavy</span><span class="dv b"><strong>200 000 – 300 000 Kč</strong></span></div>
+        <div class="dr"><span class="dk">Životnost kotle</span><span class="dv g">15–20 let od instalace</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Proč je to diferenciátor</div>
+        <div class="dr"><span class="dk">Benchmark</span><span class="dv r">Většina domů v ceně 10–15 mil má starý kotel nebo přímotopy</span></div>
+        <div class="dr"><span class="dk">V inzerátu</span><span class="dv g">"Nový kondenzační kotel Buderus" — v nadpisu nebo první větě</span></div>
+        <div class="dr"><span class="dk">Na prohlídce</span><span class="dv g">Ukázat kotelnu + fotodokumentaci kotle (štítek)</span></div>
+        <div class="dr"><span class="dk">Argument pro hypotéku</span><span class="dv g">Nižší provozní náklady → snazší schválení</span></div>
+        <div class="dr"><span class="dk">Úspora pro kupce</span><span class="dv g">Neřeší kotel 10+ let = 200–300k nemusí utratit</span></div>
+      </div>
+    </div>
+    <div class="note ok"><strong>V inzerátu na první místo:</strong> "Nový kondenzační kotel Buderus GB192i" — kupující to vidí hned a odlišuje dům od konkurence ve stejné cenové kategorii.</div>
+  </div>
+
+  <!-- 8. Timeline prodeje -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fff7ed;color:#f97316">📅</div> Timeline prodeje 2026</div>
+    <div class="note ok"><strong>Průměrná doba inzerce v okrese Kladno: 43 dní.</strong> Cíl: prodej za 13–13,5 mil do srpna 2026.</div>
+    <div class="card" style="margin-top:14px">
+      <table class="vt">
+        <thead>
+          <tr>
+            <th>Měsíc</th>
+            <th>Fáze</th>
+            <th>Akce</th>
+            <th>Stav</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="hlg">
+            <td><strong>Duben 2026</strong></td>
+            <td>Příprava</td>
+            <td>Úklid zahrady, vymalování chodby, declutter, opravit drobnosti, umýt fasádu</td>
+            <td><span class="tag ty">PLÁNOVÁNO</span></td>
+          </tr>
+          <tr>
+            <td><strong>Duben 2026</strong></td>
+            <td>Příprava</td>
+            <td>Domluvit NanoBannana staging + Four Locations briefing</td>
+            <td><span class="tag ty">PLÁNOVÁNO</span></td>
+          </tr>
+          <tr class="hlg">
+            <td><strong>Květen 2026</strong></td>
+            <td>Prezentace</td>
+            <td>NanoBannana staging — obývák, kuchyně, ložnice, chodba</td>
+            <td><span class="tag ty">PLÁNOVÁNO</span></td>
+          </tr>
+          <tr>
+            <td><strong>Květen 2026</strong></td>
+            <td>Prezentace</td>
+            <td>Profi fotky (dron + interiér, golden hour) + vizualizace fasády</td>
+            <td><span class="tag ty">PLÁNOVÁNO</span></td>
+          </tr>
+          <tr class="hlg">
+            <td><strong>Květen 2026</strong></td>
+            <td>Spuštění</td>
+            <td>Inzerát live — Sreality, Bezrealitky, Four Locations portál. Cena: 13 500 000 Kč</td>
+            <td><span class="tag ty">PLÁNOVÁNO</span></td>
+          </tr>
+          <tr>
+            <td><strong>Červen–Červenec 2026</strong></td>
+            <td>Prohlídky</td>
+            <td>Organizace prohlídek, vyjednávání nabídek, rezervační smlouva</td>
+            <td><span class="tag tb">ČEKÁ</span></td>
+          </tr>
+          <tr class="hlg">
+            <td><strong>Červenec–Srpen 2026</strong></td>
+            <td>Uzavření</td>
+            <td>Kupní smlouva, notář, převod vlastnictví na katastru</td>
+            <td><span class="tag tb">ČEKÁ</span></td>
+          </tr>
+          <tr style="border-top:2px solid #f97316">
+            <td><strong>CÍL</strong></td>
+            <td style="color:#16a34a;font-weight:700">Prodej do 31. 8. 2026</td>
+            <td>Realizační cena 13 000 000 – 13 500 000 Kč</td>
+            <td><span class="tag tg">CÍL</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="grid-3" style="margin-top:16px">
+      <div class="sc">
+        <div class="n">43 dní</div>
+        <div class="l">Průměrná inzerce okr. Kladno</div>
+        <div class="ch up">benchmark</div>
+      </div>
+      <div class="sc">
+        <div class="n">0 Kč</div>
+        <div class="l">Provize RK (Four Locations)</div>
+        <div class="ch up">ušetřeno ~270–400k vs. 2–3% RK</div>
+      </div>
+      <div class="sc">
+        <div class="n" style="color:#f97316">13,5 mil</div>
+        <div class="l">Cílová prodejní cena</div>
+        <div class="ch" style="color:#f97316">−0,8 mil vs. Valuo (14,3 mil)</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /.container -->
+</div><!-- /#p-prodej -->
+
+
+<div class="panel" id="p-pravo">
+
+<div class="hero" style="background:#334155;border-bottom:2px solid #475569">
+  <div class="container">
+    <h1 style="color:#f1f5f9">Právní, daně &amp; Hypotéka</h1>
+    <div class="sub" style="color:#94a3b8">Prodej Libušín → Koupě Družec &bull; OSVČ Appmine &bull; ~50k/měs &bull; Hypo ~4M &bull; Dar máma 500k</div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- 1. DAŇ Z PRODEJE -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fff7ed;color:#f97316">%</div> Daň z prodeje Libušín</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Dvě cesty k osvobození</div>
+        <div class="dr"><span class="dk">Varianta A — čas</span><span class="dv g">5+ let vlastnictví + trvalé bydliště → 0 Kč</span></div>
+        <div class="dr"><span class="dk">§4 odst. 1 písm. a) ZDP</span><span class="dv">Osvobozeno od daně z příjmu fyzických osob</span></div>
+        <div class="dr"><span class="dk">Varianta B — účel</span><span class="dv g">Výnos použit na bytovou potřebu do 1 roku → 0 Kč</span></div>
+        <div class="dr"><span class="dk">§4 odst. 1 písm. b) ZDP</span><span class="dv">Koupě Družce = uspokojení bytové potřeby</span></div>
+        <div class="dr"><span class="dk">Pokud ani jedno</span><span class="dv r">15 % z (prodejní − nabývací cena) = základ daně</span></div>
+        <div class="dr"><span class="dk">Příklad</span><span class="dv r">13M prodej − 3M nabytí = 10M × 15 % = 1,5M daň</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Co ověřit</div>
+        <div class="dr"><span class="dk">Délka vlastnictví</span><span class="dv y">Jak dlouho vlastníš Libušín? (ČÚZK, nabývací titul)</span></div>
+        <div class="dr"><span class="dk">Trvalé bydliště</span><span class="dv y">Odkdy má trvalý pobyt na adrese Libušín?</span></div>
+        <div class="dr"><span class="dk">Kombinace</span><span class="dv">Stačí splnit jednu z podmínek</span></div>
+        <div class="dr"><span class="dk">Lhůta B</span><span class="dv">Zakoupit Družec do 1 roku od prodeje Libušína</span></div>
+        <div class="dr"><span class="dk">Znění 2026</span><span class="dv y">Ověřit aktuální znění — zákon se mohl změnit</span></div>
+      </div>
+    </div>
+    <div class="note ok"><strong>Pravděpodobně osvobozeno.</strong> Pokud vlastníš 5+ let a/nebo výnos ihned investuješ do Družce = daň 0 Kč. Přesto konzultovat s daňovým poradcem a ověřit délku vlastnictví z nabývacího titulu.</div>
+  </div>
+
+  <!-- 2. DAŇ Z NABYTÍ -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#f0fdf4;color:#16a34a">0</div> Daň z nabytí nemovitosti</div>
+    <div class="card">
+      <div class="card-title">Zákonný stav</div>
+      <div class="dr"><span class="dk">Zákon č. 386/2020 Sb.</span><span class="dv g">Zrušena od 26. 9. 2020 — daň z nabytí neexistuje</span></div>
+      <div class="dr"><span class="dk">Dřívější sazba</span><span class="dv">4 % z kupní / odhadní ceny (platila do 2020)</span></div>
+      <div class="dr"><span class="dk">Platí pro Jakuba</span><span class="dv g">Nic neplatíš — ani za Libušín, ani za Družec</span></div>
+      <div class="dr"><span class="dk">Ověřit</span><span class="dv y">Zda nebyla znovu zavedena (2025/2026) — průběžně sledovat</span></div>
+    </div>
+    <div class="note ok"><strong>Daň z nabytí = 0 Kč.</strong> Zrušena zákonem, znovu zavedena nebyla (k 03/2026). Nicméně sleduj legislativu — opakované návrhy na obnovení existují.</div>
+  </div>
+
+  <!-- 3. HYPOTÉKA PLAYBOOK -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#eff6ff;color:#2563eb">H</div> Hypotéka — playbook</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Co banka chce (dokumenty)</div>
+        <div class="dr"><span class="dk">Daňové přiznání</span><span class="dv y">2024 + 2025 (OSVČ — povinné)</span></div>
+        <div class="dr"><span class="dk">Výpisy z účtu</span><span class="dv">3 měsíce (Appmine příjmy)</span></div>
+        <div class="dr"><span class="dk">LV Libušín</span><span class="dv">Aktuální výpis z katastru</span></div>
+        <div class="dr"><span class="dk">LV Družec</span><span class="dv">Aktuální výpis z katastru</span></div>
+        <div class="dr"><span class="dk">Odhad Družce</span><span class="dv">Certifikovaný odhadce (bankou schválený)</span></div>
+        <div class="dr"><span class="dk">Pojištění nemovitosti</span><span class="dv">Povinné — pro zástavní právo banky</span></div>
+        <div class="dr"><span class="dk">Rezervační / kupní smlouva</span><span class="dv">Draft nebo podepsaná</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Tvoje čísla (ukazatele bonity)</div>
+        <div class="dr"><span class="dk">Příjem (základ)</span><span class="dv">~24 000 Kč/měs (viz sekce níže)</span></div>
+        <div class="dr"><span class="dk">Splátka hypo ~4M / 25 let</span><span class="dv">~18 000 Kč/měs (5,5 % p.a., orientačně)</span></div>
+        <div class="dr"><span class="dk">DTI (splátka/příjem)</span><span class="dv g">18k / 24k = 75 % základu NEBO 18k / 50k = 36 % obratu</span></div>
+        <div class="dr"><span class="dk">LTV (hypo/hodnota)</span><span class="dv g">4M / 13,5M = 30 % → excelentní, banka miluje</span></div>
+        <div class="dr"><span class="dk">Vlastní prostředky</span><span class="dv g">9,5M+ (z prodeje Libušína) + 500k dar = nad 70 %</span></div>
+        <div class="dr"><span class="dk">Kontakt v bance</span><span class="dv g">Ředitelská úroveň → individuální posouzení</span></div>
+        <div class="note warn" style="margin-top:8px;margin-bottom:0"><strong>DTI pozor:</strong> Banka bere ZÁKLAD daně OSVČ, ne obrat. Viz sekce níže o optimalizaci DP.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. ZÁKLAD DANĚ OSVČ -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fefce8;color:#ca8a04">DP</div> Základ daně OSVČ &amp; hypotéka</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Paušální výdaje 60 % (IT)</div>
+        <div class="dr"><span class="dk">Roční obrat (fakturace)</span><span class="dv">~720 000 Kč (50k × 12 mes.)</span></div>
+        <div class="dr"><span class="dk">Výdaje paušál 60 %</span><span class="dv">432 000 Kč</span></div>
+        <div class="dr"><span class="dk">Základ daně</span><span class="dv y">288 000 Kč / rok = 24 000 Kč / měs</span></div>
+        <div class="dr"><span class="dk">Banka počítá s</span><span class="dv r">24 000 Kč/měs (ne 50 000 Kč!)</span></div>
+        <div class="dr"><span class="dk">Splátka 18k / základ 24k</span><span class="dv y">DTI = 75 % — na hraně, ale LTV 30 % kompenzuje</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Strategie pro DP 2025</div>
+        <div class="dr"><span class="dk">Doporučení</span><span class="dv g">Maximalizovat základ daně v DP 2025</span></div>
+        <div class="dr"><span class="dk">Tj.</span><span class="dv">Nesnižovat základ kvůli dani — dát bance co nejvíc</span></div>
+        <div class="dr"><span class="dk">Alternativa</span><span class="dv">Reálné výdaje pokud nižší než 60 % (faktura za HW apod.)</span></div>
+        <div class="dr"><span class="dk">Fakturuj víc</span><span class="dv g">Faktura za prosinec 2025 v lednu 2026 = v DP 2025</span></div>
+        <div class="dr"><span class="dk">Paušální daň</span><span class="dv r">POZOR: paušální daňový režim nelze použít pro hypo</span></div>
+        <div class="dr"><span class="dk">DP 2024</span><span class="dv y">Odevzdat co nejdříve — banka chce aktuální</span></div>
+      </div>
+    </div>
+    <div class="note warn"><strong>Klíčová akce před podáním žádosti o hypo:</strong> Odevzdat DP 2024 a připravit DP 2025 s co nejvyšším základem. Konzultovat s účetní jestli reálné vs. paušální výdaje vychází lépe pro banku.</div>
+  </div>
+
+  <!-- 5. SMLOUVA O BUDOUCÍ KUPNÍ -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fdf4ff;color:#9333ea">SBK</div> Smlouva o budoucí kupní smlouvě</div>
+    <div class="card">
+      <div class="card-title">Klíčové body draftu</div>
+      <div class="dr"><span class="dk">Cena</span><span class="dv">Fixní — dohodnutá cena (např. 13 500 000 Kč), žádná doložka</span></div>
+      <div class="dr"><span class="dk">Lhůta k uzavření KS</span><span class="dv y">4 měsíce od podpisu SBKS</span></div>
+      <div class="dr"><span class="dk">Podmínka prodeje Libušína</span><span class="dv g">Rozvazovací podmínka — pokud Libušín neprodáš, smlouva zaniká</span></div>
+      <div class="dr"><span class="dk">Záloha</span><span class="dv g">0 Kč nebo max. 200 000 Kč (plně vratná při nesplnění podmínek)</span></div>
+      <div class="dr"><span class="dk">Smluvní pokuta</span><span class="dv">Oboustranná — 300 000 Kč za bezdůvodné odstoupení</span></div>
+      <div class="dr"><span class="dk">Geometrický plán</span><span class="dv">Na náklady prodávajícího (pokud parcelace)</span></div>
+      <div class="dr"><span class="dk">Součástí prodeje</span><span class="dv y">Upřesnit: nábytek, spotřebiče, Miele? — každá položka zvlášť</span></div>
+      <div class="dr"><span class="dk">Stav nemovitosti</span><span class="dv">Prohlídka den před podpisem KS + předávací protokol</span></div>
+      <div class="dr"><span class="dk">Advokátní úschova</span><span class="dv g">Kupní cena přes advokátní nebo notářskou úschovu</span></div>
+    </div>
+    <div class="note warn"><strong>SBKS nemusíš uzavírat</strong> — je jen přípravná. Pokud podmínky prodeje Libušína nevyjdou, potřebuješ platnou rozvazovací podmínku jinak riskuješ smluvní pokutu.</div>
+  </div>
+
+  <!-- 6. REZERVAČNÍ SMLOUVA -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fdf4ff;color:#9333ea">RS</div> Rezervační smlouva</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Povinný obsah</div>
+        <div class="dr"><span class="dk">Identifikace nemovitosti</span><span class="dv">Parcelní čísla, LV číslo, KÚ, adresa</span></div>
+        <div class="dr"><span class="dk">Kupující</span><span class="dv">Jméno, RČ / IČ, adresa</span></div>
+        <div class="dr"><span class="dk">Prodávající</span><span class="dv">Jméno, RČ, adresa (případně zástupce)</span></div>
+        <div class="dr"><span class="dk">Cena</span><span class="dv">Pevná kupní cena</span></div>
+        <div class="dr"><span class="dk">Lhůta rezervace</span><span class="dv y">Typicky 2–4 týdny (do podpisu SBKS nebo KS)</span></div>
+        <div class="dr"><span class="dk">Podmínky odstoupení</span><span class="dv">Oboustranná práva, vrácení zálohy</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Co si pohlídat</div>
+        <div class="dr"><span class="dk">Záloha</span><span class="dv g">0 Kč nebo plně vratná — netrvej na záloze 100k+</span></div>
+        <div class="dr"><span class="dk">Exkluzivita</span><span class="dv g">Prodávající stáhne inzerát z realitních portálů</span></div>
+        <div class="dr"><span class="dk">Geometrák</span><span class="dv">Kdo platí — vyjednat na prodávajícího</span></div>
+        <div class="dr"><span class="dk">RK provize</span><span class="dv">Kdo platí provizi realitní kanceláři</span></div>
+        <div class="dr"><span class="dk">Advokát</span><span class="dv g">KS připravuje advokát kupujícího nebo notář</span></div>
+        <div class="dr"><span class="dk">Lhůta hypo</span><span class="dv y">Dojednat prodlouženou lhůtu kvůli schválení hypo</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. LV CHECKLIST -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#f0fdf4;color:#16a34a">LV</div> LV checklist — oba domy</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Družec — LV 84</div>
+        <div class="dr"><span class="dk">Parcely</span><span class="dv y">st. 167, 860/1, 860/9, 860/11 — ověřit všechny</span></div>
+        <div class="dr"><span class="dk">Aktuální výpis</span><span class="dv">Stáhnout z ČÚZK (nahlizenidokatastr.cuzk.cz)</span></div>
+        <div class="dr"><span class="dk">Věcná břemena</span><span class="dv y">Pečlivě — věcné břemeno bydlení, přístupu, dožití</span></div>
+        <div class="dr"><span class="dk">Zástavní práva</span><span class="dv">Stávající hypotéka prodávajícího? → splatit z kupní ceny</span></div>
+        <div class="dr"><span class="dk">Předkupní práva</span><span class="dv y">Zákonné (dědické) i smluvní</span></div>
+        <div class="dr"><span class="dk">Poznámky</span><span class="dv r">Exekuce, insolvence, soudní spory — STOP</span></div>
+        <div class="dr"><span class="dk">Plomby</span><span class="dv r">Aktivní plomba = probíhající zápis → čekat</span></div>
+        <div class="dr"><span class="dk">Nabývací titul</span><span class="dv">Způsob nabytí prodávajícím (koupě, dědictví, dar)</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Libušín — LV 439</div>
+        <div class="dr"><span class="dk">Parcely</span><span class="dv">st. 905, st. 906, 907 (zahrada 668 m²)</span></div>
+        <div class="dr"><span class="dk">Aktuální výpis</span><span class="dv">Stáhnout aktuálně před podpisem KS</span></div>
+        <div class="dr"><span class="dk">Zástavní práva</span><span class="dv g">Bez hypotéky — mělo by být čisté</span></div>
+        <div class="dr"><span class="dk">Věcná břemena</span><span class="dv">Ověřit — průchody, přístupy od sousedů?</span></div>
+        <div class="dr"><span class="dk">Poznámky</span><span class="dv g">Zkontrolovat aktuálnost — bez exekucí</span></div>
+        <div class="dr"><span class="dk">Pro kupujícího Libušína</span><span class="dv">Kupující bude chtít totéž od tebe — připrav se</span></div>
+        <div class="dr"><span class="dk">Poddolování LV</span><span class="dv r">Zkontrolovat jestli je v LV zmínka o POPD</span></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:0">
+      <div class="card-title">Jak číst LV — části</div>
+      <table class="vt">
+        <thead><tr><th>Část LV</th><th>Obsah</th><th>Co hledat</th></tr></thead>
+        <tbody>
+          <tr><td><strong>A — Majetek</strong></td><td>Parcely a budovy na LV</td><td>Souhlasí s tím co kupuješ?</td></tr>
+          <tr><td><strong>B — Vlastníci</strong></td><td>Kdo vlastní a v jakém podílu</td><td>Podílové vlastnictví → souhlas všech</td></tr>
+          <tr><td><strong>B1 — Jiné právo</strong></td><td>Věcná břemena, zástavní práva IN FAVOREM</td><td>Práva zřízená ve prospěch nemovitosti</td></tr>
+          <tr class="hlr"><td><strong>C — Omezení</strong></td><td>Zástavní práva, exekuce, věcná břemena IN PERSONAM</td><td><strong>Nejdůležitější!</strong> Každý zápis ověřit</td></tr>
+          <tr><td><strong>D — Jiné zápisy</strong></td><td>Poznámky, upozornění</td><td>Plomby, soudní spory</td></tr>
+          <tr><td><strong>E — Nabývací tituly</strong></td><td>Smlouvy, rozhodnutí</td><td>Způsob nabytí, čísla listin</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 8. POJIŠTĚNÍ -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#eff6ff;color:#2563eb">🛡</div> Pojištění Družec</div>
+    <div class="grid-3">
+      <div class="sc">
+        <div class="n" style="color:#dc2626">Povinné</div>
+        <div class="l">Pojištění nemovitosti</div>
+        <div class="ch" style="color:#1a1a1a">Banka vyžaduje pro hypo</div>
+      </div>
+      <div class="sc">
+        <div class="n">5–10k Kč</div>
+        <div class="l">Odhad ročně (nemovitost)</div>
+        <div class="ch" style="color:#6b7280">Požár, živly, voda, vandalismus</div>
+      </div>
+      <div class="sc">
+        <div class="n">~1 000 Kč</div>
+        <div class="l">Měsíčně do burn rate</div>
+        <div class="ch up">Celkem 10–15k/rok</div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px">
+      <div class="card-title">Přehled pojištění</div>
+      <div class="dr"><span class="dk">Pojištění nemovitosti</span><span class="dv r">POVINNÉ pro hypotéku — zástavní právo banky</span></div>
+      <div class="dr"><span class="dk">Rozsah</span><span class="dv">Požár, živly, povodně, vichřice, vandalismus, voda z potrubí</span></div>
+      <div class="dr"><span class="dk">Pojistná hodnota</span><span class="dv y">Reprodukční hodnota stavby (ne tržní) — dle odhadu</span></div>
+      <div class="dr"><span class="dk">Pojistník</span><span class="dv">Jakub Liška (vlastník) — banka jako pojistník/obmyšlený?</span></div>
+      <div class="dr"><span class="dk">Pojištění domácnosti</span><span class="dv">Dobrovolné — vybavení, elektronika, krádeže</span></div>
+      <div class="dr"><span class="dk">Odpovědnost z vlastnictví</span><span class="dv g">Doporučeno — škody způsobené nemovitostí třetím</span></div>
+      <div class="dr"><span class="dk">Životní pojištění</span><span class="dv y">Banka může požadovat jako podmínku hypo</span></div>
+    </div>
+    <div class="note warn"><strong>Před podpisem hypoteční smlouvy:</strong> Sjednat pojištění Družce a předložit pojistku bance jako součást dokumentace k hypo. Bez pojistky nevyplatí úvěr.</div>
+  </div>
+
+  <!-- 9. DAR OD MÁMY -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#f0fdf4;color:#16a34a">♡</div> Dar od mámy — 500 000 Kč</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Daňová situace</div>
+        <div class="dr"><span class="dk">Typ daru</span><span class="dv">Peněžní dar v přímé linii (matka → syn)</span></div>
+        <div class="dr"><span class="dk">Daň z příjmu</span><span class="dv g">Osvobozeno — §10 odst. 3 písm. c) ZDP</span></div>
+        <div class="dr"><span class="dk">Darovací daň</span><span class="dv g">Zrušena (součást daně z příjmu od 2014)</span></div>
+        <div class="dr"><span class="dk">Povinnost přiznat</span><span class="dv y">Přiznat v DP jako osvobozený příjem nad 5M (pod 5M nemusíš)</span></div>
+        <div class="dr"><span class="dk">Darovací smlouva</span><span class="dv g">Sepsat pro jistotu — banka vyžaduje jako doklad</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Jak to banka vidí</div>
+        <div class="dr"><span class="dk">Klasifikace</span><span class="dv g">Vlastní prostředky (ne cizí zdroj / půjčka)</span></div>
+        <div class="dr"><span class="dk">Podmínka</span><span class="dv">Darovací smlouva + výpis z účtu pohyb peněz</span></div>
+        <div class="dr"><span class="dk">Potvrzení dárce</span><span class="dv">Banka může chtít čestné prohlášení mámy</span></div>
+        <div class="dr"><span class="dk">Využití</span><span class="dv g">Jako rezerva po koupi Družce (opravy, vybavení)</span></div>
+        <div class="dr"><span class="dk">Alternativa</span><span class="dv">Součást zálohy při koupi — snižuje hypo o 500k</span></div>
+        <div class="dr"><span class="dk">Doporučení</span><span class="dv g">Nechat jako finanční rezervu — LTV je i bez toho skvělé</span></div>
+      </div>
+    </div>
+    <div class="note ok"><strong>Dar 500k = čistý, bez daně, banka bere jako vlastní prostředky.</strong> Sepsat darovací smlouvu. Ideálně použít jako rezervu na opravy/vybavení Družce po koupi.</div>
+  </div>
+
+  <!-- SOUHRN AKCÍ -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fefce8;color:#ca8a04">!</div> Souhrn — co udělat a kdy</div>
+    <div class="card">
+      <div class="card-title">Prioritní akce (před podpisem čehokoli)</div>
+      <table class="vt">
+        <thead><tr><th>Akce</th><th>Termín</th><th>Priorita</th></tr></thead>
+        <tbody>
+          <tr><td>Ověřit délku vlastnictví Libušína (nabývací titul z ČÚZK)</td><td>Ihned</td><td><span class="tag tr">KRITICKÉ</span></td></tr>
+          <tr><td>Stáhnout aktuální LV 84 (Družec) — sekce C pečlivě</td><td>Před RS</td><td><span class="tag tr">KRITICKÉ</span></td></tr>
+          <tr><td>Odevzdat DP 2024 (OSVČ) s max. základem</td><td>Duben 2025</td><td><span class="tag tr">KRITICKÉ</span></td></tr>
+          <tr><td>Konzultace s daňovým poradcem — osvobození §4 ZDP</td><td>Co nejdříve</td><td><span class="tag ty">DŮLEŽITÉ</span></td></tr>
+          <tr><td>Sepsat darovací smlouvu s mámou (500k)</td><td>Před hypo žádostí</td><td><span class="tag ty">DŮLEŽITÉ</span></td></tr>
+          <tr><td>Kontaktovat bankéře — předjednat podmínky OSVČ hypo</td><td>Souběžně</td><td><span class="tag ty">DŮLEŽITÉ</span></td></tr>
+          <tr><td>Sjednat pojištění Družce (nemovitost)</td><td>Před podpisem hypoteční smlouvy</td><td><span class="tag ty">DŮLEŽITÉ</span></td></tr>
+          <tr><td>Advokát na RS / SBKS / KS — vlastní, ne RK advokát</td><td>Před podpisem</td><td><span class="tag tg">DOPORUČENO</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div><!-- /.container -->
+</div><!-- /#p-pravo -->
+
+
+<div class="panel" id="p-trh">
+<div class="hero" style="background:#eff6ff;border-bottom:2px solid #2563eb">
+  <div class="container">
+    <h1 style="color:#2563eb">Konkurence & Trh</h1>
+    <div class="sub">Alternativy k Družci &bull; Realizované ceny &bull; Vyjednávací páka</div>
+  </div>
+</div>
+<div class="container">
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#eff6ff;color:#2563eb">?</div> Proč znát konkurenci</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Scénář A — existuje alternativa</div>
+        <div style="font-size:13px;color:#1a1a1a;line-height:1.6">Pokud najdeš na Sreality dům za podobnou cenu <strong>bez přímotopů</strong>, máš konkrétní argument na schůzce:<br><br><em style="color:#2563eb">"Za 14 mil mám i dům XY bez přímotopů a s kotlem."</em><br><br>To je vyjednávací páka — tlačí cenu Družce dolů nebo nutí prodávající přidat hodnotu (kotel, snížení ceny).</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Scénář B — Družec je nejlepší nabídka</div>
+        <div style="font-size:13px;color:#1a1a1a;line-height:1.6">Pokud po průzkumu trhu zjistíš, že za 14 mil v okolí Kladna nic lepšího není, máš jistotu:<br><br><em style="color:#16a34a">"Prošel jsem trh, tohle je top nabídka v rozsahu."</em><br><br>Pak dává deal smysl i bez slev — vědomě, ne ze strachu z rozhodnutí.</div>
+      </div>
+    </div>
+    <div class="note" style="border-left-color:#2563eb;background:#eff6ff">V obou případech ti průzkum konkurence <strong>dává informační výhodu</strong> — a to je vždy lepší než jednat naslepo.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#eff6ff;color:#2563eb">&#128269;</div> Co hledat na Sreality/Bezrealitky</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Filtry pro vyhledávání</div>
+        <div class="dr"><span class="dk">Lokalita</span><span class="dv">Okres Kladno</span></div>
+        <div class="dr"><span class="dk">Dispozice</span><span class="dv">5+1 a větší</span></div>
+        <div class="dr"><span class="dk">Pozemek</span><span class="dv">1 000 m² a více</span></div>
+        <div class="dr"><span class="dk">Cena</span><span class="dv">12 – 16 mil Kč</span></div>
+        <div class="dr"><span class="dk">Typ</span><span class="dv">Rodinný dům</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Parametry na srovnání s Družcem</div>
+        <div class="dr"><span class="dk">m² užitná plocha</span><span class="dv b">Cílová: 200 m²+</span></div>
+        <div class="dr"><span class="dk">Pozemek</span><span class="dv b">Cílový: 2 000 m²+</span></div>
+        <div class="dr"><span class="dk">Rok výstavby</span><span class="dv">Čím novější, tím lépe</span></div>
+        <div class="dr"><span class="dk">Stav</span><span class="dv">Po rekonstrukci vs původní</span></div>
+        <div class="dr"><span class="dk">Energetický štítek</span><span class="dv g">C nebo D = výrazně lepší než G</span></div>
+        <div class="dr"><span class="dk">Vytápění</span><span class="dv r">Přímotopy = srovnatelný problém</span></div>
+        <div class="dr"><span class="dk">D6 vzdálenost</span><span class="dv">Dojezd Praha (Dejvice)</span></div>
+      </div>
+    </div>
+    <div class="note"><strong>Tip:</strong> Zálohuj si výpis jako PDF nebo screenshot. Na schůzce s realitkou konkrétní inzerát zabrání frázi "to není srovnatelné".</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#eff6ff;color:#2563eb">&#128200;</div> Realizované ceny vs nabídkové</div>
+    <div class="grid-3" style="margin-bottom:16px">
+      <div class="sc"><div class="n" style="color:#dc2626">−10 až −20 %</div><div class="l">Nabídková vs realizovaná cena</div><div class="ch" style="color:#6b7280">průměr okres Kladno</div></div>
+      <div class="sc"><div class="n">44–56 k</div><div class="l">Kč/m² realizované transakce</div><div class="ch" style="color:#6b7280">RD Kladno (Valuo data)</div></div>
+      <div class="sc"><div class="n" style="color:#2563eb">~14,3 mil</div><div class="l">Valuo odhad Družec</div><div class="ch up">44 722 Kč/m² (320 m²)</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Kde zjistit reálné (realizované) ceny</div>
+      <div class="dr"><span class="dk">ČÚZK cenová mapa</span><span class="dv"><a href="https://cenovamapa.gov.cz" target="_blank" style="color:#2563eb">cenovamapa.gov.cz</a> — prodeje z katastru, zdarma</span></div>
+      <div class="dr"><span class="dk">Katastr nemovitostí</span><span class="dv">Kupní smlouvy — hledej "kupní cena" u převodů v katastrálním území</span></div>
+      <div class="dr"><span class="dk">Valuo.cz</span><span class="dv"><a href="https://valuo.cz" target="_blank" style="color:#2563eb">valuo.cz</a> — srovnávané transakce, automatický odhad</span></div>
+      <div class="dr"><span class="dk">Sreality — prodáno</span><span class="dv">Inzeráty označené "prodáno" — nabídková cena před slevou</span></div>
+    </div>
+    <div class="note ok"><strong>Klíčový poznatek:</strong> Pokud Sreality zobrazuje Družec za 14,5 mil, reálná realizovaná cena bude pravděpodobně 12–13 mil. To je tvůj cílový prostor pro vyjednávání.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#eff6ff;color:#2563eb">&#9878;</div> Družec vs typická nabídka v okrese Kladno</div>
+    <div class="card">
+      <table class="vt">
+        <thead>
+          <tr>
+            <th>Parametr</th>
+            <th style="color:#2563eb">Družec (varianta A/B)</th>
+            <th>Typický RD za 14 mil Kladno</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Cena</td><td style="color:#2563eb;font-weight:700">13,5–14,5 mil</td><td>~14 mil</td></tr>
+          <tr><td>Užitná plocha</td><td style="color:#16a34a;font-weight:600">~200–220 m²</td><td>~160–180 m²</td></tr>
+          <tr><td>Pozemek</td><td style="color:#16a34a;font-weight:600">2 600 m² (var. A) / 4 200 m² (var. B)</td><td>~800–1 200 m²</td></tr>
+          <tr><td>Dispozice</td><td style="color:#16a34a;font-weight:600">6+1 / 7+1</td><td>5+1</td></tr>
+          <tr><td>Rok výstavby</td><td style="color:#dc2626;font-weight:600">1947</td><td>1980–2000</td></tr>
+          <tr><td>Stav</td><td style="color:#f97316;font-weight:600">Průměrný, nutná investice</td><td>Průměrný–dobrý</td></tr>
+          <tr><td>Energetický štítek</td><td style="color:#dc2626;font-weight:700">G (přímotopy)</td><td>C–D (kotel)</td></tr>
+          <tr><td>Vytápění</td><td style="color:#dc2626">Přímotopy (provoz 40–60 k/rok)</td><td>Plyn/tepelné čerpadlo</td></tr>
+          <tr><td>Nutná investice</td><td style="color:#dc2626;font-weight:600">~500 000 Kč (kotel + revize)</td><td>~0 Kč</td></tr>
+          <tr class="hlg"><td>Stavební pozemek (var. B)</td><td style="color:#16a34a;font-weight:700">+1 600 m² (p. č. 860/11) v ceně</td><td>Není</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note" style="border-left-color:#2563eb;background:#eff6ff"><strong>Závěr:</strong> Družec je <strong>lifestyle koupě</strong> — velký pozemek, prostorný dům, vesnický charakter blízko Prahy. Není to nejracionálnější kalkulace na m². A to je ok — pokud to víš vědomě a máš to v číslech.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#eff6ff;color:#2563eb">&#128172;</div> Vyjednávací páka z konkurence</div>
+    <div class="card">
+      <div class="card-title">Jak to použít na schůzce s realitkou</div>
+      <div style="background:#1e3a5f;color:#e0f2fe;border-radius:10px;padding:16px;font-size:13px;line-height:1.7;font-style:italic;margin-bottom:12px">
+        "Díval jsem se i na [alternativa z Sreality], ten je za 13,5 mil a má plynový kotel a štítek D. Družec se mi líbí víc, ale ta energetika a nutná investice do vytápění — to by se v ceně mělo promítnout."
+      </div>
+      <div class="dr"><span class="dk">Nutná reálná alternativa?</span><span class="dv g">NE — stačí že existuje inzerát na Sreality</span></div>
+      <div class="dr"><span class="dk">Jak konkrétní být?</span><span class="dv">Ulice nebo obec + cena + klíčový parametr (kotel, štítek)</span></div>
+      <div class="dr"><span class="dk">Kdy použít?</span><span class="dv">Po prohlídce, při cenové diskuzi — ne hned na začátku</span></div>
+      <div class="dr"><span class="dk">Cíl argumentu</span><span class="dv b">Sleva 500–1 000 k nebo závazek prodávajícího k opravě</span></div>
+    </div>
+    <div class="note warn"><strong>Pozor:</strong> Neblufuj s neexistující alternativou — realitka ji může ověřit. Stačí skutečný inzerát, který jsi viděl. Sreality vždy něco zobrazí.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#eff6ff;color:#2563eb">&#128202;</div> Tržní trend — okres Kladno</div>
+    <div class="grid-3" style="margin-bottom:16px">
+      <div class="sc"><div class="n">55 557 Kč</div><div class="l">Průměr Kč/m² RD okres Kladno</div></div>
+      <div class="sc"><div class="n up">+21,7 %</div><div class="l">Růst cen za 1 rok</div><div class="ch up">+1 743 000 Kč na průměrném domě</div></div>
+      <div class="sc"><div class="n">43 dní</div><div class="l">Průměrná doba inzerce</div><div class="ch up">Zájem +46 % za rok</div></div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title" style="color:#16a34a">Co to znamená pro Libušín (prodej)</div>
+        <div class="dr"><span class="dk">Rychlost prodeje</span><span class="dv g">43 dní prům. — prodej do 60 dní reálný</span></div>
+        <div class="dr"><span class="dk">Cena</span><span class="dv g">Trh roste — Libušín prodáš za tržní cenu nebo výš</span></div>
+        <div class="dr"><span class="dk">Riziko čekání</span><span class="dv g">Nízké — poptávka silná</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:#2563eb">Co to znamená pro Družec (koupě)</div>
+        <div class="dr"><span class="dk">Cena za rok</span><span class="dv r">O ~21 % vyšší pokud nekoupíš teď</span></div>
+        <div class="dr"><span class="dk">Konkurence kupujících</span><span class="dv r">+46 % více zájemců = méně prostoru k vyjednávání</span></div>
+        <div class="dr"><span class="dk">Závěr</span><span class="dv b">Koupit teď je výhodnější než čekat rok</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#eff6ff;color:#2563eb">&#127968;</div> Sousední pozemek 860/11 jako investice</div>
+    <div class="grid-3" style="margin-bottom:16px">
+      <div class="sc"><div class="n">1 600 m²</div><div class="l">Výměra parcely 860/11</div><div class="ch" style="color:#6b7280">zóna BV, zastavitelnost 300 m²</div></div>
+      <div class="sc"><div class="n" style="color:#16a34a">4–6,4 mil</div><div class="l">Odhadovaná tržní hodnota</div><div class="ch" style="color:#6b7280">2 500–4 000 Kč/m² stav. pozemek</div></div>
+      <div class="sc"><div class="n" style="color:#2563eb">524 m²</div><div class="l">Návrh budovy HPP</div><div class="ch" style="color:#6b7280">2NP + podkroví, max 300 m² zastavění</div></div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Parametry pozemku</div>
+        <div class="dr"><span class="dk">Parcela č.</span><span class="dv b">860/11</span></div>
+        <div class="dr"><span class="dk">Výměra</span><span class="dv b">1 600 m²</span></div>
+        <div class="dr"><span class="dk">Územní zóna</span><span class="dv g">BV — bydlení venkovské</span></div>
+        <div class="dr"><span class="dk">Max zastavěná plocha</span><span class="dv">300 m²</span></div>
+        <div class="dr"><span class="dk">Podlaží</span><span class="dv">2NP + podkroví</span></div>
+        <div class="dr"><span class="dk">Hrubá podlažní plocha</span><span class="dv b">~524 m² HPP (návrh)</span></div>
+        <div class="dr"><span class="dk">Přístup k pozemku</span><span class="dv">Přes parcelu Družec nebo obecní cesta</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Investiční kalkulace</div>
+        <div class="dr"><span class="dk">Cena stav. pozemku Kladno</span><span class="dv">2 500–4 000 Kč/m²</span></div>
+        <div class="dr"><span class="dk">Hodnota 860/11</span><span class="dv g">4 – 6,4 mil Kč</span></div>
+        <div class="dr"><span class="dk">Cena varianty B (v balíku)</span><span class="dv b">14–14,5 mil Kč</span></div>
+        <div class="dr"><span class="dk">Rozdíl var. A → B</span><span class="dv">~0,5–1 mil navíc za pozemek</span></div>
+        <div class="dr"><span class="dk">Pozemek v ceně balíku</span><span class="dv g">Fakticky "zadarmo" nebo za zlomek hodnoty</span></div>
+        <div class="dr"><span class="dk">Prodej za 2–3 roky</span><span class="dv g">4–5 mil Kč (reálný odhad)</span></div>
+        <div class="dr"><span class="dk">Nebo</span><span class="dv b">Postavit nájemní dům / rodina</span></div>
+      </div>
+    </div>
+    <div class="note ok"><strong>Klíčový poznatek varianty B:</strong> Pokud koupíš balík za 14–14,5 mil, pozemek 860/11 dostaneš za ~0–1 mil navíc oproti var. A. Za 2–3 roky ho prodáš za 4–5 mil nebo postavíš. Čistý zisk na pozemku: <strong>3–5 mil Kč.</strong></div>
+  </div>
+
+</div>
+</div>
+
 <div class="footer">Analýza nemovitostí &bull; 29. 3. 2026 &bull; Data: RÚIAN (vdp.cuzk.gov.cz), Sreality, Valuo.cz, ČSÚ &bull; Nenahrazuje znalecký posudek</div>
 
 <script>
+function toggleMega(group){
+  const el=document.getElementById('mg-'+group);
+  const wasOpen=el.classList.contains('open');
+  document.querySelectorAll('.mega-group').forEach(g=>g.classList.remove('open'));
+  if(!wasOpen)el.classList.add('open');
+}
+document.addEventListener('click',function(e){
+  if(!e.target.closest('.mega-group'))document.querySelectorAll('.mega-group').forEach(g=>g.classList.remove('open'));
+});
 function go(id){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b=>{b.className='nav-btn'});
+  document.querySelectorAll('.mega-dd-btn').forEach(b=>b.classList.remove('active-item'));
   document.getElementById('p-'+id).classList.add('active');
-  document.getElementById('btn-'+id).classList.add('active-'+id);
+  const btn=document.getElementById('btn-'+id);
+  if(btn)btn.classList.add('active-item');
+  document.querySelectorAll('.mega-group').forEach(g=>g.classList.remove('open'));
   if(id==='lib'&&!window._mapLibInit){initMapLib();window._mapLibInit=true}
   if(id==='dru'&&!window._mapDruInit){initMapDru();window._mapDruInit=true}
   window.scrollTo(0,0);
