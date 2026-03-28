@@ -17,6 +17,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .nav-btn.active-dru{color:#16a34a;border-bottom-color:#16a34a;background:#f0fdf4}
 .nav-btn.active-vs{color:#1a1a1a;border-bottom-color:#1a1a1a;background:#f9fafb}
 .nav-btn.active-fin{color:#f97316;border-bottom-color:#f97316;background:#fff7ed}
+.nav-btn.active-nak{color:#7c3aed;border-bottom-color:#7c3aed;background:#f5f3ff}
 .panel{display:none}.panel.active{display:block}
 .container{max-width:1200px;margin:0 auto;padding:0 24px}
 .hero{padding:32px 0;text-align:center;border-bottom:1px solid #e5e7eb}
@@ -96,6 +97,7 @@ table.vt{width:100%;border-collapse:collapse;min-width:400px}
   <button class="nav-btn" onclick="go('dru')" id="btn-dru">Družec (koupě)</button>
   <button class="nav-btn" onclick="go('vs')" id="btn-vs">Srovnání</button>
   <button class="nav-btn" onclick="go('fin')" id="btn-fin">Finanční model</button>
+  <button class="nav-btn" onclick="go('nak')" id="btn-nak">Náklady & Dotace</button>
 </nav>
 
 <!-- ===================== LIBUŠÍN ===================== -->
@@ -865,7 +867,387 @@ table.vt{width:100%;border-collapse:collapse;min-width:400px}
 </div>
 </div>
 
-<div class="footer">Analýza nemovitostí &bull; 27. 3. 2026 &bull; Data: RÚIAN (vdp.cuzk.gov.cz), Sreality, Valuo.cz, ČSÚ &bull; Nenahrazuje znalecký posudek</div>
+<!-- ===================== NÁKLADY & DOTACE ===================== -->
+<div class="panel" id="p-nak">
+<div class="hero" style="background:#f5f3ff;border-bottom:2px solid #7c3aed">
+  <div class="container">
+    <h1 style="color:#7c3aed">Náklady & Dotace — Družec</h1>
+    <div class="sub">Investice po koupi &bull; Dotační programy NZÚ 2026 &bull; 3 scénáře &bull; Hydroizolace &bull; Chytré kombinace</div>
+  </div>
+</div>
+<div class="container">
+
+  <!-- STAV DOMU -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#f5f3ff;color:#7c3aed">S</div> Stav domu — co víme</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Potvrzeno (fotky + inzerát)</div>
+        <div class="dr"><span class="dk">Vytápění</span><span class="dv r">Elektrické přímotopy celý dům</span></div>
+        <div class="dr"><span class="dk">Ohřev vody</span><span class="dv r">Elektrický bojler 80-120l</span></div>
+        <div class="dr"><span class="dk">Energetický štítek</span><span class="dv r">G (nejhorší)</span></div>
+        <div class="dr"><span class="dk">Plyn</span><span class="dv y">"V dosahu" — ověřit HUP!</span></div>
+        <div class="dr"><span class="dk">Rozvody ÚT</span><span class="dv r">Neexistují — komplet nové</span></div>
+        <div class="dr"><span class="dk">Kuchyně</span><span class="dv y">Funkční ale styl 2005</span></div>
+        <div class="dr"><span class="dk">Koupelny (3×)</span><span class="dv g">Ok na 5-10 let</span></div>
+        <div class="dr"><span class="dk">Stropy/stěny</span><span class="dv g">Čisté, bez fleků, bez prasklin</span></div>
+        <div class="dr"><span class="dk">Garáž</span><span class="dv g">Suchá, čistá</span></div>
+        <div class="dr"><span class="dk">Střecha (dron)</span><span class="dv g">Tašky rovné, kompletní</span></div>
+        <div class="dr"><span class="dk">Fasáda</span><span class="dv g">Bílá omítka, bez zelených map</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Ověřit na prohlídce (Palán)</div>
+        <div class="dr"><span class="dk">Sklep — vlhkost</span><span class="dv y">Žádná fotka! Klíčové.</span></div>
+        <div class="dr"><span class="dk">HUP (plynová přípojka)</span><span class="dv y">Žlutá skříňka na fasádě?</span></div>
+        <div class="dr"><span class="dk">Elektroinstalace</span><span class="dv y">Mix starých/nových rozvodů?</span></div>
+        <div class="dr"><span class="dk">Okna — rok, stav</span><span class="dv y">Plastová z 2005?</span></div>
+        <div class="dr"><span class="dk">Izolace podkroví</span><span class="dv y">Tloušťka, materiál?</span></div>
+        <div class="dr"><span class="dk">Kolaudace přístaveb 2005</span><span class="dv y">Garáž, terasa, zimní zahrada</span></div>
+        <div class="dr"><span class="dk">Studna — vydatnost</span><span class="dv y">Kvalita vody?</span></div>
+        <div class="dr"><span class="dk">Reálné vyúčtování energií</span><span class="dv r">Kolik platili za elektřinu?</span></div>
+      </div>
+    </div>
+    <div class="note" style="border-left-color:#7c3aed"><strong>Proč přímotopy?</strong> Majitelé byli bohatí (křišťálové lustry, Miele, kamenné oblouky). Přímotopy = nulová údržba, žádné revize. Lifestyle choice, ne workaround na vlhkost. Pravděpodobnost hydroizolačního problému: 35-45%.</div>
+  </div>
+
+  <!-- RIZIKA S PRAVDĚPODOBNOSTÍ -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fef2f2;color:#dc2626">!</div> Rizika — pravděpodobnost a náklady</div>
+    <div class="card" style="overflow-x:auto">
+      <table class="vt">
+        <thead><tr><th>#</th><th>Problém</th><th>Pravděp.</th><th>Náklady worst case</th><th>Proč</th></tr></thead>
+        <tbody>
+          <tr class="hlr"><td>1</td><td><strong>Kotelna + rozvody + radiátory</strong></td><td style="color:#dc2626;font-weight:700">95%</td><td>400-500k</td><td>Potvrzeno na fotkách — přímotopy v celém domě</td></tr>
+          <tr><td>2</td><td><strong>Hydroizolace / vlhkost sklep</strong></td><td style="color:#f97316;font-weight:700">35-45%</td><td>500k-1,2 mil</td><td>1947, potok, studna. Ale: garáž suchá, interiér čistý</td></tr>
+          <tr><td>3</td><td><strong>Kuchyně výměna</strong></td><td style="color:#dc2626;font-weight:700">90%</td><td>180-220k</td><td>Styl 2005, vizuálně zastaralá. IKEA METOD.</td></tr>
+          <tr><td>4</td><td><strong>Elektroinstalace</strong></td><td style="color:#f97316;font-weight:700">40-50%</td><td>250-500k</td><td>Mix starých a nových rozvodů (rekon. 2005)</td></tr>
+          <tr><td>5</td><td><strong>Plynová přípojka</strong></td><td style="color:#f97316;font-weight:700">50%</td><td>80-150k</td><td>Inzerát: "v dosahu" ≠ "připojený"</td></tr>
+          <tr><td>6</td><td><strong>Střecha — drobné opravy</strong></td><td style="color:#16a34a;font-weight:700">30-40%</td><td>50-100k</td><td>20 let, ale stropy bez fleků od zatékání</td></tr>
+          <tr><td>7</td><td><strong>Koupelny refresh</strong></td><td style="color:#16a34a;font-weight:700">20-30%</td><td>30-80k</td><td>Spáry a silikony, ne komplet výměna</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note ok"><strong>Po fotkách: optimistický až realistický scénář.</strong> Rekonstrukce 2005 byla kvalitní — kámen, masivní dřevo, luxfery, Miele. Kdo dává taková řešení, nešetří na základech.</div>
+  </div>
+
+  <!-- DOTAČNÍ PROGRAMY -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#f0fdf4;color:#16a34a">€</div> Dotační programy NZÚ 2026</div>
+    <div class="grid-2">
+      <div class="card" style="border-color:#16a34a">
+        <div class="card-title" style="color:#16a34a">NZÚ Bezúročný úvěr (pro běžné domácnosti)</div>
+        <div class="dr"><span class="dk">Status</span><span class="dv g">Příjem žádostí od června 2026</span></div>
+        <div class="dr"><span class="dk">Úrok</span><span class="dv g"><strong>0% — stát platí úroky</strong></span></div>
+        <div class="dr"><span class="dk">Splatnost</span><span class="dv">Až 25 let</span></div>
+        <div class="dr"><span class="dk">Na co</span><span class="dv">Zateplení, TČ, FVE, rekuperace</span></div>
+        <div class="dr"><span class="dk">Podmínka</span><span class="dv">Renovační pas (poradce zdarma)</span></div>
+        <div class="dr"><span class="dk">Max výše</span><span class="dv y">Upřesní MŽP v květnu 2026</span></div>
+        <div class="dr"><span class="dk">Příklad MŽP</span><span class="dv g">1 mil na 15 let → ušetříš 519k na úrocích</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Oprav dům po babičce → bezúročný úvěr</div>
+        <div class="dr"><span class="dk">2025</span><span class="dv">Přímá dotace až 1 mil Kč</span></div>
+        <div class="dr"><span class="dk">2026</span><span class="dv y">Nahrazeno bezúročným úvěrem</span></div>
+        <div class="dr"><span class="dk">Podmínka</span><span class="dv">Kompletní zateplení (fasáda + střecha + podlahy)</span></div>
+        <div class="dr"><span class="dk">Přidat lze</span><span class="dv">TČ, FVE, dešťovka</span></div>
+        <div class="dr"><span class="dk">Bonusy</span><span class="dv g">Kombinační 50k + rodinný 50k/dítě + region 5%</span></div>
+        <div class="dr"><span class="dk">Kolaudace před</span><span class="dv g">1.7.2013 → Družec splňuje ✓</span></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:12px">
+      <div class="card-title">Co JE a co NENÍ dotované</div>
+      <div class="grid-2">
+        <div>
+          <div class="dr"><span class="dk g">✓ Zateplení fasády</span><span class="dv g">Až 1 mil v rámci komplexu</span></div>
+          <div class="dr"><span class="dk g">✓ Zateplení střechy/podkroví</span><span class="dv g">Součást komplexu</span></div>
+          <div class="dr"><span class="dk g">✓ Zateplení podlahy/strop sklepa</span><span class="dv g">Součást komplexu</span></div>
+          <div class="dr"><span class="dk g">✓ Tepelné čerpadlo</span><span class="dv g">Bezúročný úvěr</span></div>
+          <div class="dr"><span class="dk g">✓ FVE (solární panely)</span><span class="dv g">Bezúročný úvěr</span></div>
+          <div class="dr"><span class="dk g">✓ Výměna oken</span><span class="dv g">Součást zateplení</span></div>
+          <div class="dr"><span class="dk g">✓ Dešťovka</span><span class="dv g">V kombinaci se zateplením</span></div>
+        </div>
+        <div>
+          <div class="dr"><span class="dk r">✗ Hydroizolace základů</span><span class="dv r">Není energetické opatření</span></div>
+          <div class="dr"><span class="dk r">✗ Drenáž kolem domu</span><span class="dv r">Není energetické opatření</span></div>
+          <div class="dr"><span class="dk r">✗ Sanace vlhkosti sklepa</span><span class="dv r">Není energetické opatření</span></div>
+          <div class="dr"><span class="dk r">✗ Plynový kotel</span><span class="dv r">NZÚ nedotuje plyn</span></div>
+          <div class="dr"><span class="dk r">✗ Kuchyně</span><span class="dv r">Interiérová úprava</span></div>
+          <div class="dr"><span class="dk r">✗ Koupelny</span><span class="dv r">Interiérová úprava</span></div>
+          <div class="dr"><span class="dk r">✗ Rozvody topení</span><span class="dv y">Jen pokud součást TČ projektu</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FÍGL: HYDROIZOLACE PŘES ZATEPLENÍ -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fff7ed;color:#f97316">★</div> Chytrá kombinace: Hydroizolace přes zateplení</div>
+    <div class="card" style="border-color:#f97316">
+      <div class="card-title" style="color:#f97316">Fígl — zateplení soklu = odkopané základy = hydroizolace skoro zadarmo</div>
+      <div class="grid-2">
+        <div>
+          <div style="font-size:13px;font-weight:700;margin-bottom:8px;color:#16a34a">Platí dotace / bezúročný úvěr:</div>
+          <div class="dr"><span class="dk">Odkopání základů</span><span class="dv g">Součást zateplení soklu</span></div>
+          <div class="dr"><span class="dk">Zateplení soklu (EPS perimetr)</span><span class="dv g">Dotované</span></div>
+          <div class="dr"><span class="dk">Zpětný zásyp</span><span class="dv g">Součást zateplení</span></div>
+        </div>
+        <div>
+          <div style="font-size:13px;font-weight:700;margin-bottom:8px;color:#f97316">Z vlastních peněz:</div>
+          <div class="dr"><span class="dk">Hydroizolační fólie + pásy</span><span class="dv">30-50k</span></div>
+          <div class="dr"><span class="dk">Drenážní trubka + štěrk</span><span class="dv">20-40k</span></div>
+          <div class="dr"><span class="dk">Práce navíc (PalanStav)</span><span class="dv">30-50k</span></div>
+          <div class="dr" style="background:#fff7ed"><span class="dk"><strong>Celkem z vlastních</strong></span><span class="dv b"><strong>80-140k</strong></span></div>
+        </div>
+      </div>
+      <div class="note ok" style="margin-top:12px"><strong>Místo 300-600k za kompletní hydroizolaci zaplatíš 80-140k.</strong> Kopání a zásyp jde na účet zateplení soklu (dotované). Přidáš jen materiál na hydroizolaci. PalanStav to udělá za náklady.</div>
+    </div>
+  </div>
+
+  <!-- 3 SCÉNÁŘE -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#f5f3ff;color:#7c3aed">A</div> Scénář A: Minimum — plynový kotel, bez dotací</div>
+    <div class="card">
+      <div class="card-title">Buderus GB192i + rozvody + radiátory</div>
+      <div class="dr"><span class="dk">Plynový kotel Buderus GB192i</span><span class="dv">80-100k</span></div>
+      <div class="dr"><span class="dk">Zásobník TUV Buderus Logalux</span><span class="dv">30-40k</span></div>
+      <div class="dr"><span class="dk">Trinnity Exclusive + Fernox TF1</span><span class="dv">25-35k</span></div>
+      <div class="dr"><span class="dk">Rozvody topení (3 podlaží, ~15-20 radiátorů)</span><span class="dv">150-200k</span></div>
+      <div class="dr"><span class="dk">Radiátory deskové (~15-20 ks)</span><span class="dv">60-80k</span></div>
+      <div class="dr"><span class="dk">Instalace (PalanStav za náklady)</span><span class="dv">50-80k</span></div>
+      <div class="dr"><span class="dk y">Plynová přípojka (pokud není)</span><span class="dv y">0-150k</span></div>
+      <div class="dr"><span class="dk">Kuchyně IKEA METOD</span><span class="dv">180-220k</span></div>
+      <div class="dr"><span class="dk">Ložnice basic</span><span class="dv">35-65k</span></div>
+      <div class="dr"><span class="dk">Nepředvídané</span><span class="dv">50-100k</span></div>
+      <div class="dr" style="background:#fef2f2;border-radius:8px;padding:10px"><span class="dk"><strong>CELKEM</strong></span><span class="dv r"><strong>660k — 1,07 mil</strong></span></div>
+      <div class="dr"><span class="dk">Dotace / podpora NZÚ</span><span class="dv r"><strong>0 Kč</strong> (plyn nedotují)</span></div>
+      <div class="dr"><span class="dk"><strong>Z vlastních peněz</strong></span><span class="dv r"><strong>660k — 1,07 mil</strong></span></div>
+    </div>
+    <div class="grid-3">
+      <div class="sc"><div class="n">~5k</div><div class="l">Energie/měs (plyn)</div></div>
+      <div class="sc"><div class="n g">120-180k</div><div class="l">Úspora/rok vs přímotopy</div></div>
+      <div class="sc"><div class="n">G→F</div><div class="l">Energetický štítek po</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fff7ed;color:#f97316">B</div> Scénář B: Chytřejší — tepelné čerpadlo + bezúročný úvěr <span class="tag tg" style="margin-left:8px">DOPORUČENÝ</span></div>
+    <div class="card" style="border-color:#f97316">
+      <div class="card-title" style="color:#f97316">TČ vzduch-voda + rozvody + bezúročný úvěr NZÚ</div>
+      <div class="dr"><span class="dk">TČ vzduch-voda 12-16 kW (Viessmann, Daikin)</span><span class="dv">200-350k</span></div>
+      <div class="dr"><span class="dk">Zásobník TUV integrovaný</span><span class="dv">0 (součást TČ)</span></div>
+      <div class="dr"><span class="dk">Rozvody topení (3 podlaží, ~15-20 radiátorů)</span><span class="dv">150-200k</span></div>
+      <div class="dr"><span class="dk">Radiátory / VT kompatibilní</span><span class="dv">60-100k</span></div>
+      <div class="dr"><span class="dk">Venkovní jednotka + instalace</span><span class="dv">30-50k</span></div>
+      <div class="dr"><span class="dk">Elektroinstalace úprava (jistič, kabeláž)</span><span class="dv">20-40k</span></div>
+      <div class="dr"><span class="dk">Instalace (PalanStav + topenář)</span><span class="dv">60-100k</span></div>
+      <div class="dr"><span class="dk">Kuchyně IKEA METOD</span><span class="dv">180-220k</span></div>
+      <div class="dr"><span class="dk">Ložnice basic</span><span class="dv">35-65k</span></div>
+      <div class="dr"><span class="dk">Nepředvídané</span><span class="dv">50-100k</span></div>
+      <div class="dr" style="background:#fff7ed;border-radius:8px;padding:10px"><span class="dk"><strong>CELKEM</strong></span><span class="dv b"><strong>785k — 1,23 mil</strong></span></div>
+      <div class="dr" style="background:#f0fdf4"><span class="dk g"><strong>Bezúročný úvěr NZÚ</strong></span><span class="dv g"><strong>−500k až −700k</strong></span></div>
+      <div class="dr" style="background:#f0fdf4;border-radius:8px;padding:10px"><span class="dk"><strong>Z vlastních peněz</strong></span><span class="dv" style="color:#f97316;font-weight:800"><strong>285k — 530k</strong></span></div>
+    </div>
+    <div class="grid-3">
+      <div class="sc" style="border-color:#f97316"><div class="n" style="color:#f97316">~2,5k</div><div class="l">Energie/měs (TČ, tarif D57d)</div></div>
+      <div class="sc" style="border-color:#f97316"><div class="n g">144-216k</div><div class="l">Úspora/rok vs přímotopy</div></div>
+      <div class="sc" style="border-color:#f97316"><div class="n">G→D/E</div><div class="l">Energetický štítek po</div></div>
+    </div>
+    <div class="note" style="border-left-color:#f97316;margin-top:12px"><strong>Bezúročný úvěr 600k na 15 let = splátka 3 333 Kč/měs.</strong> Nemusíš řešit plynovou přípojku — TČ jede na elektřinu, kterou už máš. Návratnost investice 2-4 roky.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#f0fdf4;color:#16a34a">C</div> Scénář C: Maximum — kompletní renovace</div>
+    <div class="card" style="border-color:#16a34a">
+      <div class="card-title" style="color:#16a34a">Zateplení + TČ + FVE + bezúročný úvěr → posun z G na B/C</div>
+      <div class="dr"><span class="dk">Zateplení fasáda (EPS/minerální vata)</span><span class="dv">400-700k</span></div>
+      <div class="dr"><span class="dk">Zateplení střecha/podkroví</span><span class="dv">100-200k</span></div>
+      <div class="dr"><span class="dk">Zateplení podlaha/strop sklepa</span><span class="dv">50-100k</span></div>
+      <div class="dr"><span class="dk">TČ vzduch-voda 10-12 kW (po zateplení menší)</span><span class="dv">180-280k</span></div>
+      <div class="dr"><span class="dk">Rozvody topení + radiátory</span><span class="dv">200-280k</span></div>
+      <div class="dr"><span class="dk">Instalace TČ + elektro úpravy</span><span class="dv">80-130k</span></div>
+      <div class="dr"><span class="dk">FVE 5-8 kWp (panely + měnič + baterie)</span><span class="dv">250-400k</span></div>
+      <div class="dr"><span class="dk">Hydroizolace (materiál, fígl přes zateplení)</span><span class="dv">80-140k</span></div>
+      <div class="dr"><span class="dk">Kuchyně IKEA METOD</span><span class="dv">180-220k</span></div>
+      <div class="dr"><span class="dk">Ložnice basic</span><span class="dv">35-65k</span></div>
+      <div class="dr"><span class="dk">Projektová dokumentace + PENB</span><span class="dv">30-50k</span></div>
+      <div class="dr"><span class="dk">Nepředvídané</span><span class="dv">80-150k</span></div>
+      <div class="dr" style="background:#f0fdf4;border-radius:8px;padding:10px"><span class="dk"><strong>CELKEM</strong></span><span class="dv" style="color:#16a34a;font-weight:800"><strong>1,67 — 2,72 mil</strong></span></div>
+      <div class="dr" style="background:#f0fdf4"><span class="dk g"><strong>Bezúročný úvěr NZÚ</strong></span><span class="dv g"><strong>−1,0 až −1,8 mil</strong></span></div>
+      <div class="dr"><span class="dk g">Hydroizolace fígl (viz výše)</span><span class="dv g">−200 až −460k ušetřeno</span></div>
+      <div class="dr" style="background:#f0fdf4;border-radius:8px;padding:10px"><span class="dk"><strong>Z vlastních peněz</strong></span><span class="dv" style="color:#16a34a;font-weight:800"><strong>590k — 780k</strong></span></div>
+    </div>
+    <div class="grid-3">
+      <div class="sc" style="border-color:#16a34a"><div class="n g">~1,5k</div><div class="l">Energie/měs (TČ + FVE)</div></div>
+      <div class="sc" style="border-color:#16a34a"><div class="n g">156-228k</div><div class="l">Úspora/rok vs přímotopy</div></div>
+      <div class="sc" style="border-color:#16a34a"><div class="n g">G→B/C</div><div class="l">Energetický štítek po</div></div>
+    </div>
+    <div class="note ok" style="margin-top:12px"><strong>Bezúročný úvěr 1,4 mil na 20 let = splátka 5 833 Kč/měs (0%).</strong> Hodnota nemovitosti roste o 1-2 mil. Dá se udělat postupně — nejdřív TČ, za rok zateplení, za 2 roky FVE.</div>
+  </div>
+
+  <!-- SROVNÁNÍ SCÉNÁŘŮ -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#f5f3ff;color:#7c3aed">⇔</div> Srovnání scénářů</div>
+    <div class="card" style="overflow-x:auto">
+      <table class="vt">
+        <thead><tr><th>Parametr</th><th>A: Plyn (min)</th><th style="color:#f97316;font-weight:800">B: TČ + úvěr ★</th><th style="color:#16a34a">C: Komplex</th></tr></thead>
+        <tbody>
+          <tr><td>Celkové náklady</td><td>660k-1,07M</td><td>785k-1,23M</td><td>1,67-2,72M</td></tr>
+          <tr><td>Bezúročný úvěr</td><td class="r">0</td><td class="g">500-700k</td><td class="g">1,0-1,8M</td></tr>
+          <tr style="background:#fff7ed"><td><strong>Z vlastních</strong></td><td class="r"><strong>660k-1,07M</strong></td><td style="color:#f97316;font-weight:800"><strong>285-530k</strong></td><td><strong>590-780k</strong></td></tr>
+          <tr><td>Splátka úvěru/měs</td><td>0</td><td>~3,3k</td><td>~5,8k</td></tr>
+          <tr><td>Energie/měs</td><td>~5k (plyn)</td><td style="color:#f97316;font-weight:700">~2,5k (TČ)</td><td class="g">~1,5k (TČ+FVE)</td></tr>
+          <tr><td>Úspora vs přímotopy/rok</td><td>120-180k</td><td>144-216k</td><td>156-228k</td></tr>
+          <tr><td>Návratnost investice</td><td>4-7 let</td><td style="color:#f97316;font-weight:700">2-4 roky</td><td>4-6 let</td></tr>
+          <tr><td>Zvýšení hodnoty domu</td><td>+300-500k</td><td>+500-800k</td><td class="g">+1-2 mil</td></tr>
+          <tr><td>Energetický štítek po</td><td>G→F</td><td>G→D/E</td><td class="g">G→B/C</td></tr>
+          <tr><td>Plynová přípojka potřeba</td><td class="r">Ano (0-150k)</td><td class="g">Ne</td><td class="g">Ne</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note" style="border-left-color:#f97316"><strong>Scénář B je sweet spot.</strong> Z vlastních zaplatíš NEJMÉNĚ (285-530k), na účtu ti zůstane VÍC peněz než u A. Provoz 2,5k/měs místo 5k (plyn). Nemusíš řešit plynovou přípojku. Návratnost nejrychlejší.</div>
+  </div>
+
+  <!-- DOPAD NA FINANČNÍ PLÁN -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fff7ed;color:#f97316">$</div> Dopad na finanční plán (prodej 13M, koupě 14M, hypo 4M)</div>
+    <div class="card" style="overflow-x:auto">
+      <table class="vt">
+        <thead><tr><th>Parametr</th><th>A: Plyn</th><th style="color:#f97316;font-weight:800">B: TČ ★</th><th style="color:#16a34a">C: Komplex</th></tr></thead>
+        <tbody>
+          <tr><td>Na účtu po koupi</td><td>3 mil</td><td>3 mil</td><td>3 mil</td></tr>
+          <tr><td>Z vlastních na investice</td><td class="r">~850k</td><td>~400k</td><td>~700k</td></tr>
+          <tr><td>Bezúročný úvěr NZÚ</td><td>0</td><td class="g">~600k</td><td class="g">~1,4 mil</td></tr>
+          <tr style="background:#fff7ed"><td><strong>Na účtu po investicích</strong></td><td><strong>2,15 mil</strong></td><td style="color:#f97316;font-weight:800"><strong>2,6 mil</strong></td><td><strong>2,3 mil</strong></td></tr>
+          <tr><td>Hypotéka splátka</td><td>22,8k</td><td>22,8k</td><td>22,8k</td></tr>
+          <tr><td>NZÚ úvěr splátka</td><td>0</td><td>3,3k</td><td>5,8k</td></tr>
+          <tr><td>Energie</td><td>5k</td><td>2,5k</td><td>1,5k</td></tr>
+          <tr style="background:#fff7ed"><td><strong>Celk. splátky + energie</strong></td><td><strong>27,8k</strong></td><td style="color:#f97316;font-weight:800"><strong>28,6k</strong></td><td><strong>30,1k</strong></td></tr>
+          <tr><td>Provoz + osobní</td><td>43k</td><td>43k</td><td>43k</td></tr>
+          <tr style="background:#f0fdf4"><td><strong>Celk. burn/měs</strong></td><td><strong>70,8k</strong></td><td style="color:#f97316;font-weight:800"><strong>71,6k</strong></td><td><strong>73,1k</strong></td></tr>
+          <tr><td>Runway bez příjmu</td><td>30 měs.</td><td style="color:#f97316;font-weight:700">36 měs. (3 roky)</td><td>31 měs.</td></tr>
+          <tr><td>Break-even příjem</td><td>70,8k</td><td>71,6k</td><td>73,1k</td></tr>
+          <tr><td>Hodnota domu po</td><td>14,3-14,5 mil</td><td>14,5-14,8 mil</td><td class="g">15-16 mil</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note" style="border-left-color:#7c3aed"><strong>Scénář B: na účtu 2,6 mil = víc než A (2,15 mil).</strong> Burn je skoro stejný (71,6k vs 70,8k). Ale runway je o 6 měsíců delší díky vyšší rezervě. TČ + bezúročný úvěr je objektivně lepší než plynový kotel.</div>
+  </div>
+
+  <!-- SCÉNÁŘE PODLE STAVU SKLEPA -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fef2f2;color:#dc2626">⚑</div> Scénáře podle stavu sklepa (prohlídka rozhodne)</div>
+    <div class="card" style="overflow-x:auto">
+      <table class="vt">
+        <thead><tr><th>Scénář</th><th>Koupě</th><th>Investice</th><th>Celkem</th><th>Na účtu</th><th>Verdikt</th></tr></thead>
+        <tbody>
+          <tr class="hlg"><td><strong>Bez problémů</strong></td><td>14 mil</td><td>400k (scénář B)</td><td>14,4 mil</td><td>2,6 mil</td><td class="g">✓ V pohodě</td></tr>
+          <tr style="background:#fff7ed"><td><strong>Optimistický (jen kotel)</strong></td><td>13,5 mil</td><td>700k</td><td>14,2 mil</td><td>2,8 mil</td><td class="g">✓ Sweet spot</td></tr>
+          <tr><td><strong>Realistický (vlhkost + kotel)</strong></td><td>12,5-13 mil</td><td>1 mil</td><td>13,5-14 mil</td><td>2-2,5 mil</td><td class="g">✓ Ok</td></tr>
+          <tr class="hlr"><td><strong>Pesimistický</strong></td><td>11-12 mil</td><td>2-3 mil</td><td>13-15 mil</td><td>0-1 mil</td><td class="y">⚠ Na hraně</td></tr>
+          <tr style="background:#fef2f2"><td><strong>Katastrofický</strong></td><td colspan="4" style="text-align:center;color:#dc2626">Odejdi. Nechceš kupovat.</td><td class="r">✗ Nekupuj</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note"><strong>Čím horší stav → tím víc srazíš cenu.</strong> Investice do oprav se kompenzují nižší kupní cenou. Problém nastává jen u katastrofického scénáře (opravy 3+ mil). Ten poznáš za 5 minut ve sklepě.</div>
+  </div>
+
+  <!-- VYJEDNÁVACÍ SRÁŽKY -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fff7ed;color:#f97316">↓</div> Vyjednávací srážky z ceny 16,99 mil</div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title" style="color:#dc2626">Tvrdé argumenty (fakta)</div>
+        <div class="dr"><span class="dk">Přímotopy celý dům, žádné rozvody</span><span class="dv r">−400-500k</span></div>
+        <div class="dr"><span class="dk">Energetický štítek G</span><span class="dv r">−200-300k</span></div>
+        <div class="dr"><span class="dk">Elektrický bojler (ne plyn)</span><span class="dv r">−50-100k</span></div>
+        <div class="dr"><span class="dk">Kuchyně zastaralá</span><span class="dv r">−150-200k</span></div>
+        <div class="dr"><span class="dk">Plyn možná nepřipojený</span><span class="dv r">−80-150k</span></div>
+        <div class="dr" style="background:#fef2f2;border-radius:8px;padding:8px"><span class="dk"><strong>Celkem tvrdé</strong></span><span class="dv r"><strong>−880k až −1,25 mil</strong></span></div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:#f97316">Měkké argumenty (páky)</div>
+        <div class="dr"><span class="dk">Dům z 1947, 78 let</span><span class="dv">−200-400k</span></div>
+        <div class="dr"><span class="dk">20 let od rekonstrukce</span><span class="dv">−100-200k</span></div>
+        <div class="dr"><span class="dk">4+ měsíce na trhu</span><span class="dv">−300-500k</span></div>
+        <div class="dr"><span class="dk">Prodávající ve Švýcarsku</span><span class="dv">−200-300k</span></div>
+        <div class="dr"><span class="dk">Ty jsi jistý kupec</span><span class="dv">−100-200k</span></div>
+        <div class="dr"><span class="dk">Geometrák nehotový</span><span class="dv">−100-200k</span></div>
+        <div class="dr" style="background:#fff7ed;border-radius:8px;padding:8px"><span class="dk"><strong>Celkem měkké</strong></span><span class="dv b"><strong>−1,0 až −1,8 mil</strong></span></div>
+      </div>
+    </div>
+    <div style="background:#f5f3ff;border:2px solid #7c3aed;border-radius:10px;padding:18px;text-align:center;margin-top:14px">
+      <div style="font-size:12px;color:#7c3aed;font-weight:700">CELKOVÁ SRÁŽKA Z 16,99 MIL</div>
+      <div style="font-size:28px;font-weight:800;color:#1a1a1a">−2 mil až −3,05 mil</div>
+      <div style="font-size:13px;color:#6b7280;margin-top:4px">→ Reálná cena: <strong>13,9 — 15 mil</strong> &bull; Cíl vyjednávání: <strong>14 — 14,5 mil</strong></div>
+      <div style="font-size:11px;color:#6b7280;margin-top:6px">Pokud sklep mokrý → +500k-1 mil srážka → cíl 13 — 13,5 mil</div>
+    </div>
+  </div>
+
+  <!-- VYJEDNÁVACÍ STRATEGIE -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#f5f3ff;color:#7c3aed">♟</div> Vyjednávací strategie</div>
+    <div class="card" style="overflow-x:auto">
+      <table class="vt">
+        <thead><tr><th>Krok</th><th>Tvoje číslo</th><th>Argumenty</th></tr></thead>
+        <tbody>
+          <tr style="background:#fef2f2"><td><strong>Otevírací nabídka</strong></td><td style="font-weight:800">12,5 — 13 mil</td><td>Znalecký posudek + investice do topení + G štítek</td></tr>
+          <tr><td>Jejich kontr</td><td>~15,5-16 mil</td><td>"To je moc málo"</td></tr>
+          <tr style="background:#fff7ed"><td><strong>Tvůj kontr</strong></td><td style="font-weight:800">13,5 mil</td><td>"Mám předschválenou hypo, podepíšu tento měsíc"</td></tr>
+          <tr><td>Jejich kontr</td><td>~14,5-15 mil</td><td>Kompromis</td></tr>
+          <tr style="background:#f0fdf4"><td><strong>Finální</strong></td><td style="font-weight:800;color:#16a34a">14 — 14,5 mil</td><td>"To je můj strop, beru nebo nechávám"</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="grid-2" style="margin-top:12px">
+      <div class="sc"><div class="n">20%</div><div class="l">Šance na 14 mil</div><div class="ch">Trpělivost, ne argumenty</div></div>
+      <div class="sc" style="border-color:#f97316"><div class="n b">45%</div><div class="l">Šance na 14,5 mil</div><div class="ch">Argumenty + deadline</div></div>
+    </div>
+    <div class="note" style="margin-top:12px"><strong>Na 14 mil se dostaneš trpělivostí, ne argumenty.</strong> Argumenty tě dostanou na 14,5. Každý den co dům neprodají je stojí nervy. Ty máš čas — oni ne.</div>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#f0fdf4;color:#16a34a">→</div> Timeline 2026</div>
+    <div class="card" style="overflow-x:auto">
+      <table class="vt">
+        <thead><tr><th>Kdy</th><th>Co</th><th>Detail</th></tr></thead>
+        <tbody>
+          <tr style="background:#f5f3ff"><td><strong>Duben</strong></td><td>Prohlídka Družec s Palánem</td><td>Sklep první → HUP druhý → stav třetí</td></tr>
+          <tr style="background:#f5f3ff"><td><strong>Duben</strong></td><td>NZÚ poradce (zdarma)</td><td>Renovační pas → připravit žádost</td></tr>
+          <tr><td><strong>Květen</strong></td><td>MŽP zveřejní podmínky úvěru</td><td>Upřesní max výši a podmínky</td></tr>
+          <tr><td><strong>Květen</strong></td><td>Libušín na trh (Four Locations)</td><td>NanoBannana staging + profi fotky</td></tr>
+          <tr style="background:#fff7ed"><td><strong>Červen</strong></td><td>Podání žádosti NZÚ úvěr</td><td>Příjem žádostí otevřen</td></tr>
+          <tr><td><strong>Červen-červenec</strong></td><td>Prodej Libušín</td><td>Ø doba inzerce 43 dní</td></tr>
+          <tr style="background:#f0fdf4"><td><strong>Červenec-srpen</strong></td><td>Koupě Družec + hypotéka</td><td>Záloha z prodeje + hypo 4 mil</td></tr>
+          <tr><td><strong>Září</strong></td><td>NZÚ vyplácí bezúročné úvěry</td><td>Realizace: TČ + rozvody</td></tr>
+          <tr style="background:#f0fdf4"><td><strong>Říjen</strong></td><td>Grilování s Markem na terase</td><td>🔥</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- DOPORUČENÍ -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#f0fdf4;color:#16a34a">✓</div> Doporučení</div>
+    <div style="background:#f0fdf4;border:2px solid #16a34a;border-radius:12px;padding:24px">
+      <div style="font-size:18px;font-weight:800;color:#16a34a;margin-bottom:12px">Scénář B — tepelné čerpadlo + bezúročný úvěr</div>
+      <div class="grid-3" style="margin-bottom:14px">
+        <div class="sc" style="border-color:#16a34a"><div class="n g">285-530k</div><div class="l">Z vlastních (nejméně!)</div></div>
+        <div class="sc" style="border-color:#16a34a"><div class="n g">2,5k/měs</div><div class="l">Energie (TČ)</div></div>
+        <div class="sc" style="border-color:#16a34a"><div class="n g">2-4 roky</div><div class="l">Návratnost</div></div>
+      </div>
+      <div style="font-size:13px;line-height:1.8">
+        <strong>Proč B a ne A:</strong> Z vlastních zaplatíš MÍNĚ. Na účtu ti zůstane VÍC. Provoz je levnější. Nemusíš řešit plynovou přípojku.<br>
+        <strong>Proč B a ne C:</strong> Zateplení můžeš udělat později (NZÚ umožňuje žádat postupně). Nejdřív TČ → za rok zateplení → za 2 roky FVE.<br>
+        <strong>Next step:</strong> Duben — prohlídka s Palánem + NZÚ poradce zdarma → renovační pas → připravit žádost na červen.
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<div class="footer">Analýza nemovitostí &bull; 29. 3. 2026 &bull; Data: RÚIAN (vdp.cuzk.gov.cz), Sreality, Valuo.cz, ČSÚ &bull; Nenahrazuje znalecký posudek</div>
 
 <script>
 function go(id){
