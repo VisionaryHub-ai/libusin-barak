@@ -24,44 +24,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .nav-btn.active-pravo{color:#334155;border-bottom-color:#334155;background:#f1f5f9}
 .nav-btn.active-trh{color:#2563eb;border-bottom-color:#2563eb;background:#eff6ff}
 .panel{display:none}.panel.active{display:block}
-.mega-nav{position:sticky;top:0;z-index:9999;background:#fff;border-bottom:2px solid #f3f4f6;box-shadow:0 1px 3px rgba(0,0,0,.06)}
-.mega-top{display:flex;justify-content:center;align-items:center;gap:0;padding:0}
-.mega-group{position:relative}
-.mega-group-btn{padding:14px 24px;font-size:13px;font-weight:700;cursor:pointer;border:none;background:transparent;color:#6b7280;transition:all .2s;border-bottom:3px solid transparent;display:flex;align-items:center;gap:6px}
-.mega-group-btn:hover{color:#1a1a1a;background:#f9fafb}
-.mega-group-btn .arrow{font-size:10px;transition:transform .2s}
-.mega-group.open .arrow{transform:rotate(180deg)}
-.mega-group.open .mega-group-btn{color:#1a1a1a;background:#f9fafb;border-bottom-color:#e5e7eb}
-.mega-dd{display:none;position:absolute;top:100%;left:50%;transform:translateX(-50%);background:#fff;border:1px solid #e5e7eb;border-radius:0 0 12px 12px;box-shadow:0 8px 24px rgba(0,0,0,.1);min-width:200px;z-index:10000;overflow:hidden}
-.mega-group.open .mega-dd{display:block}
-.mega-dd-btn{display:block;width:100%;padding:12px 20px;font-size:13px;font-weight:600;cursor:pointer;border:none;background:transparent;color:#374151;text-align:left;transition:all .15s;white-space:nowrap}
-.mega-dd-btn:hover{background:#f9fafb;color:#1a1a1a}
-.mega-dd-btn.active-item{font-weight:700}
-.mega-dd-sep{height:1px;background:#e5e7eb;margin:0}
-.mega-dd-label{padding:8px 20px 4px;font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px}
-.hamburger{display:none;border:none;background:transparent;cursor:pointer;padding:12px;flex-direction:column;gap:5px;z-index:10001}
-.hamburger span{display:block;width:22px;height:2px;background:#374151;border-radius:2px;transition:all .2s}
-.mobile-menu{display:none}
-.mm-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:10001}
-.mm-panel{position:fixed;top:0;right:0;bottom:0;width:280px;background:#fff;z-index:10002;padding:20px;overflow-y:auto;box-shadow:-4px 0 24px rgba(0,0,0,.15);transform:translateX(100%);transition:transform .25s ease}
-.mobile-menu.open .mm-panel{transform:translateX(0)}
-.mm-close{position:absolute;top:12px;right:16px;border:none;background:transparent;font-size:24px;cursor:pointer;color:#6b7280;padding:8px;min-height:44px;min-width:44px}
-.mm-label{font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px;padding:12px 0 6px;margin-top:8px}
-.mm-label:first-child{margin-top:32px}
-.mm-btn{display:block;width:100%;padding:14px 16px;font-size:15px;font-weight:600;cursor:pointer;border:none;border-left:4px solid #e5e7eb;background:#fff;color:#374151;text-align:left;transition:all .15s;min-height:48px;border-radius:0 8px 8px 0;margin-bottom:4px}
-.mm-btn:hover,.mm-btn:active{background:#f9fafb;color:#1a1a1a}
-@media(max-width:700px){
-.mega-group{display:none!important}
-.hamburger{display:flex}
-.mega-top{justify-content:flex-start;padding:0 4px}
-}
-@media(min-width:701px){
-.mobile-menu{display:none!important}
-.mega-top{overflow-x:auto;-webkit-overflow-scrolling:touch}
-.mega-group-btn{padding:14px 20px;font-size:13px;white-space:nowrap;min-height:44px}
-.mega-dd{left:0;transform:none;min-width:200px;border-radius:0 0 8px 8px}
-.mega-dd-btn{padding:10px 16px;font-size:13px;min-height:44px}
-}
 .container{max-width:1200px;margin:0 auto;padding:0 24px}
 .hero{padding:32px 0;text-align:center;border-bottom:1px solid #e5e7eb}
 .hero h1{font-size:28px;font-weight:800;color:#1a1a1a;margin-bottom:6px}
@@ -128,58 +90,25 @@ table.vt{width:100%;border-collapse:collapse;min-width:400px}
 .footer{text-align:center;padding:28px 0;color:#9ca3af;font-size:11px}
 .print-btn{position:fixed;bottom:16px;right:16px;background:#f97316;color:white;border:none;padding:10px 18px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(249,115,22,.3);z-index:100}
 .hl{background:#fff7ed}.hlg{background:#f0fdf4}.hlr{background:#fef2f2}
-@media print{.print-btn,.mega-nav{display:none}.panel{display:block!important;page-break-before:always}}
+@media print{.print-btn,.nav{display:none}.panel{display:block!important;page-break-before:always}}
 </style>
 </head>
 <body>
 
 <button class="print-btn" onclick="window.print()">Tisk / PDF</button>
 
-<nav class="mega-nav">
-  <div class="mega-top">
-    <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()"><span></span><span></span><span></span></button>
-    <div class="mega-group" id="mg-nem">
-      <button class="mega-group-btn" onclick="toggleMega('nem')">Nemovitosti <span class="arrow">▾</span></button>
-      <div class="mega-dd">
-        <button class="mega-dd-btn" onclick="go('lib')" id="btn-lib">Libušín (prodej)</button>
-        <button class="mega-dd-btn" onclick="go('prodej')" id="btn-prodej">Prodejní strategie</button>
-        <div class="mega-dd-sep"></div>
-        <button class="mega-dd-btn" onclick="go('dru')" id="btn-dru">Družec (koupě)</button>
-        <button class="mega-dd-btn" onclick="go('check')" id="btn-check">Prohlídka checklist</button>
-        <button class="mega-dd-btn" onclick="go('rk')" id="btn-rk">Strategie na RK</button>
-        <div class="mega-dd-sep"></div>
-        <button class="mega-dd-btn" onclick="go('vs')" id="btn-vs">Srovnání</button>
-        <button class="mega-dd-btn" onclick="go('trh')" id="btn-trh">Konkurence & Trh</button>
-      </div>
-    </div>
-    <div class="mega-group" id="mg-fin">
-      <button class="mega-group-btn" onclick="toggleMega('fin')">Finance <span class="arrow">▾</span></button>
-      <div class="mega-dd">
-        <button class="mega-dd-btn" onclick="go('fin')" id="btn-fin">Finanční model</button>
-        <button class="mega-dd-btn" onclick="go('nak')" id="btn-nak">Náklady & Dotace</button>
-        <button class="mega-dd-btn" onclick="go('pravo')" id="btn-pravo">Právní & Hypotéka</button>
-      </div>
-    </div>
-  </div>
+<nav class="nav">
+  <button class="nav-btn active-lib" onclick="go('lib')" id="btn-lib">Libušín</button>
+  <button class="nav-btn" onclick="go('prodej')" id="btn-prodej">Prodej strategie</button>
+  <button class="nav-btn" onclick="go('dru')" id="btn-dru">Družec</button>
+  <button class="nav-btn" onclick="go('check')" id="btn-check">Prohlídka</button>
+  <button class="nav-btn" onclick="go('rk')" id="btn-rk">Strategie RK</button>
+  <button class="nav-btn" onclick="go('vs')" id="btn-vs">Srovnání</button>
+  <button class="nav-btn" onclick="go('trh')" id="btn-trh">Trh</button>
+  <button class="nav-btn" onclick="go('fin')" id="btn-fin">Finance</button>
+  <button class="nav-btn" onclick="go('nak')" id="btn-nak">Náklady</button>
+  <button class="nav-btn" onclick="go('pravo')" id="btn-pravo">Právní</button>
 </nav>
-<div class="mobile-menu" id="mobile-menu">
-  <div class="mm-overlay" onclick="closeMobileMenu()"></div>
-  <div class="mm-panel">
-    <button class="mm-close" onclick="closeMobileMenu()">&#10005;</button>
-    <div class="mm-label">Nemovitosti</div>
-    <button class="mm-btn" onclick="go('lib')" style="border-left-color:#f97316">Libušín (prodej)</button>
-    <button class="mm-btn" onclick="go('prodej')" style="border-left-color:#f97316">Prodejní strategie</button>
-    <button class="mm-btn" onclick="go('dru')" style="border-left-color:#16a34a">Družec (koupě)</button>
-    <button class="mm-btn" onclick="go('check')" style="border-left-color:#7c3aed">Prohlídka checklist</button>
-    <button class="mm-btn" onclick="go('rk')" style="border-left-color:#0891b2">Strategie na RK</button>
-    <button class="mm-btn" onclick="go('vs')" style="border-left-color:#1a1a1a">Srovnání</button>
-    <button class="mm-btn" onclick="go('trh')" style="border-left-color:#2563eb">Konkurence & Trh</button>
-    <div class="mm-label" style="margin-top:16px">Finance</div>
-    <button class="mm-btn" onclick="go('fin')" style="border-left-color:#f97316">Finanční model</button>
-    <button class="mm-btn" onclick="go('nak')" style="border-left-color:#7c3aed">Náklady & Dotace</button>
-    <button class="mm-btn" onclick="go('pravo')" style="border-left-color:#334155">Právní & Hypotéka</button>
-  </div>
-</div>
 
 <!-- ===================== LIBUŠÍN ===================== -->
 <div class="panel active" id="p-lib">
@@ -2551,34 +2480,11 @@ table.vt{width:100%;border-collapse:collapse;min-width:400px}
 <div class="footer">Analýza nemovitostí &bull; 29. 3. 2026 &bull; Data: RÚIAN (vdp.cuzk.gov.cz), Sreality, Valuo.cz, ČSÚ &bull; Nenahrazuje znalecký posudek</div>
 
 <script>
-function toggleMega(group){
-  const el=document.getElementById('mg-'+group);
-  const wasOpen=el.classList.contains('open');
-  document.querySelectorAll('.mega-group').forEach(g=>g.classList.remove('open'));
-  if(!wasOpen)el.classList.add('open');
-}
-document.addEventListener('click',function(e){
-  if(!e.target.closest('.mega-group'))document.querySelectorAll('.mega-group').forEach(g=>g.classList.remove('open'));
-}
-);
-function toggleMobileMenu(){
-  document.getElementById('mobile-menu').classList.toggle('open');
-  document.getElementById('mobile-menu').style.display='block';
-  document.body.style.overflow=document.getElementById('mobile-menu').classList.contains('open')?'hidden':'';
-}
-function closeMobileMenu(){
-  document.getElementById('mobile-menu').classList.remove('open');
-  document.body.style.overflow='';
-  setTimeout(function(){document.getElementById('mobile-menu').style.display='none';},250);
-});
 function go(id){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.mega-dd-btn').forEach(b=>b.classList.remove('active-item'));
+  document.querySelectorAll('.nav-btn').forEach(b=>{b.className='nav-btn'});
   document.getElementById('p-'+id).classList.add('active');
-  const btn=document.getElementById('btn-'+id);
-  if(btn)btn.classList.add('active-item');
-  document.querySelectorAll('.mega-group').forEach(g=>g.classList.remove('open'));
-  closeMobileMenu();
+  document.getElementById('btn-'+id).classList.add('active-'+id);
   if(id==='lib'&&!window._mapLibInit){initMapLib();window._mapLibInit=true}
   if(id==='dru'&&!window._mapDruInit){initMapDru();window._mapDruInit=true}
   window.scrollTo(0,0);
