@@ -39,11 +39,28 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .mega-dd-btn.active-item{font-weight:700}
 .mega-dd-sep{height:1px;background:#e5e7eb;margin:0}
 .mega-dd-label{padding:8px 20px 4px;font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px}
-@media(max-width:600px){
-.mega-top{overflow-x:auto;-webkit-overflow-scrolling:touch;justify-content:flex-start}
-.mega-group-btn{padding:12px 14px;font-size:12px;white-space:nowrap;min-height:44px}
-.mega-dd{left:0;transform:none;min-width:180px;border-radius:0 0 8px 8px}
-.mega-dd-btn{padding:10px 16px;font-size:12px}
+.hamburger{display:none;border:none;background:transparent;cursor:pointer;padding:12px;flex-direction:column;gap:5px;z-index:10001}
+.hamburger span{display:block;width:22px;height:2px;background:#374151;border-radius:2px;transition:all .2s}
+.mobile-menu{display:none}
+.mm-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:10001}
+.mm-panel{position:fixed;top:0;right:0;bottom:0;width:280px;background:#fff;z-index:10002;padding:20px;overflow-y:auto;box-shadow:-4px 0 24px rgba(0,0,0,.15);transform:translateX(100%);transition:transform .25s ease}
+.mobile-menu.open .mm-panel{transform:translateX(0)}
+.mm-close{position:absolute;top:12px;right:16px;border:none;background:transparent;font-size:24px;cursor:pointer;color:#6b7280;padding:8px;min-height:44px;min-width:44px}
+.mm-label{font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px;padding:12px 0 6px;margin-top:8px}
+.mm-label:first-child{margin-top:32px}
+.mm-btn{display:block;width:100%;padding:14px 16px;font-size:15px;font-weight:600;cursor:pointer;border:none;border-left:4px solid #e5e7eb;background:#fff;color:#374151;text-align:left;transition:all .15s;min-height:48px;border-radius:0 8px 8px 0;margin-bottom:4px}
+.mm-btn:hover,.mm-btn:active{background:#f9fafb;color:#1a1a1a}
+@media(max-width:700px){
+.mega-group{display:none!important}
+.hamburger{display:flex}
+.mega-top{justify-content:flex-start;padding:0 4px}
+}
+@media(min-width:701px){
+.mobile-menu{display:none!important}
+.mega-top{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.mega-group-btn{padding:14px 20px;font-size:13px;white-space:nowrap;min-height:44px}
+.mega-dd{left:0;transform:none;min-width:200px;border-radius:0 0 8px 8px}
+.mega-dd-btn{padding:10px 16px;font-size:13px;min-height:44px}
 }
 .container{max-width:1200px;margin:0 auto;padding:0 24px}
 .hero{padding:32px 0;text-align:center;border-bottom:1px solid #e5e7eb}
@@ -120,6 +137,7 @@ table.vt{width:100%;border-collapse:collapse;min-width:400px}
 
 <nav class="mega-nav">
   <div class="mega-top">
+    <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()"><span></span><span></span><span></span></button>
     <div class="mega-group" id="mg-nem">
       <button class="mega-group-btn" onclick="toggleMega('nem')">Nemovitosti <span class="arrow">▾</span></button>
       <div class="mega-dd">
@@ -144,6 +162,24 @@ table.vt{width:100%;border-collapse:collapse;min-width:400px}
     </div>
   </div>
 </nav>
+<div class="mobile-menu" id="mobile-menu">
+  <div class="mm-overlay" onclick="closeMobileMenu()"></div>
+  <div class="mm-panel">
+    <button class="mm-close" onclick="closeMobileMenu()">&#10005;</button>
+    <div class="mm-label">Nemovitosti</div>
+    <button class="mm-btn" onclick="go('lib')" style="border-left-color:#f97316">Libušín (prodej)</button>
+    <button class="mm-btn" onclick="go('prodej')" style="border-left-color:#f97316">Prodejní strategie</button>
+    <button class="mm-btn" onclick="go('dru')" style="border-left-color:#16a34a">Družec (koupě)</button>
+    <button class="mm-btn" onclick="go('check')" style="border-left-color:#7c3aed">Prohlídka checklist</button>
+    <button class="mm-btn" onclick="go('rk')" style="border-left-color:#0891b2">Strategie na RK</button>
+    <button class="mm-btn" onclick="go('vs')" style="border-left-color:#1a1a1a">Srovnání</button>
+    <button class="mm-btn" onclick="go('trh')" style="border-left-color:#2563eb">Konkurence & Trh</button>
+    <div class="mm-label" style="margin-top:16px">Finance</div>
+    <button class="mm-btn" onclick="go('fin')" style="border-left-color:#f97316">Finanční model</button>
+    <button class="mm-btn" onclick="go('nak')" style="border-left-color:#7c3aed">Náklady & Dotace</button>
+    <button class="mm-btn" onclick="go('pravo')" style="border-left-color:#334155">Právní & Hypotéka</button>
+  </div>
+</div>
 
 <!-- ===================== LIBUŠÍN ===================== -->
 <div class="panel active" id="p-lib">
@@ -2523,6 +2559,17 @@ function toggleMega(group){
 }
 document.addEventListener('click',function(e){
   if(!e.target.closest('.mega-group'))document.querySelectorAll('.mega-group').forEach(g=>g.classList.remove('open'));
+}
+);
+function toggleMobileMenu(){
+  document.getElementById('mobile-menu').classList.toggle('open');
+  document.getElementById('mobile-menu').style.display='block';
+  document.body.style.overflow=document.getElementById('mobile-menu').classList.contains('open')?'hidden':'';
+}
+function closeMobileMenu(){
+  document.getElementById('mobile-menu').classList.remove('open');
+  document.body.style.overflow='';
+  setTimeout(function(){document.getElementById('mobile-menu').style.display='none';},250);
 });
 function go(id){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
@@ -2531,6 +2578,7 @@ function go(id){
   const btn=document.getElementById('btn-'+id);
   if(btn)btn.classList.add('active-item');
   document.querySelectorAll('.mega-group').forEach(g=>g.classList.remove('open'));
+  closeMobileMenu();
   if(id==='lib'&&!window._mapLibInit){initMapLib();window._mapLibInit=true}
   if(id==='dru'&&!window._mapDruInit){initMapDru();window._mapDruInit=true}
   window.scrollTo(0,0);
