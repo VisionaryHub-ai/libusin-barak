@@ -23,6 +23,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .nav-btn.active-prodej{color:#f97316;border-bottom-color:#f97316;background:#fff7ed}
 .nav-btn.active-pravo{color:#334155;border-bottom-color:#334155;background:#f1f5f9}
 .nav-btn.active-trh{color:#2563eb;border-bottom-color:#2563eb;background:#eff6ff}
+.nav-btn.active-souhrn{color:#fff;border-bottom-color:#f97316;background:#1a1a1a}
 .panel{display:none}.panel.active{display:block}
 .container{max-width:1200px;margin:0 auto;padding:0 24px}
 .hero{padding:32px 0;text-align:center;border-bottom:1px solid #e5e7eb}
@@ -98,7 +99,8 @@ table.vt{width:100%;border-collapse:collapse;min-width:400px}
 <button class="print-btn" onclick="window.print()">Tisk / PDF</button>
 
 <nav class="nav">
-  <button class="nav-btn active-lib" onclick="go('lib')" id="btn-lib">Libušín</button>
+  <button class="nav-btn active-souhrn" onclick="go('souhrn')" id="btn-souhrn" style="background:#1a1a1a;color:#f97316;font-weight:800">SOUHRN</button>
+  <button class="nav-btn" onclick="go('lib')" id="btn-lib">Libušín</button>
   <button class="nav-btn" onclick="go('prodej')" id="btn-prodej">Prodej strategie</button>
   <button class="nav-btn" onclick="go('dru')" id="btn-dru">Družec</button>
   <button class="nav-btn" onclick="go('check')" id="btn-check">Prohlídka</button>
@@ -110,8 +112,290 @@ table.vt{width:100%;border-collapse:collapse;min-width:400px}
   <button class="nav-btn" onclick="go('pravo')" id="btn-pravo">Právní</button>
 </nav>
 
+<!-- ===================== SOUHRN ===================== -->
+<div class="panel active" id="p-souhrn">
+<div class="hero" style="background:#1a1a1a;border-bottom:2px solid #f97316">
+  <div class="container">
+    <h1 style="color:#fff">Souhrn — Kompletní přehled</h1>
+    <div class="sub" style="color:#9ca3af">Libušín → Družec &bull; Všechna data, rizika, šance, čísla na jednom místě</div>
+    <div class="price" style="background:#f97316;color:#fff">Prodej 14M → Koupě 12,5M → 3,5 mil na účtu</div>
+  </div>
+</div>
+<div class="container">
+
+  <!-- CELKOVÝ DEAL -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#f97316;color:#fff">★</div> Celý deal na jeden pohled</div>
+    <div class="grid-3">
+      <div class="sc" style="border-color:#f97316"><div class="n b">14 mil</div><div class="l">Prodej Libušín</div><div class="ch">Valuo 14,3 mil, trh +21,7%</div></div>
+      <div class="sc" style="border-color:#16a34a"><div class="n g">12,5 mil</div><div class="l">Koupě Družec</div><div class="ch">27% pod trhem (stál 30 mil)</div></div>
+      <div class="sc" style="border-color:#7c3aed"><div class="n" style="color:#7c3aed">3,5 mil</div><div class="l">Na účtu po všem</div><div class="ch">4,4 roku runway bez příjmu</div></div>
+    </div>
+    <div class="grid-3" style="margin-top:10px">
+      <div class="sc"><div class="n">15k</div><div class="l">Splátka hypo/měs</div><div class="ch">3 mil, 4,3%, 30 let</div></div>
+      <div class="sc"><div class="n g">1k</div><div class="l">Energie/měs po renovaci</div><div class="ch">TČ Buderus + FVE</div></div>
+      <div class="sc"><div class="n g">0 Kč</div><div class="l">Daň z prodeje</div><div class="ch">Trojitě osvobozeno</div></div>
+    </div>
+    <div style="background:#1a1a1a;border-radius:12px;padding:20px;text-align:center;margin-top:16px;color:#fff">
+      <div style="font-size:14px;color:#f97316;font-weight:700;text-transform:uppercase;letter-spacing:1px">Výsledek</div>
+      <div style="font-size:20px;font-weight:800;margin:8px 0">Prodáváš substanci za plnou cenu. Kupuješ lifestyle 27% pod trhem.</div>
+      <div style="font-size:13px;color:#9ca3af">Dům co stál 30 mil za 12,5 &bull; Opce na pozemek 4-6 mil za 300k &bull; Energie 1k/měs &bull; Runway 4,4 roku</div>
+    </div>
+  </div>
+
+  <!-- SOUHRN JEDNOTLIVÝCH STRÁNEK -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fff7ed;color:#f97316">1</div> <span onclick="go('lib')" style="cursor:pointer;text-decoration:underline;text-decoration-color:#f97316">Libušín (prodej)</span></div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title" style="color:#16a34a">Proč ANO — výhody</div>
+        <div class="dr"><span class="dk">Valuo odhad 14,3 mil</span><span class="dv g">Data potvrzují cenu</span></div>
+        <div class="dr"><span class="dk">Buderus kotel = diferenciátor</span><span class="dv g">Sestava za 250k, nastěhuj se a bydli</span></div>
+        <div class="dr"><span class="dk">3 garáže + plný sklep</span><span class="dv g">Vzácné pod 14 mil</span></div>
+        <div class="dr"><span class="dk">Občanská vybavenost pěšky</span><span class="dv g">Bus 3 min, doktor, lékárna</span></div>
+        <div class="dr"><span class="dk">Trh roste +21,7%</span><span class="dv g">Průměr inzerce 43 dní</span></div>
+        <div class="dr"><span class="dk">Daň 0 Kč</span><span class="dv g">Trojitě osvobozeno</span></div>
+        <div class="dr"><span class="dk">Provize 0 Kč</span><span class="dv g">Four Locations + Vilímková (100k fixně)</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:#dc2626">Rizika — mínusy</div>
+        <div class="dr"><span class="dk r">Poddolování</span><span class="dv r">−500k až −1M na ceně</span></div>
+        <div class="dr"><span class="dk r">Břízolit fasáda</span><span class="dv r">Vizuálně horší na první pohled</span></div>
+        <div class="dr"><span class="dk y">Elektroinstalace 1980</span><span class="dv y">Budoucí investice pro kupce</span></div>
+        <div class="dr"><span class="dk y">Libušín = ne prestižní adresa</span><span class="dv y">Odrazí investory</span></div>
+        <div class="dr"><span class="dk g">Mitigace</span><span class="dv g">Poddolování filtruje investory, ne rodiny</span></div>
+      </div>
+    </div>
+    <div class="note"><strong>Verdikt:</strong> Solidní nemovitost v dobrém segmentu. Prodej za 13,5-14 mil je realistický do 60 dní. Poddolování je jediné reálné riziko ale nebrání prodeji rodinám.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fff7ed;color:#f97316">2</div> <span onclick="go('prodej')" style="cursor:pointer;text-decoration:underline;text-decoration-color:#f97316">Prodejní strategie Libušín</span></div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title" style="color:#16a34a">Co funguje</div>
+        <div class="dr"><span class="dk">NanoBannana staging</span><span class="dv g">+5-10% na ceně (0 Kč)</span></div>
+        <div class="dr"><span class="dk">Profi fotky + dron</span><span class="dv g">Golden hour, první dojem prodává</span></div>
+        <div class="dr"><span class="dk">Kotel jako diferenciátor</span><span class="dv g">"Nový Buderus v hodnotě 250k"</span></div>
+        <div class="dr"><span class="dk">Dva kanály</span><span class="dv g">Vilímková veřejně + Four Locations neveřejně</span></div>
+        <div class="dr"><span class="dk">Bonus 100k/milion pro RK</span><span class="dv g">Motivace tlačit cenu nahoru</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:#f97316">Klíčové kroky</div>
+        <div class="dr"><span class="dk">Duben</span><span class="dv">Úklid, vymalování, declutter</span></div>
+        <div class="dr"><span class="dk">Květen</span><span class="dv">Staging + fotky + inzerát live</span></div>
+        <div class="dr"><span class="dk">Červen-červenec</span><span class="dv">Prohlídky + nabídky</span></div>
+        <div class="dr"><span class="dk">Cíl</span><span class="dv b">13,5-14,5 mil do 60 dní</span></div>
+      </div>
+    </div>
+    <div class="note"><strong>Verdikt:</strong> Lehký prodej. Kostka 5+1 s kotlem pod 14 mil = sweet spot pro rodiny. Staging + dva kanály + motivovaná RK = prodej do 60 dní.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#f0fdf4;color:#16a34a">3</div> <span onclick="go('dru')" style="cursor:pointer;text-decoration:underline;text-decoration-color:#16a34a">Družec (koupě)</span></div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title" style="color:#16a34a">Proč ANO — výhody</div>
+        <div class="dr"><span class="dk">Dům za 12,5M co stál 30M</span><span class="dv g">27% pod tržní cenou</span></div>
+        <div class="dr"><span class="dk">1 720 m² pozemek</span><span class="dv g">2× víc než Libušín</span></div>
+        <div class="dr"><span class="dk">Zimní zahrada + terasa</span><span class="dv g">Killer feature</span></div>
+        <div class="dr"><span class="dk">3 koupelny, 3 podlaží</span><span class="dv g">Prostor pro rodinu</span></div>
+        <div class="dr"><span class="dk">Žádné poddolování</span><span class="dv g">vs Libušín = VYSOKÉ riziko</span></div>
+        <div class="dr"><span class="dk">3 min D6</span><span class="dv g">Rychle Praha</span></div>
+        <div class="dr"><span class="dk">Potok + studna + vzrostlé stromy</span><span class="dv g">Lifestyle</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:#dc2626">Rizika — mínusy</div>
+        <div class="dr"><span class="dk r">Přímotopy + štítek G</span><span class="dv r">Investice 500k+ do topení</span></div>
+        <div class="dr"><span class="dk r">Rok 1947 (78 let)</span><span class="dv r">Starý základ, možná vlhkost</span></div>
+        <div class="dr"><span class="dk y">Vlhkost sklep (35-45% šance)</span><span class="dv y">80-140k navíc</span></div>
+        <div class="dr"><span class="dk y">Vesnice = vše autem</span><span class="dv y">vs Libušín vše pěšky</span></div>
+        <div class="dr"><span class="dk g">Mitigace</span><span class="dv g">TČ za 135k z vlastních (NZÚ), Palán za náklady</span></div>
+      </div>
+    </div>
+    <div class="note ok"><strong>Verdikt:</strong> Lifestyle koupě za cenu substance. Problémy (přímotopy, G) = důvod proč kupuješ za 12,5 místo 17. Ty je umíš vyřešit za 135k. Běžný kupec ne — proto je barák 4 měsíce neprodejný.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#f5f3ff;color:#7c3aed">4</div> <span onclick="go('check')" style="cursor:pointer;text-decoration:underline;text-decoration-color:#7c3aed">Prohlídka checklist</span></div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Priorita na prohlídce</div>
+        <div class="dr"><span class="dk" style="font-weight:700">#1 Sklep</span><span class="dv">Vlhkost = rozhoduje o ceně</span></div>
+        <div class="dr"><span class="dk" style="font-weight:700">#2 HUP (plyn)</span><span class="dv">Žlutá skříňka na fasádě?</span></div>
+        <div class="dr"><span class="dk" style="font-weight:700">#3 Přímotopy</span><span class="dv">Spočítat v každé místnosti</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Verdikt po sklepě</div>
+        <div class="dr"><span class="dk g">Suchý</span><span class="dv g">Nabídni 12,5M</span></div>
+        <div class="dr"><span class="dk y">Mírně vlhký</span><span class="dv y">Nabídni 12-12,5M</span></div>
+        <div class="dr"><span class="dk r">Mokrý/plíseň</span><span class="dv r">Odejdi nebo max 11M</span></div>
+      </div>
+    </div>
+    <div class="note"><strong>Verdikt:</strong> Sklep rozhodne o ceně za 5 minut. Zbytek (elektro, okna, střecha) je sekundární. Po fotkách tipuju optimistický scénář — garáž suchá, interiér čistý, rekon. 2005 kvalitní.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#ecfeff;color:#0891b2">5</div> <span onclick="go('rk')" style="cursor:pointer;text-decoration:underline;text-decoration-color:#0891b2">Strategie na RK</span></div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title" style="color:#0891b2">Co nabízíš</div>
+        <div class="dr"><span class="dk">200k cash</span><span class="dv g">100k fixně + 100k/milion nad 13,5M</span></div>
+        <div class="dr"><span class="dk">100h práce (350k+ hodnota)</span><span class="dv g">Web, AI, automatizace</span></div>
+        <div class="dr"><span class="dk">LinkedIn 36k zobrazení</span><span class="dv g">C-level audience, budoucí klienti</span></div>
+        <div class="dr"><span class="dk">300k za 3 roky (pozemek)</span><span class="dv g">Dlouhodobý vztah</span></div>
+        <div class="dr"><span class="dk"><strong>Celkem pro ni</strong></span><span class="dv b"><strong>925k+ z jednoho klienta</strong></span></div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:#dc2626">Co NEŘÍKAT</div>
+        <div class="dr"><span class="dk r">Neprozrazuj prodej Libušína</span><span class="dv">Oslabuje pozici</span></div>
+        <div class="dr"><span class="dk r">Neříkej historii slev 30→17</span><span class="dv">Tvoje eso na později</span></div>
+        <div class="dr"><span class="dk r">Neříkej 100k na prohlídce</span><span class="dv">Ústně, ne v dokumentu</span></div>
+        <div class="dr"><span class="dk r">Neříkej cenu jako první</span><span class="dv">Až PO nabídce spolupráce</span></div>
+      </div>
+    </div>
+    <div class="note" style="border-left-color:#0891b2"><strong>Verdikt:</strong> 88% šance že řekne ano. Po 4 měsících bez kupce a s tvou nabídkou 925k+ nemá důvod odmítnout. Jeden telefonát do Švýcarska = nejlíp placených 10 minut jejího života.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#f9fafb;color:#1a1a1a">6</div> <span onclick="go('vs')" style="cursor:pointer;text-decoration:underline;text-decoration-color:#1a1a1a">Srovnání Libušín vs Družec</span></div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title" style="color:#f97316">Libušín (prodej)</div>
+        <div class="dr"><span class="dk">320 m² užitná</span><span class="dv">Víc než Družec (289 m²)</span></div>
+        <div class="dr"><span class="dk">884 m² pozemek</span><span class="dv">Menší než Družec</span></div>
+        <div class="dr"><span class="dk">Kotel Buderus, 5k/měs</span><span class="dv g">Hotové topení</span></div>
+        <div class="dr"><span class="dk">44 722 Kč/m²</span><span class="dv">Na trhu</span></div>
+        <div class="dr"><span class="dk r">Poddolování VYSOKÉ</span><span class="dv r">Hlavní minus</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:#16a34a">Družec (koupě)</div>
+        <div class="dr"><span class="dk">289 m² užitná</span><span class="dv">Méně ale 3 podlaží</span></div>
+        <div class="dr"><span class="dk">1 720 m² pozemek</span><span class="dv g">2× větší</span></div>
+        <div class="dr"><span class="dk r">Přímotopy, 15-20k/měs</span><span class="dv">→ po TČ: 1k/měs</span></div>
+        <div class="dr"><span class="dk">43 253 Kč/m²</span><span class="dv g">27% pod trhem</span></div>
+        <div class="dr"><span class="dk g">Žádné poddolování</span><span class="dv g">Hlavní plus</span></div>
+      </div>
+    </div>
+    <div class="note"><strong>Verdikt:</strong> Libušín = substance (efektivní, praktický). Družec = lifestyle (krásný, prostorný). Prodáváš substanci za plnou cenu. Kupuješ lifestyle za cenu substance.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#eff6ff;color:#2563eb">7</div> <span onclick="go('trh')" style="cursor:pointer;text-decoration:underline;text-decoration-color:#2563eb">Konkurence & Trh</span></div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title" style="color:#2563eb">Klíčová zjištění</div>
+        <div class="dr"><span class="dk">Průměr RD Kladno</span><span class="dv">55 557 Kč/m²</span></div>
+        <div class="dr"><span class="dk">Průměr okolí Družce</span><span class="dv">58 927 Kč/m²</span></div>
+        <div class="dr"><span class="dk">Tvoje koupě Družec</span><span class="dv g">43 253 Kč/m² (−27%)</span></div>
+        <div class="dr"><span class="dk">Tvůj prodej Libušín</span><span class="dv">43 750 Kč/m² (na trhu)</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:#2563eb">Nejsilnější vyjednávací páky</div>
+        <div class="dr"><span class="dk">Unhošťská 6+1 za 10,79M</span><span class="dv g">Stejná dispozice, o 6M levnější</span></div>
+        <div class="dr"><span class="dk">Unhošť 5+1 za 13,9M</span><span class="dv g">Bez přímotopů</span></div>
+        <div class="dr"><span class="dk">Kam. Žehrovice novostavba</span><span class="dv g">5+kk za 12,5M</span></div>
+      </div>
+    </div>
+    <div class="note" style="border-left-color:#2563eb"><strong>Verdikt:</strong> Data potvrzují tvou strategii. Libušín prodáváš za tržní cenu. Družec kupuješ 27% pod trhem díky přímotopům a G. Máš 3 reálné alternativy jako vyjednávací páky.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#fff7ed;color:#f97316">8</div> <span onclick="go('fin')" style="cursor:pointer;text-decoration:underline;text-decoration-color:#f97316">Finanční model</span></div>
+    <div class="grid-3">
+      <div class="sc"><div class="n b">14 900</div><div class="l">Splátka hypo/měs</div><div class="ch">3 mil, 4,3%, 30 let</div></div>
+      <div class="sc"><div class="n">7 500</div><div class="l">Splátka NZÚ/měs</div><div class="ch">1,8 mil, 0%, 20 let</div></div>
+      <div class="sc"><div class="n g">66 400</div><div class="l">Celk. burn/měs</div><div class="ch">Break-even příjem</div></div>
+    </div>
+    <div class="card" style="margin-top:12px">
+      <div class="card-title">Kombinovaný scénář</div>
+      <div class="dr"><span class="dk">Pesimistický (13M/13,5M)</span><span class="dv">2,1 mil na účtu, 32 měs. runway</span></div>
+      <div class="dr" style="background:#fff7ed"><span class="dk"><strong>Realistický (14M/12,5M)</strong></span><span class="dv b"><strong>3,5 mil na účtu, 53 měs. runway</strong></span></div>
+      <div class="dr"><span class="dk">Optimistický (14,5M/12,5M)</span><span class="dv g">4,4 mil na účtu, 67 měs. runway</span></div>
+    </div>
+    <div class="note"><strong>Verdikt:</strong> I pesimistický scénář ti dá 2,1 mil a 32 měsíců runway. Realisticky 3,5 mil a 4,4 roku. Neexistuje scénář kde prohráváš.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#f5f3ff;color:#7c3aed">9</div> <span onclick="go('nak')" style="cursor:pointer;text-decoration:underline;text-decoration-color:#7c3aed">Náklady & Dotace</span></div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title" style="color:#7c3aed">3 scénáře investic</div>
+        <div class="dr"><span class="dk">A: Plynový kotel (bez dotací)</span><span class="dv r">660k-1,07M z vlastních</span></div>
+        <div class="dr" style="background:#fff7ed"><span class="dk"><strong>B: Buderus TČ + NZÚ ★</strong></span><span class="dv b"><strong>135-480k z vlastních</strong></span></div>
+        <div class="dr"><span class="dk">C: Komplex + trojskla + FVE</span><span class="dv g">480-660k z vlastních</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:#7c3aed">Klíčové výhody NZÚ</div>
+        <div class="dr"><span class="dk">Bezúročný úvěr</span><span class="dv g">0% úrok, stát platí</span></div>
+        <div class="dr"><span class="dk">TČ Buderus WLW196i-11</span><span class="dv">COP 4,2, 190l zásobník, 45 dB</span></div>
+        <div class="dr"><span class="dk">Energie po renovaci</span><span class="dv g">~1 000 Kč/měs (G → A/B)</span></div>
+        <div class="dr"><span class="dk">Hydroizolace fígl</span><span class="dv g">80-140k místo 300-600k</span></div>
+      </div>
+    </div>
+    <div class="note" style="border-left-color:#7c3aed"><strong>Verdikt:</strong> Scénář B (TČ + NZÚ) je sweet spot — z vlastních jen 135-480k, energie 2,5k/měs. Scénář C (komplex) za 480-660k z vlastních posune dům na A/B. Oboje výrazně lepší než plynový kotel bez dotací.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#f1f5f9;color:#334155">10</div> <span onclick="go('pravo')" style="cursor:pointer;text-decoration:underline;text-decoration-color:#334155">Právní & Hypotéka</span></div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title" style="color:#16a34a">Co je vyřešené</div>
+        <div class="dr"><span class="dk">Daň z prodeje</span><span class="dv g">0 Kč — trojitě osvobozeno</span></div>
+        <div class="dr"><span class="dk">Daň z nabytí</span><span class="dv g">0 Kč — zrušena 2020</span></div>
+        <div class="dr"><span class="dk">LV 439 Libušín</span><span class="dv g">Čistý — žádná břemena</span></div>
+        <div class="dr"><span class="dk">Hypotéka 3M</span><span class="dv g">LTV 22%, DTI 30% = jistota</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title" style="color:#f97316">Co ještě vyřešit</div>
+        <div class="dr"><span class="dk y">LV 84 Družec</span><span class="dv">Ověřit břemena, zástavy</span></div>
+        <div class="dr"><span class="dk y">Kolaudace přístaveb 2005</span><span class="dv">Ověřit na prohlídce</span></div>
+        <div class="dr"><span class="dk y">PENB Libušín</span><span class="dv">Ze zákona nutný při prodeji</span></div>
+        <div class="dr"><span class="dk y">Smlouva o budoucí kupní</span><span class="dv">Nechat zkontrolovat advokátem (5-10k)</span></div>
+      </div>
+    </div>
+    <div class="note" style="border-left-color:#334155"><strong>Verdikt:</strong> Právně čisté. Daně vyřešené (0 Kč). Hypotéka 3M projde bez problémů (LTV 22%). Smlouvu o budoucí kupní máš připravenou v Notion — nechat zkontrolovat advokátem.</div>
+  </div>
+
+  <!-- CELKOVÁ ŠANCE -->
+  <div class="section">
+    <div class="section-title"><div class="ico" style="background:#1a1a1a;color:#f97316">%</div> Celková šance na úspěch</div>
+    <div class="grid-3">
+      <div class="sc" style="border-color:#16a34a"><div class="n g">88%</div><div class="l">Ona řekne ano</div></div>
+      <div class="sc" style="border-color:#f97316"><div class="n b">65%</div><div class="l">Družec za 12,5M</div></div>
+      <div class="sc" style="border-color:#16a34a"><div class="n g">75%</div><div class="l">Libušín za 13,5M+</div></div>
+    </div>
+    <div style="background:#f0fdf4;border:2px solid #16a34a;border-radius:12px;padding:24px;text-align:center;margin-top:16px">
+      <div style="font-size:14px;color:#16a34a;font-weight:700;text-transform:uppercase">Celková šance na úspěch</div>
+      <div style="font-size:48px;font-weight:800;color:#1a1a1a">~80%</div>
+      <div style="font-size:13px;color:#6b7280;margin-top:8px">Žádný single point of failure. Každé riziko má mitigaci.<br>I pesimistický scénář ti dá 2,1 mil na účtu a 32 měsíců runway.<br><strong>Neexistuje scénář kde prohráváš.</strong></div>
+    </div>
+  </div>
+
+  <!-- NEXT STEPS -->
+  <div class="section" style="border-bottom:none">
+    <div class="section-title"><div class="ico" style="background:#f97316;color:#fff">→</div> Next steps</div>
+    <div class="card" style="border-color:#f97316">
+      <div class="card-title" style="color:#f97316">Co udělat TEĎ</div>
+      <div class="dr"><span class="dk" style="font-weight:700;color:#f97316">1.</span><span class="dv"><strong>Zavolat Vilímkové</strong> — domluvit prohlídku Družce tento týden</span></div>
+      <div class="dr"><span class="dk" style="font-weight:700;color:#f97316">2.</span><span class="dv"><strong>Prohlídka + Mac</strong> — projít dům, ukázat nabídku, říct číslo</span></div>
+      <div class="dr"><span class="dk" style="font-weight:700;color:#f97316">3.</span><span class="dv"><strong>Ona řekne ano</strong> — do 2-3 dnů po prohlídce</span></div>
+      <div class="dr"><span class="dk" style="font-weight:700;color:#f97316">4.</span><span class="dv"><strong>Smlouva o budoucí kupní</strong> — zamknout Družec + opce na pozemek</span></div>
+      <div class="dr"><span class="dk" style="font-weight:700;color:#f97316">5.</span><span class="dv"><strong>Libušín na trh</strong> — staging, fotky, dva kanály, prodej do 60 dní</span></div>
+      <div class="dr"><span class="dk" style="font-weight:700;color:#f97316">6.</span><span class="dv"><strong>Koupě Družce</strong> — hypo, převod, nastěhování do srpna</span></div>
+      <div class="dr"><span class="dk" style="font-weight:700;color:#f97316">7.</span><span class="dv"><strong>NZÚ žádost</strong> — TČ Buderus + zateplení + FVE, energie 1k/měs</span></div>
+    </div>
+    <div style="background:#1a1a1a;border-radius:12px;padding:20px;text-align:center;margin-top:16px;color:#fff">
+      <div style="font-size:16px;font-weight:800">Celý deal začíná jedním telefonátem.</div>
+      <div style="font-size:13px;color:#9ca3af;margin-top:6px">30 sekund vytáčení čísla → 5 měsíců → nový dům, 3,5 mil na účtu, žádná daň.</div>
+    </div>
+  </div>
+
+</div>
+</div>
+
 <!-- ===================== LIBUŠÍN ===================== -->
-<div class="panel active" id="p-lib">
+<div class="panel" id="p-lib">
 <div class="hero" style="background:#fff7ed;border-bottom:2px solid #f97316">
   <div class="container">
     <h1 style="color:#f97316">V Zahrádkách 742, Libušín</h1>
@@ -2767,7 +3051,8 @@ function initMapDru(){
 }
 
 // Init Libušín map on load
-setTimeout(()=>{initMapLib();window._mapLibInit=true},100);
+// Init Libušín map only when tab opened
+// Default page is now Souhrn
 </script>
 </body>
 </html>
